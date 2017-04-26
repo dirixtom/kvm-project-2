@@ -163,11 +163,19 @@
             $statement->bindValue(":firstname", $this->Firstname);
             $statement->bindValue(":lastname", $this->Lastname);
             $statement->bindValue(":email", $this->Email);
-            $statement->bindValue(":username", $this->Username);
-            $statement->execute();
-            $_SESSION['firstname']=$this->m_sFirstname;
-            $_SESSION['lastname']=$this->m_sLastname;
-            $_SESSION['email']=$this->m_sEmail;
-            $_SESSION['image']=$this->m_sImage;
+            $statement->bindValue(":username", $_SESSION['user']);
+            //IMAGE:
+            if (empty($this->Image)) {
+                //pad naar afbeelding behouden als de gebruiker het veld leeg laat.
+                $this->Image = $_SESSION['image'];
+            } elseif (($_SESSION["image"] != "default.png") && ($_SESSION["image"] != $this->Image)) {
+                unlink("images/uploads/profileImages/" . $_SESSION["image"] . "");
+            }
+            $statement->bindValue(":image", $this->Image);
+            $res = $statement->execute();
+            $_SESSION['firstname']=$this->Firstname;
+            $_SESSION['lastname']=$this->Lastname;
+            $_SESSION['email']=$this->Email;
+            $_SESSION['image']=$this->Image;
         }
     }
