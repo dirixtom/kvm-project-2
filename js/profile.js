@@ -1,4 +1,6 @@
 $(document).ready(function(){
+    
     $("#img").click(function(){
-        alert("AAAAAAAAAA");
+        $("#image").css('visibility', 'visible');
     });
+});

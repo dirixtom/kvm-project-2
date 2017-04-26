@@ -35,6 +35,7 @@
                     $this->m_sPasswordNew = $p_vValue;
                 case "Image":
                     $this->m_sImage = $p_vValue;
+                    echo " in setter: " . $this->m_sImage;
                     break;
             }
         }
@@ -140,14 +141,14 @@
                 $lastname = $res["lastname"];
                 $email = $res["email"];
                 $image = $res["image"];
-                $id = $res["id"];
+                $userid = $res["id"];
                 session_start();
                 $_SESSION['user'] = $this->Username;
                 $_SESSION['firstname'] = $firstname;
                 $_SESSION['lastname'] = $lastname;
                 $_SESSION['email'] = $email;
                 $_SESSION['image'] = $image;
-                $_SESSION['id'] = $id;
+                $_SESSION['userid'] = $userid;
 
                 header('Location: overview.php');
             } catch (Exception $e) {
@@ -176,13 +177,14 @@
             $statement->bindValue(":email", $this->Email);
             
             //image:
-            if (empty($this->Image)) {
+            /*if (!isset($this->Image)) {
                 //pad naar afbeelding behouden als de gebruiker het veld leeg laat.
                 $this->Image = $_SESSION['image'];
             } elseif (($_SESSION["image"] != "default.png") && ($_SESSION["image"] != $this->Image)) {
-                unlink("images/uploads/profileImages/" . $_SESSION["image"] . "");
-            }
+                unlink("uploads/profileImages/" . $_SESSION["image"] . "");
+            }*/
             $statement->bindValue(":image", $this->Image);
+            
             $res = $statement->execute();
             $_SESSION['firstname']=$this->Firstname;
             $_SESSION['lastname']=$this->Lastname;
