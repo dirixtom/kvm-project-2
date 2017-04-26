@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 26 apr 2017 om 09:52
+-- Gegenereerd op: 26 apr 2017 om 10:19
 -- Serverversie: 10.1.21-MariaDB
 -- PHP-versie: 5.6.30
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `project2`
+-- Database: `db_kvm`
 --
 
 -- --------------------------------------------------------
@@ -41,7 +41,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `firstname`, `lastname`, `email`, `password`, `image`) VALUES
-(6, 'roelifant', 'roel', 'van rossen', 'roel@roelmail.roel', '$2y$13$jUGdvYSoPmPPawcbdd6/NOE9GfqxOZU7Cbd1OGB0JHzvq1kX3pIM.', 'default.png'),
+(6, 'roelifant', 'roelie', 'van rossen', 'roel@roelmail.roel', '$2y$13$jUGdvYSoPmPPawcbdd6/NOE9GfqxOZU7Cbd1OGB0JHzvq1kX3pIM.', 'default.png'),
 (7, 'test', 'test', 'test', 'test@testmail.test', '$2y$13$sTv/iICg68SKeTg9hzqw2esiSWhRhFWlxLsssaat9HeXDsSsq3Rbe', 'default.png'),
 (8, 'Blub', 'blubber', 'de blub', 'blub@blubmail.blub', '$2y$13$dIsiNnuCNVCedA.J0RZca.0Oi00Jwy/VZWcLHd19fxz4reVzCuPIG', 'default.png'),
 (9, 'Geit', 'Geit', 'Geit', 'Geit@geitmail.com', '$2y$13$QiedlwOiDdoQntu4kRFvb.DuvRdsl4SJTafeYFtEHqH6IkMSkCtmu', 'default.png'),
