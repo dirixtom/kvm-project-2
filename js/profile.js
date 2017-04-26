@@ -4,46 +4,48 @@ $(document).ready(function(){
         $(".image").css('visibility', 'visible');
     });
 
-    $("#firstname, #lastname, #email, #image").blur(function(){
-        if(e.keyCode==13){
+    $("#firstname").blur(function(){
             
-        var fistname = $("#firstname").val()
-        var lastname = $("#lastname").val()
-        var email = $("#email").val()
+        var firstname = $("#firstname").val();
+                
+        console.log(firstname);
             
-        $.ajax({
+        /*$.ajax({
         method: "POST",
         url: "classes/User.php",
-        data: {firstname: firstname, lastname: lastname, email: email}
+        data: {firstname: firstname}
         }).done(function(response){
             //alert("DONE");
-        });
-        }
+        });*/
     });
     
-    /*$("#image").on('change', function() {
+    $("#lastname").blur(function(){
+            
+        var lastname = $("#lastname").val();
         
-        alert("yup");
+        console.log(lastname);
+            
+        /*$.ajax({
+        method: "POST",
+        url: "classes/User.php",
+        data: {lastname: lastname}
+        }).done(function(response){
+            //alert("DONE");
+        });*/
+    });
+    
+    $("#email").blur(function(){
+            
+        var email = $("#email").val();
         
-        var formData = new FormData();
-        
-        var image = image.file;
-        
-        formData.append('image', image, image.name);
-        
-        var xhr = new XMLHttpRequest();
-        
-        xhr.open('POST', 'User.php', true);
-        
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-            // File(s) uploaded.
-            uploadButton.innerHTML = 'Upload';
-        } else {
-            alert('An error occurred!');
-        }
-        };
-        
-        xhr.send(formData);
-    });*/
+        console.log(email);
+            
+        /*$.ajax({
+        method: "POST",
+        url: "classes/User.php",
+        data: {email: email}
+        }).done(function(response){
+            //alert("DONE");
+        });*/
+    });
 });
