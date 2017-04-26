@@ -18,7 +18,7 @@
             $user->Lastname = $_POST["lastname"];
             $user->Email = $_POST["email"]; 
             if ($user->updateProfile()) {
-                header('Location: profile.php');
+                //header('Location: profile.php');
             }
         } else {
             throw new Exception('Een veld mag niet leeg zijn!');
@@ -34,7 +34,7 @@
 </head>
 <style>
     .nodisplay{
-        display: none;
+        visibility: hidden;
     }
 </style>
 <body>
@@ -43,6 +43,7 @@
     <img src="uploads/profileImages/<?php echo $_SESSION['image']; ?>" alt="" id="img">
     <form action="" method="post">
         <input type="file" name="image" id="image" class="nodisplay">
+        <br>
         <label for="firstname"> Voornaam : </label>
         <input type="text" name="firstname" id="firstname" value="<?php echo $_SESSION['firstname'];?>">
         <br>
