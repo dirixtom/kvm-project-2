@@ -38,7 +38,7 @@
                 "uploads/profileImages/" . $_SESSION['userid'] . ".gif");
                 $user->Image = $_SESSION['userid'] . ".gif";
             } else {
-                throw new exception("De foto moet een jpg, png of ig zijn!");
+                throw new exception("De foto moet een jpg, png of gif zijn!");
             }
         } else {
             $user->Image = $_SESSION['image'];
@@ -55,7 +55,7 @@
     <title><?php echo SCHERM; ?></title>
 </head>
 <style>
-    #image{
+    .image{
         visibility: hidden;
     }
 </style>
@@ -64,7 +64,8 @@
     <h1> <?php echo $_SESSION['user']; ?></h1>
     <img src="uploads/profileImages/<?php echo $_SESSION['image']; ?>" alt="profielfoto" id="img" style="max-width: 150px;">
     <form action="" method="post" enctype="multipart/form-data">
-        <input type="file" name="image" id="image">
+        <input type="file" name="image" class="image" id="image">
+        <button type="submit" class="image">Bevestig</button>
         <br>
         <label for="firstname"> Voornaam : </label>
         <input type="text" name="firstname" id="firstname" value="<?php echo $_SESSION['firstname'];?>">
@@ -74,7 +75,6 @@
         <br>
         <label for="email"> E-mail : </label>
         <input type="text" name="email" id="email" value="<?php echo $_SESSION['email'];?>">
-        <button type="submit">update</button>
     </form>
     <button>Verbind met Facebook </button>
     <br>
