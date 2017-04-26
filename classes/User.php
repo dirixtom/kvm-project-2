@@ -35,7 +35,6 @@
                     $this->m_sPasswordNew = $p_vValue;
                 case "Image":
                     $this->m_sImage = $p_vValue;
-                    echo " in setter: " . $this->m_sImage;
                     break;
             }
         }
@@ -177,12 +176,9 @@
             $statement->bindValue(":email", $this->Email);
             
             //image:
-            /*if (!isset($this->Image)) {
-                //pad naar afbeelding behouden als de gebruiker het veld leeg laat.
-                $this->Image = $_SESSION['image'];
-            } elseif (($_SESSION["image"] != "default.png") && ($_SESSION["image"] != $this->Image)) {
-                unlink("uploads/profileImages/" . $_SESSION["image"] . "");
-            }*/
+            if (($_SESSION["image"] != "default.png") && ($_SESSION["image"] != $this->Image)) {
+                unlink("uploads/profileImages/" . $_SESSION["image"]);
+            }
             $statement->bindValue(":image", $this->Image);
             
             $res = $statement->execute();
