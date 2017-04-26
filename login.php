@@ -27,7 +27,7 @@
     <title><?php echo SCHERM; ?></title>
 </head>
 <body>
-    <a href="register.php"> Login </a>
+    <a href="#"> Login </a>
     <a href="register.php"> Registreer </a>
     <form action="" method="post">
         <input type="text" placeholder="Gebruikersnaam" name="username" id="username">
