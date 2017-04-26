@@ -1,7 +1,6 @@
 <?php
     class User
     {
-        private $m_iId;
         private $m_sUsername;
         private $m_sEmail;
         private $m_sFirstname;
@@ -130,7 +129,7 @@
             }
         }
         
-        public function HandleLogin() {
+        public function handleLogin() {
             try {
                 $conn = Db::getInstance();
                 $statement = $conn->prepare("SELECT * FROM `users` WHERE (username = :username)");

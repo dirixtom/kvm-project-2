@@ -8,7 +8,7 @@
             if (isset(self::$conn)) {
                 return self::$conn;
             } else {
-                self::$conn = new PDO('mysql:host=localhost; dbname=project2', 'root', '');
+                self::$conn = new PDO('mysql:host=localhost; dbname=db_kvm', 'root', '');
                 return self::$conn;
             }
         }
