@@ -140,14 +140,14 @@
                 $lastname = $res["lastname"];
                 $email = $res["email"];
                 $image = $res["image"];
-                $id = $res["id"];
+                $userid = $res["id"];
                 session_start();
                 $_SESSION['user'] = $this->Username;
                 $_SESSION['firstname'] = $firstname;
                 $_SESSION['lastname'] = $lastname;
                 $_SESSION['email'] = $email;
                 $_SESSION['image'] = $image;
-                $_SESSION['id'] = $id;
+                $_SESSION['userid'] = $userid;
 
                 header('Location: overview.php');
             } catch (Exception $e) {
@@ -159,18 +159,28 @@
             
             $conn = Db::getInstance();
             $statement = $conn->prepare("UPDATE users SET firstname = :firstname, lastname = :lastname, email = :email, image = :image where username = :username");
+            $statement->bindValue(":username", $_SESSION['user']);
             $statement->bindValue(":firstname", $this->Firstname);
             $statement->bindValue(":lastname", $this->Lastname);
+            
+            //email:
+            if($this->Email != $_SESSION['email']){
+                $checkemail = $conn->prepare("SELECT * FROM `users` WHERE (email =:email)");
+                $checkemail->bindValue(":email", $this->m_sEmail);
+                $checkemail->execute();
+                $found_email = $checkemail->fetch(PDO::FETCH_ASSOC);
+                if (!empty($found_email)) {
+                    throw new Exception("Deze email staat al geregistreerd op een ander account.");
+                }
+            }
             $statement->bindValue(":email", $this->Email);
-            $statement->bindValue(":username", $_SESSION['user']);
-            //IMAGE:
-            if (empty($this->Image)) {
-                //pad naar afbeelding behouden als de gebruiker het veld leeg laat.
-                $this->Image = $_SESSION['image'];
-            } elseif (($_SESSION["image"] != "default.png") && ($_SESSION["image"] != $this->Image)) {
-                unlink("images/uploads/profileImages/" . $_SESSION["image"] . "");
+            
+            //image:
+            if (($_SESSION["image"] != "default.png") && ($_SESSION["image"] != $this->Image)) {
+                unlink("uploads/profileImages/" . $_SESSION["image"]);
             }
             $statement->bindValue(":image", $this->Image);
+            
             $res = $statement->execute();
             $_SESSION['firstname']=$this->Firstname;
             $_SESSION['lastname']=$this->Lastname;
