@@ -14,13 +14,13 @@
         try{
             $user = new User();
             
-        /*if(!empty($_POST["firstname"]) && !empty($_POST["lastname"]) && !empty($_POST["email"])){
+        if(!empty($_POST["firstname"]) && !empty($_POST["lastname"]) && !empty($_POST["email"])){
             $user->Firstname = $_POST["firstname"];
             $user->Lastname = $_POST["lastname"];
             $user->Email = $_POST["email"];
         } else {
             throw new Exception('Een veld mag niet leeg zijn!');
-        }*/
+        }
         
         if (!empty($_FILES['image']['name'])) {
             $bestandsnaam = strtolower($_FILES['image']['name']);
