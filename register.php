@@ -33,6 +33,7 @@
     <title><?php echo SCHERM; ?></title>
 </head>
 <body>
+   <a href="login.php"> terug </a>
     <form action="" method="post">
         <input type="text" placeholder="Gebruikersnaam" name="username" id="username">
         <br>
