@@ -7,16 +7,21 @@ $(document).ready(function(){
     $("#firstname").blur(function(){
             
         var firstname = $("#firstname").val();
-                
+        
         console.log(firstname);
             
-        /*$.ajax({
+        $.ajax({
         method: "POST",
-        url: "classes/User.php",
+        url: "ajax/ajaxProfile.php",
         data: {firstname: firstname}
         }).done(function(response){
-            //alert("DONE");
-        });*/
+            if( response.code == 500){
+                alert("ALLES IS VERKEERD");
+            }
+            if( response.code == 200){
+                alert("update!");
+            }
+        });
     });
     
     $("#lastname").blur(function(){
@@ -25,27 +30,38 @@ $(document).ready(function(){
         
         console.log(lastname);
             
-        /*$.ajax({
+        $.ajax({
         method: "POST",
-        url: "classes/User.php",
+        url: "ajax/ajaxProfile.php",
         data: {lastname: lastname}
         }).done(function(response){
-            //alert("DONE");
-        });*/
+            if( response.code == 500){
+                alert("ALLES IS VERKEERD");
+            }
+            if( response.code == 200){
+                alert("update!");
+            }
+        });
     });
     
     $("#email").blur(function(){
             
         var email = $("#email").val();
-        
+                
         console.log(email);
             
-        /*$.ajax({
+        $.ajax({
         method: "POST",
-        url: "classes/User.php",
+        url: "ajax/ajaxProfile.php",
         data: {email: email}
         }).done(function(response){
-            //alert("DONE");
-        });*/
+            if( response.code == 500){
+                alert("ALLES IS VERKEERD");
+            }
+            if( response.code == 200){
+                alert("update!");
+            }
+        });
     });
+    
 });
