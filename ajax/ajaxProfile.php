@@ -28,6 +28,9 @@
             $user->Email = $_SESSION['email'];
         }
         
+        if(empty($_FILES['image'])){
+            $user->Image = $_FILES['image'];
+        }
         
         /*if (!empty($_FILES['image']['name'])) {
             $bestandsnaam = strtolower($_FILES['image']['name']);

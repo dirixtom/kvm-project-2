@@ -187,4 +187,9 @@
             $_SESSION['email']=$this->Email;
             $_SESSION['image']=$this->Image;
         }
+        
+        public function deleteProfile(){
+            $conn = Db::getInstance();
+            
+        }
     }
