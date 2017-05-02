@@ -190,6 +190,9 @@
         
         public function deleteProfile(){
             $conn = Db::getInstance();
-            
+            $conn = Db::getInstance();
+            $statement = $conn->prepare("DELETE FROM users WHERE username = :username;");
+            $statement->bindValue(":username", $_SESSION['user']);
+            $res = $statement->execute();
         }
     }

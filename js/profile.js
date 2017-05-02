@@ -1,7 +1,13 @@
 $(document).ready(function(){
     
     $("#img").click(function(){
-        $(".image").css('visibility', 'visible');
+        $("#image_modal").css('display', 'inline');
+    });
+    
+    $("#cancel_img").click(function(e){
+        $("#image_modal").css('display', 'none');
+        
+        e.preventDefault();
     });
 
     $("#firstname").blur(function(){
@@ -93,4 +99,17 @@ $(document).ready(function(){
         });
     });
     */
+    
+    $("#verwijder").click(function(e){
+        $("#verwijder_modal").css('display', 'inline');
+        
+        e.preventDefault();
+    });
+    
+    $("#cancel_verwijder").click(function(e){
+        $("#verwijder_modal").css('display', 'none');
+        
+        e.preventDefault();
+    });
+    
 });
