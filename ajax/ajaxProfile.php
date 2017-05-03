@@ -23,13 +23,22 @@
         }
         
         if(!empty($_POST['email'])){
-            $user->Email = $_POST['email'];
+            /*$checkemail = $conn->prepare("SELECT * FROM `users` WHERE (email =:email) and (username != :username)");
+            $checkemail->bindValue(":email", $_POST['email']);
+            $checkemail->execute();
+            $found_email = $checkemail->fetch(PDO::FETCH_ASSOC);
+            $rows = count($found_email);
+            if ($rows > 0 ) {
+                throw new Exception("Deze email staat al geregistreerd op een ander account.");
+            }*/
+                $user->Email = $_POST['email'];
+            
         } else {
             $user->Email = $_SESSION['email'];
         }
         
         if(empty($_FILES['image'])){
-            $user->Image = $_FILES['image'];
+            $user->Image = $_SESSION['image'];
         }
         
         /*if (!empty($_FILES['image']['name'])) {
