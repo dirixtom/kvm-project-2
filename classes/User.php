@@ -168,19 +168,18 @@
             $statement->bindValue(":lastname", $this->Lastname);
             
             //email:
-            if($this->Email != $_SESSION['email']){
-                $checkemail = $conn->prepare("SELECT * FROM `users` WHERE (email =:email)");
-                $checkemail->bindValue(":email", $this->m_sEmail);
-                $checkemail->execute();
-                $found_email = $checkemail->fetch(PDO::FETCH_ASSOC);
-                if (!empty($found_email)) {
-                    throw new Exception("Deze email staat al geregistreerd op een ander account.");
-                }
-                if (strpos($this->Email, "@") && strpos($this->Email, ".")){
-                    $statement->bindValue(":email", $this->Email);
-                } else {
-                    throw new Exception("Dit is geen geldig email adres.");
-                }
+            $checkemail = $conn->prepare("SELECT * FROM `users` WHERE (email =:email) and (username != :username);");
+            $checkemail->bindValue(":email", $this->m_sEmail);
+            $checkemail->bindValue(":username", $_SESSION['user']);
+            $checkemail->execute();
+            $found_email = $checkemail->fetch(PDO::FETCH_ASSOC);
+            if (!empty($found_email)) {
+                throw new Exception("Deze email staat al geregistreerd op een ander account.");
+            }
+            if (strpos($this->Email, "@") && strpos($this->Email, ".")){
+                $statement->bindValue(":email", $this->Email);
+            } else {
+                throw new Exception("Dit is geen geldig email adres.");
             }
             
             //image:
@@ -188,7 +187,6 @@
                 unlink("uploads/profileImages/" . $_SESSION["image"]);
             }
             $statement->bindValue(":image", $this->Image);
-            
             $res = $statement->execute();
             $_SESSION['firstname']=$this->Firstname;
             $_SESSION['lastname']=$this->Lastname;

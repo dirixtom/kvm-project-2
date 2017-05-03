@@ -1,10 +1,10 @@
 <?php
+    session_start();
     //hier komt JSON
     header ('Content-Type: application/json');
     
     include_once('../classes/Db.php');
 	include_once('../classes/User.php');
-    include_once('../profile.php');
     
     try{    
         if(!empty($_POST) ){
@@ -37,8 +37,6 @@
             $feedback = [
                 "code" => 200
             ];
-            
-            echo json_encode($feedback);
                 
             }
     } catch (Exception $e) {
@@ -47,8 +45,8 @@
             "code" => 500,
             "message" => $error
         ];
-        
-        echo json_encode($feedback);
     }
+    
+    echo json_encode($feedback);
 
 ?>

@@ -1,5 +1,9 @@
 $(document).ready(function(){
     
+    var fnSession = $("#firstname").val();
+    var lnSession = $("#lastname").val();
+    var emSession = $("#email").val();
+    
     $("#img").click(function(){
         $("#image_modal").css('display', 'inline');
     });
@@ -22,10 +26,8 @@ $(document).ready(function(){
         data: {firstname: firstname}
         }).done(function(response){
             if( response.code == 500){
-                console.log("ALLES IS VERKEERD");
-            }
-            if( response.code == 200){
-                console.log("update!");
+                $("#firstname").val(fnSession);
+                console.log(response.message);
             }
         });
     });
@@ -42,10 +44,8 @@ $(document).ready(function(){
         data: {lastname: lastname}
         }).done(function(response){
             if( response.code == 500){
-                console.log("ALLES IS VERKEERD");
-            }
-            if( response.code == 200){
-                console.log("update!");
+                $("#lastname").val(lnSession);
+                console.log(response.message);
             }
         });
     });
@@ -62,43 +62,11 @@ $(document).ready(function(){
         data: {email: email}
         }).done(function(response){
             if( response.code == 500){
-                console.log("ALLES IS VERKEERD");
-            }
-            if( response.code == 200){
-                console.log("update!");
+                $("#email").val(emSession);
+                console.log(response.message);
             }
         });
     });
-    
-    /*
-    $("#image").change(function(){
-                   
-        console.log("image ajax call");
-        
-        var data = new FormData();
-    
-        $.ajax({
-            url: 'ajax/ajaxProfile.php',
-            type: 'POST',
-            cache: false,
-            data: data,
-            processData: false,
-            contentType: false,
-            beforeSend: function () {
-                console.log("Uploading, please wait....");
-            },
-            success: function () { 
-                console.log("Upload success.");
-            },
-            complete: function () {
-                console.log("upload complete.");
-            },
-            error: function () {
-                console.log("ERROR in upload");
-            }
-        });
-    });
-    */
     
     $("#verwijder").click(function(e){
         $("#verwijder_modal").css('display', 'inline');
