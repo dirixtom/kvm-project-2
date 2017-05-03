@@ -69,7 +69,7 @@
     }
 </style>
 <body>
-   <a href="overview.php"> terug </a>
+   <a href="../overview.php"> terug </a>
     <h1> <?php echo $_SESSION['user']; ?></h1>
     <img src="../uploads/profileImages/<?php echo $_SESSION['image']; ?>" alt="profielfoto" id="img" style="max-width: 150px;"> <!-- profiel foto -->
     <img src="../uploads/profileImages/<?php echo $_SESSION['image']; ?>" alt="profielfoto" id="background" style="max-width: 150px;"> <!-- achtergrond foto -->
