@@ -187,11 +187,6 @@
                 unlink("uploads/profileImages/" . $_SESSION["image"]);
             }
             $statement->bindValue(":image", $this->Image);
-            echo $this->Username;
-            echo $this->Firstname;
-            echo $this->Lastname;
-            echo $this->Email;
-            echo $this->Image;
             $res = $statement->execute();
             $_SESSION['firstname']=$this->Firstname;
             $_SESSION['lastname']=$this->Lastname;

@@ -1,5 +1,9 @@
 $(document).ready(function(){
     
+    var fnSession = $("#firstname").val();
+    var lnSession = $("#lastname").val();
+    var emSession = $("#email").val();
+    
     $("#img").click(function(){
         $("#image_modal").css('display', 'inline');
     });
@@ -22,10 +26,8 @@ $(document).ready(function(){
         data: {firstname: firstname}
         }).done(function(response){
             if( response.code == 500){
-                console.log("ALLES IS VERKEERD");
-            }
-            if( response.code == 200){
-                console.log("update!");
+                $("#firstname").val(fnSession);
+                console.log(response.message);
             }
         });
     });
@@ -39,16 +41,11 @@ $(document).ready(function(){
         $.ajax({
         method: "POST",
         url: "ajax/ajaxProfile.php",
-        data: {lastname: lastname},
-        success: function(){
-            alert("AAAAAAAAAA");
-        }
+        data: {lastname: lastname}
         }).done(function(response){
             if( response.code == 500){
-                console.log("ALLES IS VERKEERD");
-            }
-            if( response.code == 200){
-                console.log("update!");
+                $("#lastname").val(lnSession);
+                console.log(response.message);
             }
         });
     });
@@ -65,10 +62,8 @@ $(document).ready(function(){
         data: {email: email}
         }).done(function(response){
             if( response.code == 500){
-                alert("ALLES IS VERKEERD");
-            }
-            if( response.code == 200){
-                console.log("update!");
+                $("#email").val(emSession);
+                console.log(response.message);
             }
         });
     });
