@@ -1,5 +1,5 @@
 $(document).ready(function(){
     $("#upload").click( function(){
-        window.location = "upload.php";
+        window.location = "record.php";
     });
 });
