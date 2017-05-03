@@ -23,7 +23,7 @@
             }
 
             if(!empty($_POST['email'])){
-                $conn = Db::getInstance();
+                /*$conn = Db::getInstance();
                 $checkemail = $conn->prepare("SELECT * FROM `users` WHERE (email =:email) and (username != :username)");
                 $checkemail->bindValue(":email", $_POST['email']);
                 $checkemail->bindValue(":username", $_SESSION['user']);
@@ -33,11 +33,11 @@
                 if (($found_email == true)) {
                     throw new Exception("Deze email staat al geregistreerd op een ander account.");
                 }
-                if (strpos($_POST['email'], "@") && strpos($_POST['email'], ".")){
+                if (strpos($_POST['email'], "@") && strpos($_POST['email'], ".")){*/
                     $user->Email = $_POST['email'];
-                } else {
+                /*} else {
                     throw new Exception("Dit is geen geldig email adres.");
-                }
+                }*/
 
             } else {
                 $user->Email = $_SESSION['email'];
@@ -82,7 +82,7 @@
             echo json_encode($feedback);
         }
     } catch (Exception $e) {
-                    echo $e->getMessage();
+        echo $e->getMessage();
     }
 
 ?>
