@@ -176,8 +176,12 @@
                 if (!empty($found_email)) {
                     throw new Exception("Deze email staat al geregistreerd op een ander account.");
                 }
+                if (strpos($this->Email, "@") && strpos($this->Email, ".")){
+                    $statement->bindValue(":email", $this->Email);
+                } else {
+                    throw new Exception("Dit is geen geldig email adres.");
+                }
             }
-            $statement->bindValue(":email", $this->Email);
             
             //image:
             if (($_SESSION["image"] != "default.png") && ($_SESSION["image"] != $this->Image)) {
