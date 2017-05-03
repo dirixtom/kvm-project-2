@@ -13,36 +13,41 @@
 
         try{
             $user = new User();
-            
-        if(!empty($_POST["firstname"]) && !empty($_POST["lastname"]) && !empty($_POST["email"])){
-            $user->Firstname = $_POST["firstname"];
-            $user->Lastname = $_POST["lastname"];
-            $user->Email = $_POST["email"];
-        } else {
-            throw new Exception('Een veld mag niet leeg zijn!');
-        }
         
-        if (!empty($_FILES['image']['name'])) {
-            $bestandsnaam = strtolower($_FILES['image']['name']);
-            
-            if (strpos($bestandsnaam, ".png")) {
-                move_uploaded_file($_FILES["image"]["tmp_name"],
-                "uploads/profileImages/" . $_SESSION['userid'] . ".png");
-                $user->Image = $_SESSION['userid'] . ".png";
-            } elseif (strpos($bestandsnaam, ".jpg")) {
-                move_uploaded_file($_FILES["image"]["tmp_name"],
-                "uploads/profileImages/" . $_SESSION['userid'] . ".jpg");
-                $user->Image = $_SESSION['userid'] . ".jpg";
-            } elseif (strpos($bestandsnaam, ".gif")) {
-                move_uploaded_file($_FILES["image"]["tmp_name"],
-                "uploads/profileImages/" . $_SESSION['userid'] . ".gif");
-                $user->Image = $_SESSION['userid'] . ".gif";
-            } else {
-                throw new exception("De foto moet een jpg, png of gif zijn!");
+            if(!empty($_POST["delete"])){
+                $user->deleteProfile();
+                header ("Location: logout.php");
             }
-        } else {
-            $user->Image = $_SESSION['image'];
-        }
+
+            if(!empty($_POST["firstname"]) && !empty($_POST["lastname"]) && !empty($_POST["email"])){
+                $user->Firstname = $_POST["firstname"];
+                $user->Lastname = $_POST["lastname"];
+                $user->Email = $_POST["email"];
+            } else {
+                throw new Exception('Een veld mag niet leeg zijn!');
+            }
+
+            if (!empty($_FILES['image']['name'])) {
+                $bestandsnaam = strtolower($_FILES['image']['name']);
+
+                if (strpos($bestandsnaam, ".png")) {
+                    move_uploaded_file($_FILES["image"]["tmp_name"],
+                    "uploads/profileImages/" . $_SESSION['userid'] . ".png");
+                    $user->Image = $_SESSION['userid'] . ".png";
+                } elseif (strpos($bestandsnaam, ".jpg")) {
+                    move_uploaded_file($_FILES["image"]["tmp_name"],
+                    "uploads/profileImages/" . $_SESSION['userid'] . ".jpg");
+                    $user->Image = $_SESSION['userid'] . ".jpg";
+                } elseif (strpos($bestandsnaam, ".gif")) {
+                    move_uploaded_file($_FILES["image"]["tmp_name"],
+                    "uploads/profileImages/" . $_SESSION['userid'] . ".gif");
+                    $user->Image = $_SESSION['userid'] . ".gif";
+                } else {
+                    throw new exception("De foto moet een jpg, png of gif zijn!");
+                }
+            } else {
+                $user->Image = $_SESSION['image'];
+            }
         $user->updateProfile();
         
     } catch (Exception $e){
@@ -92,6 +97,7 @@
        <p>Ben je zeker dat je je profiel wil verwijderen? alle gegevens zullen van je toestel gewist worden en kunnen niet meer hersteld worden. </p>
         <form action="" method="post">
             <button id="cancel_verwijder"> annuleer </button>
+            <input type="hidden" value="true" name="delete" id="delete">
             <button type="submit"> ok </button>
         </form>
     </div>

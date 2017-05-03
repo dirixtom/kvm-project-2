@@ -189,10 +189,12 @@
         }
         
         public function deleteProfile(){
-            $conn = Db::getInstance();
+            if ($_SESSION["image"] != "default.png") {
+                unlink("uploads/profileImages/" . $_SESSION["image"]);
+            }
             $conn = Db::getInstance();
             $statement = $conn->prepare("DELETE FROM users WHERE username = :username;");
             $statement->bindValue(":username", $_SESSION['user']);
-            $res = $statement->execute();
+            $statement->execute();
         }
     }
