@@ -22,7 +22,7 @@ $(document).ready(function(){
             
         $.ajax({
         method: "POST",
-        url: "ajax/ajaxProfile.php",
+        url: "../ajax/ajaxProfile.php",
         data: {firstname: firstname}
         }).done(function(response){
             if( response.code == 500){
@@ -40,7 +40,7 @@ $(document).ready(function(){
             
         $.ajax({
         method: "POST",
-        url: "ajax/ajaxProfile.php",
+        url: "../ajax/ajaxProfile.php",
         data: {lastname: lastname}
         }).done(function(response){
             if( response.code == 500){
@@ -58,7 +58,7 @@ $(document).ready(function(){
             
         $.ajax({
         method: "POST",
-        url: "ajax/ajaxProfile.php",
+        url: "../ajax/ajaxProfile.php",
         data: {email: email}
         }).done(function(response){
             if( response.code == 500){

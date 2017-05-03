@@ -35,7 +35,7 @@
             width: 80%;
             height: 100%;
             display: flex;
-            overflow-y: scroll;
+            overflow-y: visible;
             margin: auto;
         }
         main {

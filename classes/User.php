@@ -153,7 +153,7 @@
                 $_SESSION['image'] = $image;
                 $_SESSION['userid'] = $userid;
 
-                header('Location: overview.php');
+                header('Location: ../overview.php');
             } catch (Exception $e) {
                 echo $e->getMessage();
             }
