@@ -31,20 +31,24 @@
             if(empty($_FILES['image'])){
                 $user->Image = $_SESSION['image'];
             }
-
-            if($user->updateProfile()){
-                $feedback = [
-                    "code" => 200
-                ];
-            } else {
-                $feedback = [
-                    "code" => 500
-                ];
-            }
+            
+            $user->updateProfile();
+            
+            $feedback = [
+                "code" => 200
+            ];
+            
             echo json_encode($feedback);
-        }
+                
+            }
     } catch (Exception $e) {
-        echo $e->getMessage();
+        $error = $e->getMessage();
+        $feedback = [
+            "code" => 500,
+            "message" => $error
+        ];
+        
+        echo json_encode($feedback);
     }
 
 ?>
