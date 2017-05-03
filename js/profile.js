@@ -39,7 +39,10 @@ $(document).ready(function(){
         $.ajax({
         method: "POST",
         url: "ajax/ajaxProfile.php",
-        data: {lastname: lastname}
+        data: {lastname: lastname},
+        success: function(){
+            alert("AAAAAAAAAA");
+        }
         }).done(function(response){
             if( response.code == 500){
                 console.log("ALLES IS VERKEERD");
@@ -64,41 +67,11 @@ $(document).ready(function(){
             if( response.code == 500){
                 alert("ALLES IS VERKEERD");
             }
-            /*if( response.code == 200){
+            if( response.code == 200){
                 console.log("update!");
-            }*/
-        });
-    });
-    
-    /*
-    $("#image").change(function(){
-                   
-        console.log("image ajax call");
-        
-        var data = new FormData();
-    
-        $.ajax({
-            url: 'ajax/ajaxProfile.php',
-            type: 'POST',
-            cache: false,
-            data: data,
-            processData: false,
-            contentType: false,
-            beforeSend: function () {
-                console.log("Uploading, please wait....");
-            },
-            success: function () { 
-                console.log("Upload success.");
-            },
-            complete: function () {
-                console.log("upload complete.");
-            },
-            error: function () {
-                console.log("ERROR in upload");
             }
         });
     });
-    */
     
     $("#verwijder").click(function(e){
         $("#verwijder_modal").css('display', 'inline');

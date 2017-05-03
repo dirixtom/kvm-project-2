@@ -1,10 +1,10 @@
 <?php
+    session_start();
     //hier komt JSON
     header ('Content-Type: application/json');
     
     include_once('../classes/Db.php');
 	include_once('../classes/User.php');
-    include_once('../profile.php');
     
     try{    
         if(!empty($_POST) ){
