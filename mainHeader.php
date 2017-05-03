@@ -156,14 +156,15 @@
         </div>
         <div class="scherm">
             <img class="sysbar" src="images/sysbar-top.png" alt="android systeem balk" />
-            <header>
+            <?php include_once("includes/mainHeader.php") ?>
+            <!--<header>
                 <img id="een" src="images/ic_search.svg" alt="vergrootglas_icon">
                 <img id="twee" src="images/ic_live.svg" alt="livefeed_icon">
                 <img id="drie" src="images/ic_notifications.svg" alt="notification_icon">
                 <h1>Overzicht</h1>
                 <div class="menuicon"><span></span></div>
                 <div class="menu"></div>
-            </header>
+            </header>-->
             <main>
 
             </main>
