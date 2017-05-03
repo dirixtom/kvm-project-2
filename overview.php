@@ -16,8 +16,8 @@
     <title><?php echo SCHERM; ?></title>
 
 	<script src="js/jquery.min.js"></script>
+   <script src="js/overview.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
-    <script src="js/overview.js"></script>
 
     <style type="text/css">
         * {
@@ -185,7 +185,6 @@
   </style>
 </head>
 <body>
-    <button id="upload"> + </button>
     <div class="container">
         <div class="fill">
         </div>
