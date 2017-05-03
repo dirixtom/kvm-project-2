@@ -37,8 +37,6 @@
             $feedback = [
                 "code" => 200
             ];
-            
-            echo json_encode($feedback);
                 
             }
     } catch (Exception $e) {
@@ -47,8 +45,8 @@
             "code" => 500,
             "message" => $error
         ];
-        
-        echo json_encode($feedback);
     }
+    
+    echo json_encode($feedback);
 
 ?>

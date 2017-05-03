@@ -62,11 +62,11 @@ $(document).ready(function(){
         data: {email: email}
         }).done(function(response){
             if( response.code == 500){
-                console.log("ALLES IS VERKEERD");
+                alert("ALLES IS VERKEERD");
             }
-            if( response.code == 200){
+            /*if( response.code == 200){
                 console.log("update!");
-            }
+            }*/
         });
     });
     
