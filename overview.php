@@ -70,19 +70,21 @@
         .scherm .sysbar:first-child {
             width: 100%;
             margin-bottom: -4px;
+            z-index: 1000;
         }
         .scherm .sysbar:not(:first-child) {
             position: absolute;
             left: 0;
             bottom: 0;
+            z-index: 1000;
         }
         .menu {
             position: absolute;
             display: block;
             background-color: #888;
-            width: 280px;
+            width: 300px;
             height: 600px;
-            left: -280px;
+            left: -300px;
             -webkit-transition-duration: .2s;
             -moz-transition-duration: .2s;
             -ms-transition-duration: .2s;
@@ -93,12 +95,33 @@
             -ms-transition-delay: .2s;
             -o-transition-delay: .2s;
             transition-delay: .2s;
+            z-index: 1;
+        }
+        .shade {
+            position: absolute;
+            display: block;
+            background-color: #000;
+            opacity: 0.4;
+            visibility: hidden;
+            width: 360px;
+            height: 600px;
+            -webkit-transition-duration: .2s;
+            -moz-transition-duration: .2s;
+            -ms-transition-duration: .2s;
+            -o-transition-duration: .2s;
+            transition-duration: .2s;
+            -webkit-transition-delay: .2s;
+            -moz-transition-delay: .2s;
+            -ms-transition-delay: .2s;
+            -o-transition-delay: .2s;
+            transition-delay: .2s;
+            z-index: 0;
         }
         .menuicon {
             position: absolute;
             top: 23px;
             left: 20px;
-            display: block;
+            display: inline-block;
             cursor: pointer;
             height: 12px;
             width: 22px;
@@ -125,8 +148,11 @@
         span::after {
             margin-top: 6.5px;
         }
-        .menuicon:hover + .menu, .menu:hover, .menuicon:active + .menu{
+        .menuicon:hover ~ .menu, .menu:hover, .menuicon:active ~ .menu{
             left: 0px;
+        }
+        .menuicon:hover ~ .shade, .menu:hover ~ .shade{
+            visibility: visible;
         }
         .hidden {
             visibility: hidden;
@@ -135,9 +161,9 @@
             position: absolute;
             color: #FED600;
             top: 19px;
-            left: 80px;
+            left: 65px;
             font-family: 'Roboto', sans-serif;
-            font-weight: normal;
+            font-weight: lighter;
             font-size: 23px;
         }
         header img {
@@ -146,12 +172,10 @@
             display: block;
             cursor: pointer;
             height: 24px;
-            width: 24px;
-        }
-        header img#een {
-            right: 120px;
         }
         header img#twee {
+            height: 22px;
+            top: 21px;
             right: 70px;
         }
         header img#drie {
@@ -174,7 +198,5 @@
         <div class="fill">
         </div>
     </div>
-
-    <?php //include_once("appNav.inc.php"); ?>
 </body>
 </html>
