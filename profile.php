@@ -70,7 +70,8 @@
 <body>
    <a href="overview.php"> terug </a>
     <h1> <?php echo $_SESSION['user']; ?></h1>
-    <img src="uploads/profileImages/<?php echo $_SESSION['image']; ?>" alt="profielfoto" id="img" style="max-width: 150px;">
+    <img src="uploads/profileImages/<?php echo $_SESSION['image']; ?>" alt="profielfoto" id="img" style="max-width: 150px;"> <!-- profiel foto -->
+    <img src="uploads/profileImages/<?php echo $_SESSION['image']; ?>" alt="profielfoto" id="background" style="max-width: 150px;"> <!-- achtergrond foto -->
     <form action="" method="post" enctype="multipart/form-data">
         <div class="modal" id="image_modal">
             <h2> Stel een afbeelding in </h2>

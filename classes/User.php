@@ -103,7 +103,11 @@
                 if (!empty($found_email)) {
                     throw new Exception("Deze email staat al geregistreerd op een ander account.");
                 }
-                $statement->bindValue(":email", $this->Email);
+                if (strpos($this->m_sEmail, "@") && strpos($this->m_sEmail, ".")){
+                    $statement->bindValue(":email", $this->Email);
+                } else {
+                    throw new Exception("Dit is geen geldig email adres");
+                }
             
                 $statement->bindValue(":password", $this->Password);
                 $statement->bindValue(":image", $this->Image);

@@ -33,7 +33,11 @@
                 if (($found_email == true)) {
                     throw new Exception("Deze email staat al geregistreerd op een ander account.");
                 }
+                if (strpos($_POST['email'], "@") && strpos($_POST['email'], ".")){
                     $user->Email = $_POST['email'];
+                } else {
+                    throw new Exception("Dit is geen geldig email adres.");
+                }
 
             } else {
                 $user->Email = $_SESSION['email'];
