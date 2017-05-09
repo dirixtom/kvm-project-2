@@ -1,5 +1,13 @@
 <?php
     session_start();
+    if (isset($_SESSION['user'])) {
+    } else {
+        header('Location: login.php');
+    }
+
+    spl_autoload_register(function ($class) {
+        include_once("../classes/" . $class . ".php");
+    });
 ?><!DOCTYPE html>
 <html lang="en">
 <head>

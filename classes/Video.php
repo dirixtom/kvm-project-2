@@ -1,0 +1,65 @@
+<?php
+    class Video
+    {
+        private $m_iID;
+        private $m_sData;
+        private $m_sTumbnail;
+        private $m_sUploader;
+        private $m_iVotes;
+        private $m_sStatus;
+        
+        public function __set($p_sProperty, $p_vValue)
+        {
+            switch ($p_sProperty) {
+                case "Data":
+                    $this->m_sData = $p_vValue;
+                    break;
+                case "Tumbnail":
+                    $this->m_sTumbnail = $p_vValue;
+                    break;
+                case "Uploader":
+                    $this->m_sUploader = $p_vValue;
+                    break;
+                case "Votes":
+                    $this->m_iVotes = $p_vValue;
+                    break;
+                case "Status":
+                    $this->m_sStatus = $p_vValue;
+                    break;
+            }
+        }
+
+        public function __get($p_sProperty)
+        {
+            switch ($p_sProperty) {
+                case "ID":
+                    return $this->m_iID;
+                    break;
+                case "Data":
+                    return $this->m_sData;
+                    break;
+                case "Tumbnail":
+                    return $this->m_sTumbnail;
+                    break;
+                case "Lastname":
+                    return $this->m_sLastname;
+                    break;
+                case "Uploader":
+                    return $this->m_sUploader;
+                    break;
+                case "Votes":
+                    return $this->m_iVotes;
+                    break;
+                case "Status":
+                    return $this->m_sStatus;
+                    break;
+            }
+        }
+        
+        public function upload(){
+            
+        }
+        
+        public function printRecent(){
+            
+        }
