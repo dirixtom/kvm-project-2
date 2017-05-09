@@ -28,11 +28,11 @@
 </style>
 <body>
    <a href="../overview.php"> terug </a>
+   <a id="downloadLink" download="mediarecorder.webm" name="mediarecorder.webm" href></a>
     <div id="videoscreen">
        <video id="video" width="320" height="480" autoplay></video>
    </div>
    <button id="record"> neem op </button>
-   <a id="downloadLink" download="mediarecorder.webm" name="mediarecorder.webm" href></a>
     <p id="data"></p>
    <br>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>

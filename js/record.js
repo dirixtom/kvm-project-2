@@ -43,14 +43,6 @@ $(document).ready(function(){
     console.info("deze browser is "+getBrowser());
     
     var recording = false;
-    
-    $("#record").click( function(){
-        
-        if(recording == false ){
-            console.log("recording now");
-        
-            $("#record").text("stop");
-            recording = true;
             
             if(getBrowser() == "Chrome"){
                 var constraints = {"audio": true, "video": {  "mandatory": {  "minWidth": 640,  "maxWidth": 640, "minHeight": 480,"maxHeight": 480 }, "optional": [] } };//Chrome
@@ -58,11 +50,130 @@ $(document).ready(function(){
                 var constraints = {audio: true,video: {  width: { min: 640, ideal: 640, max: 640 },  height: { min: 480, ideal: 480, max: 480 }}}; //Firefox
             }
             
-            var video = document.querySelector('#data');
-            var link = document.querySelector('a#downloadLink'); //tijdelijk
+            var data = document.querySelector('#data');
+            var downloadLink = document.querySelector('a#downloadLink'); //tijdelijk!!!
             
+            video.controls = false;
+    
+            function errorCallback(error){
+                console.log('navigator.getUserMedia error: ', error);	
+            }
+            
+            var mediaRecorder;
+            var chunks = [];
+            var count = 0;
+            
+            //magische voodoo magie die ik zelf maar half begrijp:
+            function startRecording(stream) {
+                console.log('Start record functie');
+                if (typeof MediaRecorder.isTypeSupported == 'function'){
+                    if (MediaRecorder.isTypeSupported('video/webm;codecs=h264')) {
+                      var options = {mimeType: 'video/webm;codecs=h264'};
+                    } else if (MediaRecorder.isTypeSupported('video/webm;codecs=vp9')) {
+                      var options = {mimeType: 'video/webm;codecs=vp9'};
+                    } else if (MediaRecorder.isTypeSupported('video/webm;codecs=vp8')) {
+                      var options = {mimeType: 'video/webm;codecs=vp8'};
+                    }
+                    console.log('Using '+options.mimeType);
+                    mediaRecorder = new MediaRecorder(stream, options);
+                }else{
+                    console.log('Using default codecs for browser');
+                    mediaRecorder = new MediaRecorder(stream);
+                }
+
+                /*pauseResBtn.textContent = "Pause";*/
+
+                mediaRecorder.start(10);
+
+                var url = window.URL || window.webkitURL;
+                video.src = url ? url.createObjectURL(stream) : stream;
+                video.play();
+
+                mediaRecorder.ondataavailable = function(e) {
+                    //log('Data available...');
+                    //console.log(e.data);
+                    //console.log(e.data.type);
+                    //console.log(e);
+                    chunks.push(e.data);
+                };
+
+                mediaRecorder.onerror = function(e){
+                    console.log('Error: ' + e);
+                    console.log('Error: ', e);
+                };
+
+                mediaRecorder.onstart = function(){
+                    console.log('Started & state = ' + mediaRecorder.state);
+                };
+
+                mediaRecorder.onstop = function(){
+                    console.log('Stopped  & state = ' + mediaRecorder.state);
+
+                    var blob = new Blob(chunks, {type: "video/webm"});
+                    chunks = [];
+
+                    var videoURL = window.URL.createObjectURL(blob);
+
+                    downloadLink.href = videoURL;
+                    video.src = videoURL;
+                    downloadLink.innerHTML = 'Download video file';
+
+                    var rand =  Math.floor((Math.random() * 10000000));
+                    var name  = "video_"+rand+".webm" ;
+
+                    downloadLink.setAttribute( "download", name);
+                    downloadLink.setAttribute( "name", name);
+
+                    // nu ik :p
+                    /*var file = new File(blob, "name");
+                    var element = document.getElementById("upload");
+                    element.value = file;
+                    element.form.submit();*/
+
+                    function setValue(){
+                document.fileform.upload.value = 100;
+                document.forms["fileform"].submit();
+            }
+
+                };
+
+                mediaRecorder.onpause = function(){
+                    log('Paused & state = ' + mediaRecorder.state);
+                }
+
+                mediaRecorder.onresume = function(){
+                    log('Resumed  & state = ' + mediaRecorder.state);
+                }
+
+                mediaRecorder.onwarning = function(e){
+                    log('Warning: ' + e);
+                };
+            }
+            
+        $("#record").click( function(){
+        
+        if(recording == false ){
+            console.log("recording now");
+        
+            $("#record").text("stop");
+            recording = true;
+            
+            if (typeof MediaRecorder === 'undefined' || !navigator.getUserMedia) {alert('MediaRecorder not supported on your browser, use Firefox 30 or Chrome 49 instead.');
+            } else {
+                navigator.getUserMedia(constraints, startRecording, errorCallback);
+                /*recBtn.disabled = true;
+                pauseResBtn.disabled = false;
+                stopBtn.disabled = false;*/
+	       } 
             
         } else {
+            mediaRecorder.stop();
+	       video.controls = true;
+
+	       /*recBtn.disabled = false;
+	       pauseResBtn.disabled = true;
+	       stopBtn.disabled = true;*/
+            
             console.log("recording stopped");
         }
         
