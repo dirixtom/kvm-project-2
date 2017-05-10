@@ -21,6 +21,8 @@
             $video->upload();
             /*$video->giveTags;*/
             
+            unset($_SESSION['recorded']);
+            
             $feedback = [
                 "code" => 200,
                 "message" => "De video has been saved"
