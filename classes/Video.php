@@ -68,11 +68,17 @@
             $statement->bindValue(":votes", $this->Votes);
             $statement->bindValue(":status", $this->Status);
             $statement->execute();
-            
         }
         
         public function setTags(){
-            //echo $this->TagInput;
+            $tags = explode("; ", strtolower($this->TagInput));
+            foreach($tags as $tag){
+                $conn = Db::getInstance();
+                $stmnt = $conn->prepare("INSERT INTO tags (tag, video) VALUES (:tag, :video);");
+                $stmnt->bindValue(":tag", $tag);
+                $stmnt->bindValue(":video", $this->Data);
+                $stmnt->execute();
+            }
         }
         
         public function printRecent(){
