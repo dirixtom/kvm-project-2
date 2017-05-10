@@ -118,7 +118,6 @@ $(document).ready(function(){
             downloadLink.setAttribute( "name", name);
 
             //START AJAX
-            
             var reader = new FileReader();
             reader.onload = function(event){
                 var fd = new FormData();
@@ -126,12 +125,14 @@ $(document).ready(function(){
                 fd.append('data', event.target.result);
                 $.ajax({
                     type: "POST",
-                    url: "../ajax/ajaxUpload.php",
+                    url: "../ajax/ajaxRecord.php",
                     data: fd,
                     processData: false,
                     contentType: false
-                }).done(function(data) {
-                       console.log(data);
+                }).done(function(response) {
+                    if( response.code == 200){
+                        window.location = "upload.php";
+                    }
                 });
             };
             reader.readAsDataURL(blob);

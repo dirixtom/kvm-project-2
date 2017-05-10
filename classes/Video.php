@@ -41,9 +41,6 @@
                 case "Tumbnail":
                     return $this->m_sTumbnail;
                     break;
-                case "Lastname":
-                    return $this->m_sLastname;
-                    break;
                 case "Uploader":
                     return $this->m_sUploader;
                     break;
@@ -57,9 +54,17 @@
         }
         
         public function upload(){
+            $conn = Db::getInstance();
+            $statement = $conn->prepare("INSERT INTO videos (data, uploader, votes, status) VALUES (:data, :uploader, :votes, :status);");
+            $statement->bindValue(":data", $this->Data);
+            $statement->bindValue(":uploader", $this->Uploader);
+            $statement->bindValue(":votes", $this->Votes);
+            $statement->bindValue(":status", $this->Status);
+            $statement->execute();
             
         }
         
         public function printRecent(){
             
         }
+    }
