@@ -19,7 +19,7 @@
             $video->Status = "default";
 
             $video->upload();
-            /*$video->giveTags;*/
+            $video->setTags($_POST["tags"]);
             
             unset($_SESSION['recorded']);
             

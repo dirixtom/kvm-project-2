@@ -64,6 +64,10 @@
             
         }
         
+        public function setTags(p_sTagInput){
+            echo p_sTagInput;
+        }
+        
         public function printRecent(){
             
         }
