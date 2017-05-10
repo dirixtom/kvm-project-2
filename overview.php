@@ -182,6 +182,25 @@
         header img#drie {
             right: 20px;
         }
+        button#upload {
+           width: 56px;
+           height: 56px;
+           position: absolute;
+           display: flex;
+           align-items: center;
+           justify-content: center;
+           background-color: #E22E2F;
+           border: none;
+           outline: none;
+           border-radius: 50%;
+           -webkit-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.25);
+           -moz-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.25);
+           box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.25);
+        }
+        
+        button#upload img {
+           width: 20px;
+        }
   </style>
 </head>
 <body>
@@ -192,7 +211,7 @@
             <img class="sysbar" src="images/sysbar-top.png" alt="android systeem balk" />
             <?php include_once("includes/mainHeader.php") ?>
             <main>
-                <button id="upload"> + </button>
+                <button id="upload"><img src="images/ic_camera.svg" alt="opnemen camera icoon" /></button>
             </main>
             <img class="sysbar" src="images/navbar-bot.png" alt="android navigatie balk" />
         </div>
