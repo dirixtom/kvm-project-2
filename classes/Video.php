@@ -7,6 +7,7 @@
         private $m_sUploader;
         private $m_iVotes;
         private $m_sStatus;
+        private $m_sTagInput;
         
         public function __set($p_sProperty, $p_vValue)
         {
@@ -25,6 +26,9 @@
                     break;
                 case "Status":
                     $this->m_sStatus = $p_vValue;
+                    break;
+                case "TagInput":
+                    $this->m_sTagInput = $p_vValue;
                     break;
             }
         }
@@ -50,6 +54,9 @@
                 case "Status":
                     return $this->m_sStatus;
                     break;
+                case "TagInput":
+                    return $this->m_sTagInput;
+                    break;
             }
         }
         
@@ -61,7 +68,17 @@
             $statement->bindValue(":votes", $this->Votes);
             $statement->bindValue(":status", $this->Status);
             $statement->execute();
-            
+        }
+        
+        public function setTags(){
+            $tags = explode("; ", strtolower($this->TagInput));
+            foreach($tags as $tag){
+                $conn = Db::getInstance();
+                $stmnt = $conn->prepare("INSERT INTO tags (tag, video) VALUES (:tag, :video);");
+                $stmnt->bindValue(":tag", $tag);
+                $stmnt->bindValue(":video", $this->Data);
+                $stmnt->execute();
+            }
         }
         
         public function printRecent(){

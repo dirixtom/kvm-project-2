@@ -122,6 +122,7 @@ define("SCHERM", "video uploaden");
             <?php include_once("../includes/simpleHeader.php") ?>
             <main>
                 <form action="" method="post">
+                   <p>scheid de tags met een ; en een spatie</p>
                     <input type="text" name="tags" id="tags" placeholder="voeg tags toe">
                     <input type="hidden" name="cancel" id="cancel" value="true">
                     <br>
