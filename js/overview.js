@@ -1,5 +1,7 @@
 $(document).ready(function(){
     $("#upload").click( function(){
-        window.location = "pages/record.php";
+		setTimeout(
+			window.location = "pages/record.php"
+		, 300);
     });
 });
