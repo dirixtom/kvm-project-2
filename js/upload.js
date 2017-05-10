@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    alert("AAAAAAAAAAAAAA");
+    
     $("#upload").click( function(e){
         
         var tags = $("#tags").val();
@@ -21,8 +21,6 @@ $(document).ready(function(){
                 console.log("er is iets misgelopen.");
             }
         });
-        
-        
         
         e.preventDefault();
     });
