@@ -7,6 +7,7 @@
         private $m_sUploader;
         private $m_iVotes;
         private $m_sStatus;
+        private $m_sTagInput;
         
         public function __set($p_sProperty, $p_vValue)
         {
@@ -25,6 +26,9 @@
                     break;
                 case "Status":
                     $this->m_sStatus = $p_vValue;
+                    break;
+                case "TagInput":
+                    $this->m_sTagInput = $p_vValue;
                     break;
             }
         }
@@ -50,6 +54,9 @@
                 case "Status":
                     return $this->m_sStatus;
                     break;
+                case "TagInput":
+                    return $this->m_sTagInput;
+                    break;
             }
         }
         
@@ -64,8 +71,8 @@
             
         }
         
-        public function setTags(p_sTagInput){
-            echo p_sTagInput;
+        public function setTags(){
+            //echo $this->TagInput;
         }
         
         public function printRecent(){
