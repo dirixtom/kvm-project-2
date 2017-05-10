@@ -9,10 +9,12 @@
     try{    
         if(!empty($_POST) ){
             
-            // iets
+            var_dump($_POST);
+            echo $_POST["data"];
             
             $feedback = [
-                "code" => 200
+                "code" => 200,
+                "message" => "AAAAAAAAA"
             ];
                 
             }

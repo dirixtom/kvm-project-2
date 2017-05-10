@@ -104,6 +104,7 @@ $(document).ready(function(){
             console.log('Stopped  & state = ' + mediaRecorder.state);
 
             var blob = new Blob(chunks, {type: "video/webm"});
+            console.info("1 dit is de blob: "+JSON.stringify(blob));
             chunks = [];
     
             var videoURL = window.URL.createObjectURL(blob);
@@ -117,26 +118,29 @@ $(document).ready(function(){
 
             downloadLink.setAttribute( "download", name);
             downloadLink.setAttribute( "name", name);
+            
+            console.info("2 dit is de blob: "+JSON.stringify(blob));
 
             //START AJAX
-            var file = new File(blob, "name");
-            var element = document.getElementById("upload");
-            element.value = file;
-            element.form.submit();*/
             
-            $.ajax({
-            method: "POST",
-            url: "../ajax/ajaxUpload.php",
-            data: {data: file}
-            }).done(function(response){
-                if( response.code == 200){
-                    console.log("ajax call success");
-                }
-                if( response.code == 500){
-                    console.log("ajax call failed");
-                }
-            });
+            var reader = new FileReader();
+            reader.onload = function(event){
+                var fd = new FormData();
+                fd.append('fname', name);
+                fd.append('data', event.target.result);
+                $.ajax({
+                    type: "POST",
+                    url: "../ajax/ajaxUpload.php",
+                    data: fd,
+                    processData: false,
+                    contentType: false
+                }).done(function(data) {
+                       console.log(data);
+                });
+            };
+            reader.readAsDataURL(blob);
             // EIND AJAX
+            
             function setValue(){
                 document.fileform.upload.value = 100;
                 document.forms["fileform"].submit();
