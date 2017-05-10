@@ -9,7 +9,7 @@
     define("SCHERM", "Profiel");
 
     spl_autoload_register(function ($class) {
-    include_once("classes/" . $class . ".php");
+    include_once("../classes/" . $class . ".php");
     });
 
         try{
@@ -69,10 +69,10 @@
     }
 </style>
 <body>
-   <a href="overview.php"> terug </a>
+   <a href="../overview.php"> terug </a>
     <h1> <?php echo $_SESSION['user']; ?></h1>
-    <img src="uploads/profileImages/<?php echo $_SESSION['image']; ?>" alt="profielfoto" id="img" style="max-width: 150px;"> <!-- profiel foto -->
-    <img src="uploads/profileImages/<?php echo $_SESSION['image']; ?>" alt="profielfoto" id="background" style="max-width: 150px;"> <!-- achtergrond foto -->
+    <img src="../uploads/profileImages/<?php echo $_SESSION['image']; ?>" alt="profielfoto" id="img" style="max-width: 150px;"> <!-- profiel foto -->
+    <img src="../uploads/profileImages/<?php echo $_SESSION['image']; ?>" alt="profielfoto" id="background" style="max-width: 150px;"> <!-- achtergrond foto -->
     <form action="" method="post" enctype="multipart/form-data">
         <div class="modal" id="image_modal">
             <h2> Stel een afbeelding in </h2>
@@ -104,6 +104,6 @@
         </form>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-    <script src="js/profile.js"></script>
+    <script src="../js/profile.js"></script>
 </body>
 </html>

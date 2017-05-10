@@ -16,6 +16,7 @@
     <title><?php echo SCHERM; ?></title>
 
 	<script src="js/jquery.min.js"></script>
+   <script src="js/overview.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
 
     <style type="text/css">
@@ -35,7 +36,7 @@
             width: 80%;
             height: 100%;
             display: flex;
-            overflow-y: scroll;
+            overflow-y: visible;
             margin: auto;
         }
         main {
@@ -191,7 +192,7 @@
             <img class="sysbar" src="images/sysbar-top.png" alt="android systeem balk" />
             <?php include_once("includes/mainHeader.php") ?>
             <main>
-
+                <button id="upload"> + </button>
             </main>
             <img class="sysbar" src="images/navbar-bot.png" alt="android navigatie balk" />
         </div>
