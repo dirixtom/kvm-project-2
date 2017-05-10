@@ -51,7 +51,7 @@ $(document).ready(function(){
     }
             
     var data = document.querySelector('#data');
-    var downloadLink = document.querySelector('a#downloadLink'); //tijdelijk!!!
+    var downloadLink = document.querySelector('a#downloadLink');
     
     video.controls = false;
     
@@ -104,7 +104,6 @@ $(document).ready(function(){
             console.log('Stopped  & state = ' + mediaRecorder.state);
 
             var blob = new Blob(chunks, {type: "video/webm"});
-            console.info("1 dit is de blob: "+JSON.stringify(blob));
             chunks = [];
     
             var videoURL = window.URL.createObjectURL(blob);
@@ -112,14 +111,11 @@ $(document).ready(function(){
             downloadLink.href = videoURL;
             video.src = videoURL;
             downloadLink.innerHTML = 'Download video file';
-
-            var rand =  Math.floor((Math.random() * 10000000));
-            var name  = "video_"+rand+".webm" ;
+            
+            var name  = "_video.webm" ;
 
             downloadLink.setAttribute( "download", name);
             downloadLink.setAttribute( "name", name);
-            
-            console.info("2 dit is de blob: "+JSON.stringify(blob));
 
             //START AJAX
             
