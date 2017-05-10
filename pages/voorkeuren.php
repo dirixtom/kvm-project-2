@@ -15,7 +15,7 @@
 
     <title><?php echo SCHERM; ?></title>
 
-	<script src="js/jquery.min.js"></script>
+	<script src="../js/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
 
     <style type="text/css">
@@ -183,8 +183,8 @@
         <div class="fill">
         </div>
         <div class="scherm">
-            <img class="sysbar" src="images/sysbar-top.png" alt="android systeem balk" />
-            <?php include_once("includes/simpleHeader.php") ?>
+            <img class="sysbar" src="../images/sysbar-top.png" alt="android systeem balk" />
+            <?php include_once("../includes/simpleHeader.php") ?>
             <main>
                 <div class="cat">
                     <h2>Pushberichten</h2>
@@ -235,7 +235,7 @@
                     </div>
                 </div>
             </main>
-            <img class="sysbar" src="images/navbar-bot.png" alt="android navigatie balk" />
+            <img class="sysbar" src="../images/navbar-bot.png" alt="android navigatie balk" />
         </div>
         <div class="fill">
         </div>
