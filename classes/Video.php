@@ -134,7 +134,7 @@
         
         public function printFavorite(){
             $conn = Db::getInstance();
-            $statement = $conn->prepare("SELECT * FROM videos v INNER JOIN stemmen s ON v.id = s.video_id WHERE s.user_id = :user_id ORDER BY id DESC;");
+            $statement = $conn->prepare("SELECT * FROM videos v INNER JOIN stemmen s ON v.id = s.video_id WHERE s.user_id = :user_id ORDER BY s.stem_id DESC;");
             $statement->bindValue(":user_id", $_SESSION["userid"]);
             $statement->execute();
             return $statement->fetchAll(PDO::FETCH_ASSOC);
