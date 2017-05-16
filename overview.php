@@ -345,19 +345,15 @@
          height: 20px;
          width: 20px;
       }
+       .video_id{
+           display: none;
+       }
    </style>
    <script>
       $('#videocontainer').dragscrollable({
          dragSelector: '.video',
-         acceptPropagatedEvent: false
+         acceptPropagatedEvent: false;
       });
-
-    $('#stem').click( function(e){
-        alert("AAAAAAAAAAAAA!!!");
-        
-        e.preventDefault();
-      });
-
    </script>
 </head>
 </head>
@@ -387,11 +383,18 @@
                      </div>
                      <div class="actionbar">
                         <p class="naam"><?php echo $video["uploader"]?></p>
+                        <p class="video_id"><?php echo $video["id"]?></p>
                         <div class="right-actions">
                            <p class="report">!</p>
-                           <a href="#" id="stem">
+                           <a href="#" class="stem">
                                <img src="images/ic_favorite.svg" alt="markeer als favoriet" />
                             </a>
+                            <p><?php $videos->checkVote($video["id"], $_SESSION["userid"]);
+        if($videos->Voted == true){
+                                echo $videos->Votes;
+    }
+                                ?>
+                            </p>
                         </div>
                      </div>
                   </div>

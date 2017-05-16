@@ -6,12 +6,16 @@
         private $m_sTumbnail;
         private $m_sUploader;
         private $m_iVotes;
+        private $m_bVoted;
         private $m_sStatus;
         private $m_sTagInput;
         
         public function __set($p_sProperty, $p_vValue)
         {
             switch ($p_sProperty) {
+                case "ID":
+                    $this->m_iID = $p_vValue;
+                    break;
                 case "Data":
                     $this->m_sData = $p_vValue;
                     break;
@@ -23,6 +27,9 @@
                     break;
                 case "Votes":
                     $this->m_iVotes = $p_vValue;
+                    break;
+                case "Voted":
+                    $this->m_bVoted = $p_vValue;
                     break;
                 case "Status":
                     $this->m_sStatus = $p_vValue;
@@ -50,6 +57,9 @@
                     break;
                 case "Votes":
                     return $this->m_iVotes;
+                    break;
+                case "Voted":
+                    return $this->m_bVoted;
                     break;
                 case "Status":
                     return $this->m_sStatus;
@@ -81,9 +91,51 @@
             }
         }
         
+        public function vote($p_iUserid){
+            $conn = Db::getInstance();
+            $statement = $conn->prepare("INSERT INTO stemmen (user_id, video_id) VALUES (:user_id, :video_id);");
+            $statement->bindValue(":user_id", $p_iUserid);
+            $statement->bindValue(":video_id", $this->ID);
+            $statement->execute();
+            
+            $this->Voted= true;
+        }
+        
+        public function checkVote($p_iVideoid, $p_iUserid){
+            $conn = Db::getInstance();
+            $statement1 = $conn->prepare("SELECT * FROM stemmen WHERE video_id = :video_id;");
+            $statement1->bindValue(":video_id", $p_iVideoid);
+            $statement1->execute();
+            $res = $statement1->fetchAll(\PDO::FETCH_ASSOC);
+            $rows = count($res);
+            $this->Votes = $rows;
+            
+            $statement2 = $conn->prepare("SELECT * FROM stemmen WHERE video_id = :video_id AND user_id = :user_id;");
+            $statement2->bindValue(":user_id", $p_iUserid);
+            $statement2->bindValue(":video_id", $p_iVideoid);
+            $statement2->execute();
+            $res2 = $statement2->fetchAll(\PDO::FETCH_ASSOC);
+            $rows2 = count($res2);
+            if($rows2 > 0){
+                $this->Voted = true;
+            } else {
+                $this->Voted = false;
+            }
+            
+            
+        }
+        
         public function printRecent(){
             $conn = Db::getInstance();
             $statement = $conn->prepare("SELECT * FROM videos ORDER BY id DESC;");
+            $statement->execute();
+            return $statement->fetchAll(PDO::FETCH_ASSOC);
+        }
+        
+        public function printFavorite(){
+            $conn = Db::getInstance();
+            $statement = $conn->prepare("SELECT * FROM videos v INNER JOIN stemmen s ON v.id = s.video_id WHERE s.user_id = :user_id ORDER BY id DESC;");
+            $statement->bindValue(":user_id", $_SESSION["userid"]);
             $statement->execute();
             return $statement->fetchAll(PDO::FETCH_ASSOC);
         }
