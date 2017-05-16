@@ -6,6 +6,14 @@
     }*/
 
     define("SCHERM", "Overzicht");
+    
+    spl_autoload_register(function ($class) {
+        include_once("/classes/" . $class . ".php");
+    });
+
+    $videos = new Video;
+    $res = $videos->printRecent();
+
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -343,6 +351,13 @@
          dragSelector: '.video',
          acceptPropagatedEvent: false
       });
+
+    $('#stem').click( function(e){
+        alert("AAAAAAAAAAAAA!!!");
+        
+        e.preventDefault();
+      });
+
    </script>
 </head>
 </head>
@@ -352,7 +367,7 @@
         </div>
         <div class="scherm">
             <img class="sysbar" src="images/sysbar-top.png" alt="android systeem balk" />
-            <?php include_once("includes/mainHeader.php") ?>
+            <?php include_once("includes/mainHeader.php"); ?>
             <main>
                <nav>
                   <a href="overview.php">Recent</a>
@@ -364,42 +379,24 @@
                   </div>
                </nav>
                <div id="videocontainer">
+                
+                <?php foreach ( $res as $key => $video): ?>
                   <div class="video">
                      <div class="imgcontainer">
-                        <img src="images/thumbnail_placeholder.jpg" alt="video thumbnail">
+                        <video src="<?php echo "uploads/videos/" . $video["data"]?>" alt="video thumbnail">
                      </div>
                      <div class="actionbar">
-                        <p class="naam">Vootballeur007</p>
+                        <p class="naam"><?php echo $video["uploader"]?></p>
                         <div class="right-actions">
                            <p class="report">!</p>
-                           <img src="images/ic_favorite.svg" alt="markeer als favoriet" />
+                           <a href="#" id="stem">
+                               <img src="images/ic_favorite.svg" alt="markeer als favoriet" />
+                            </a>
                         </div>
                      </div>
                   </div>
-                  <div class="video">
-                     <div class="imgcontainer">
-                        <img src="images/thumbnail_placeholder.jpg" alt="video thumbnail">
-                     </div>
-                     <div class="actionbar">
-                        <p class="naam">Vootballeur007</p>
-                        <div class="right-actions">
-                           <p class="report">!</p>
-                           <img src="images/ic_favorite.svg" alt="markeer als favoriet" />
-                        </div>
-                     </div>
-                  </div>
-                  <div class="video">
-                     <div class="imgcontainer">
-                        <img src="images/thumbnail_placeholder.jpg" alt="video thumbnail">
-                     </div>
-                     <div class="actionbar">
-                        <p class="naam">Vootballeur007</p>
-                        <div class="right-actions">
-                           <p class="report">!</p>
-                           <img src="images/ic_favorite.svg" alt="markeer als favoriet" />
-                        </div>
-                     </div>
-                  </div>
+                  <?php endforeach; ?>
+                  
                </div>
                <button id="upload"><img src="images/ic_camera.svg" alt="opnemen camera icoon" /></button>
             </main>
