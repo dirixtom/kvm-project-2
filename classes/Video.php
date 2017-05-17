@@ -182,16 +182,25 @@
             $statement = $conn->prepare("SELECT * FROM featured ORDER BY feature_id DESC LIMIT 1;");
             $statement->execute();
             $res = $statement->fetch(PDO::FETCH_ASSOC);
+            $previous = $res["timestamp"];
             
-            if((time() - $res["timestamp"]) > 10*60){ //meer dan 10 minuten geleden
+            if((time() - $previous) > 10*60){ //meer dan 10 minuten geleden
                 
-            // 2) als het lang geleden genoeg was, haal alle video's op die zijn geupload sinds de laatste timestamp uit de featured tabel. orden op meeste stemmen
+            // 2) als het lang genoeg geleden was, haal alle video's op die zijn geupload sinds de laatste timestamp uit de featured tabel. orden op meeste stemmen
+                $statement2 = $conn->prepare("SELECT * FROM videos WHERE timestamp > :timestamp ORDER BY timestamp DESC LIMIT 1;");
+                $statement2->bindValue(":timestamp", $previous);
+                $statement2->execute();
+                $res2 = $statement2->fetch(PDO::FETCH_ASSOC);
                 
+                $feature = $res2["id"]; // dit is de video die in featured zal worden opgeslaan.
                 
-            }
-            
-            // 3) Neem de bovenste video uit de lijst van 2) en maak een record aan in de featured tabel met die video_id, en een nieuwe timestamp
+                // 3) Neem de bovenste video uit de lijst van 2) en maak een record aan in de featured tabel met die video_id, en een nieuwe timestamp
             //INSERT INTO featured (video_id, timestamp) VALUES (0, 0);
+                $statement3 = $conn->prepare("INSERT INTO featured (video_id, timestamp) VALUES (:video_id, :timestamp);");
+                $statement3->bindValue(":video_id", $feature);
+                $statement3->bindValue(":timestamp", time());
+                $statement3->execute();
+            }
         }
         
         //een functie genaamd updateNotifications() zal de laatste feature id uit de tabel features opslaan wanneer de gebruiker op overview 4 of in livefeed is

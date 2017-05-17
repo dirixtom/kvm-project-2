@@ -13,6 +13,7 @@
 
     $videos = new Video;
     $res = $videos->printRecent();
+    $videos->feature();
 
 ?><!DOCTYPE html>
 <html lang="en">
