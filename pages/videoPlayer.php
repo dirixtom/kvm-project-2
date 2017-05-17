@@ -12,7 +12,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Upload</title>
+    <title>Video Player</title>
 </head>
 <style>
     /*360 op 640*/
@@ -27,11 +27,11 @@
         left: -50px;
         width: 640px;
     }
-    #record {
+    #pause {
         z-index: 100;
         position: absolute;
-        top: 300px;
-        left: 300px;
+        top: 350px;
+        left: 20px;
     }
     #upload-modal{
         display: none;
@@ -41,9 +41,10 @@
    <a href="../overview.php"> terug </a>
    <a id="downloadLink" download="mediarecorder.webm" name="mediarecorder.webm" href></a>
     <div id="videoscreen">
-       <video id="video" width="320" height="480" autoplay></video>
+       <video id="video" width="320" height="480" autoplay>
+           <source>
+       </video>
    </div>
-   <input type="file" accept="image/*;capture=camera">
    <button id="pause"> || </button>
     <p id="data"></p>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
