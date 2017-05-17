@@ -110,6 +110,8 @@ $(document).ready(function(){
             chunks = [];
     
             var videoURL = window.URL.createObjectURL(blob);
+            video.src = videoURL;
+            video.play();
             
             var name  = "_video.webm" ;
 
