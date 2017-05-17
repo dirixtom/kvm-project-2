@@ -351,6 +351,13 @@
            display: none;
        }
        
+       .emptystate{
+           color: #626A6C;
+           margin: auto 0;
+            text-decoration: none;
+           text-align: center;
+       }
+       
    </style>
 </head>
    <script>
@@ -375,7 +382,11 @@
                   <a href="overview4.php">Eigen</a>
                </nav>
                <div id="videocontainer">
-                
+                <?php
+                    if(count($res) == 0){
+                        echo "<p class='emptystate'> Je hebt nog niets gefilmd... </p>";
+                    }
+                ?>
                 <?php foreach ( $res as $key => $video): ?>
                   <div class="video">
                      <div class="imgcontainer">
