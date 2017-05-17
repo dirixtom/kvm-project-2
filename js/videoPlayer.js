@@ -10,10 +10,12 @@ $(document).ready(function(){
         console.log("sound muted by default");
         var klik_mute = 1;
         video.muted=true;
+        $("#mute").text("unmute");
     } else if(muted === "false") {
         console.log("sound isn't muted");
         var klik_mute = 2;
         video.muted=false;
+        $("#mute").text("mute");
     } else {
         console.log("no mute memory");
         var klik_mute = 0;
@@ -47,10 +49,12 @@ $(document).ready(function(){
             console.log("unmute");
             video.muted=false;
             localStorage.setItem("muted", false);
+            $("#mute").text("mute");
         } else {
             console.log("mute");
             video.muted=true;
             localStorage.setItem("muted", true);
+            $("#mute").text("unmute");
         }
     });
 });
