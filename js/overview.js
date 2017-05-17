@@ -19,12 +19,12 @@ $(document).ready(function(){
             console.log(feedback.code);
             console.log(feedback.count);
             console.log(feedback.boolean);
-            /*if( response.code == 500){
+            if( feedback.code == 500){
                 console.log("something went wrong");
             }
-            if( response.code == 200){
+            if( feedback.code == 200){
                 console.log("everything is perfect");
-            }*/
+            }
         });
         
         e.preventDefault();
