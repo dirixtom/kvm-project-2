@@ -18,6 +18,8 @@
                 //niets gebeurt hier.
             }
             
+            $video->checkVote($_POST["video_id"], $_SESSION["userid"]);
+            
             $feedback = [
                 "code" => 200,
                 "count" => $video->Votes,

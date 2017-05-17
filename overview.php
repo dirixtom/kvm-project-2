@@ -389,7 +389,7 @@
                            <a href="#" class="stem">
                                <img src="images/ic_favorite.svg" alt="markeer als favoriet" />
                             </a>
-                            <p><?php $videos->checkVote($video["id"], $_SESSION["userid"]);
+                            <p class="count"><?php $videos->checkVote($video["id"], $_SESSION["userid"]);
         if($videos->Voted == true){
                                 echo $videos->Votes;
     }
