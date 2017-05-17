@@ -1,5 +1,11 @@
 $(document).ready(function(){
     
+    $("#cancel").click( function(e){
+        console.log("AAAAAAAAAAAAA!!!!");
+        
+        e.preventDefault();
+    });
+    
     $("#upload").click( function(e){
         
         var tags = $("#tags").val();

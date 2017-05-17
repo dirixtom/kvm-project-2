@@ -51,7 +51,6 @@ $(document).ready(function(){
     }
             
     var data = document.querySelector('#data');
-    var downloadLink = document.querySelector('a#downloadLink');
     
     video.controls = false;
     
@@ -111,15 +110,9 @@ $(document).ready(function(){
             chunks = [];
     
             var videoURL = window.URL.createObjectURL(blob);
-
-            downloadLink.href = videoURL;
-            video.src = videoURL;
-            downloadLink.innerHTML = 'Download video file';
             
             var name  = "_video.webm" ;
 
-            downloadLink.setAttribute( "download", name);
-            downloadLink.setAttribute( "name", name);
 
             //START AJAX
             var reader = new FileReader();
@@ -170,6 +163,8 @@ $(document).ready(function(){
         } else {
             mediaRecorder.stop();
             video.controls = true;
+            
+            $("#record").css('display', 'none');
             
             console.log("recording stopped");
         }

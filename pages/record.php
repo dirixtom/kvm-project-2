@@ -52,7 +52,7 @@
                     <input type="text" name="tags" id="tags" placeholder="voeg tags toe">
                     <input type="hidden" name="cancel" id="cancel" value="true">
                     <br>
-                    <button type="submit" id="cancel">video annuleren</button>
+                    <button type="button" id="cancel">video annuleren</button>
                     <br>
                     <button type="submit" id="upload">Ok</button>
                 </form>
