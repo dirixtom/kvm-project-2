@@ -1,7 +1,7 @@
 $(document).ready(function(){
     
     $("#cancel").click( function(e){
-        console.log("AAAAAAAAAAAAA!!!!");
+        console.log("Waarom werkt dit niet???");
         
         e.preventDefault();
     });
