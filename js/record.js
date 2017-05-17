@@ -131,7 +131,8 @@ $(document).ready(function(){
                     contentType: false
                 }).done(function(response) {
                     if( response.code == 200){
-                        window.location = "upload.php";
+                        /*window.location = "upload.php";*/
+                        $("#upload-modal").css('display', 'inline');
                     }
                 });
             };

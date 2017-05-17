@@ -33,6 +33,9 @@
         top: 300px;
         left: 300px;
     }
+    #upload-modal{
+        display: none;
+    }
 </style>
 <body>
    <a href="../overview.php"> terug </a>
@@ -43,7 +46,19 @@
    <button id="record"> neem op </button>
     <p id="data"></p>
    <br>
+   <div class="modal" id="upload-modal">
+        <form action="" method="post">
+                   <p>scheid de tags met een ; en een spatie</p>
+                    <input type="text" name="tags" id="tags" placeholder="voeg tags toe">
+                    <input type="hidden" name="cancel" id="cancel" value="true">
+                    <br>
+                    <button type="submit" id="cancel">video annuleren</button>
+                    <br>
+                    <button type="submit" id="upload">Ok</button>
+                </form>
+    </div>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <script src="../js/record.js"></script>
+    <script src="../js/upload.js"></script>
 </body>
 </html>
