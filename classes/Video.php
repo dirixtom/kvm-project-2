@@ -139,4 +139,12 @@
             $statement->execute();
             return $statement->fetchAll(PDO::FETCH_ASSOC);
         }
+        
+        public function printUploads(){
+            $conn = Db::getInstance();
+            $statement = $conn->prepare("SELECT * FROM videos WHERE uploader = :user ORDER BY id DESC;");
+            $statement->bindValue(":user", $_SESSION["user"]);
+            $statement->execute();
+            return $statement->fetchAll(PDO::FETCH_ASSOC);
+        }
     }
