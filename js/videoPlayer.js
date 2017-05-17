@@ -3,7 +3,21 @@ $(document).ready(function(){
     video.play();
     
     var klik_pause = 0;
-    var klik_mute = 0;
+    
+    var muted = localStorage.getItem("muted");
+    console.log(muted);
+    if(muted === "true"){
+        console.log("sound muted by default");
+        var klik_mute = 1;
+        video.muted=true;
+    } else if(muted === "false") {
+        console.log("sound isn't muted");
+        var klik_mute = 2;
+        video.muted=false;
+    } else {
+        console.log("no mute memory");
+        var klik_mute = 0;
+    }
     
     $("#pause").on('click', function(click){
         klik_pause++;
@@ -24,14 +38,19 @@ $(document).ready(function(){
         video.play();
     });
     
+    function checkMute(){
+    }
+    
     $("#mute").click(function(e){
         klik_mute++;
         if(klik_mute % 2 == 0){
-            console.log("mute");
-            video.muted=true;
-        } else {
             console.log("unmute");
             video.muted=false;
+            localStorage.setItem("muted", false);
+        } else {
+            console.log("mute");
+            video.muted=true;
+            localStorage.setItem("muted", true);
         }
     });
 });

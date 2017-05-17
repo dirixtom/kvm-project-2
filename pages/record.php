@@ -41,7 +41,7 @@
    <a href="../overview.php"> terug </a>
    <a id="downloadLink" download="mediarecorder.webm" name="mediarecorder.webm" href></a>
     <div id="videoscreen">
-       <video id="video" width="320" height="480" autoplay></video>
+       <video id="video" width="320" height="480" controls></video>
    </div>
    <button id="record"> neem op </button>
     <p id="data"></p>
