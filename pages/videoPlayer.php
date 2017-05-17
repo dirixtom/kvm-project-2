@@ -55,5 +55,6 @@
    </div>
     <p id="data"></p>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+   <script src="../js/videoPlayer.js"></script>
 </body>
 </html>
