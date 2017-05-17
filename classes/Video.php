@@ -72,10 +72,10 @@
         
         public function upload(){
             $conn = Db::getInstance();
-            $statement = $conn->prepare("INSERT INTO videos (data, uploader, votes, status) VALUES (:data, :uploader, :votes, :status);");
+            $statement = $conn->prepare("INSERT INTO videos (data, timestamp, uploader, status) VALUES (:data, :timestamp, :uploader, :status);");
             $statement->bindValue(":data", $this->Data);
+            $statement->bindValue(":timestamp", time());
             $statement->bindValue(":uploader", $this->Uploader);
-            $statement->bindValue(":votes", $this->Votes);
             $statement->bindValue(":status", $this->Status);
             $statement->execute();
         }
@@ -174,6 +174,31 @@
             $statement->bindValue(":id", $p_iID);
             $statement->execute();
             return $statement->fetch(PDO::FETCH_ASSOC);
+        }
+        
+        public function feature(){ // maak een nieuwe feature aan
+            // 1)lees de laatste feature id uit, check timestamp en check hoe lang dit geleden was
+            $conn = Db::getInstance();
+            $statement = $conn->prepare("SELECT * FROM featured ORDER BY feature_id DESC LIMIT 1;");
+            $statement->execute();
+            $res = $statement->fetch(PDO::FETCH_ASSOC);
             
+            if((time() - $res["timestamp"]) > 10*60){ //meer dan 10 minuten geleden
+                
+            // 2) als het lang geleden genoeg was, haal alle video's op die zijn geupload sinds de laatste timestamp uit de featured tabel. orden op meeste stemmen
+                
+                
+            }
+            
+            // 3) Neem de bovenste video uit de lijst van 2) en maak een record aan in de featured tabel met die video_id, en een nieuwe timestamp
+            //INSERT INTO featured (video_id, timestamp) VALUES (0, 0);
+        }
+        
+        //een functie genaamd updateNotifications() zal de laatste feature id uit de tabel features opslaan wanneer de gebruiker op overview 4 of in livefeed is
+        
+        public function checkFeature(){// controleer of er een nieuwe feature is
+            // 1) check de recentste gefeaturede video in de featured tabel, als deze id niet overeen komt met wat in localStorage staat, wordt er een melding gemaakt
+            
+            // 2) in de medling wordt gezegd hoeveel nieuwe gefeaturede video's er zijn = laatste id in de tabel - id in localstorage
         }
     }
