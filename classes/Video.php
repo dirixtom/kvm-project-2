@@ -147,4 +147,13 @@
             $statement->execute();
             return $statement->fetchAll(PDO::FETCH_ASSOC);
         }
+        
+        public function show($p_iID){
+            $conn = Db::getInstance();
+            $statement = $conn->prepare("SELECT * FROM videos WHERE id = :id;");
+            $statement->bindValue(":id", $p_iID);
+            $statement->execute();
+            return $statement->fetch(PDO::FETCH_ASSOC);
+            
+        }
     }

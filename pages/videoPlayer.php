@@ -8,6 +8,10 @@
     spl_autoload_register(function ($class) {
         include_once("../classes/" . $class . ".php");
     });
+    
+    $id = $_GET["id"];
+    $video = new Video;
+    $res = $video->show($id);
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,7 +31,7 @@
         left: -50px;
         width: 640px;
     }
-    #pause {
+    #buttons {
         z-index: 100;
         position: absolute;
         top: 350px;
@@ -42,10 +46,13 @@
    <a id="downloadLink" download="mediarecorder.webm" name="mediarecorder.webm" href></a>
     <div id="videoscreen">
        <video id="video" width="320" height="480" autoplay>
-           <source>
+           <source src="../uploads/videos/<?php echo $res["data"] ?>" type="video/webm">
        </video>
    </div>
+   <div id="buttons">
    <button id="pause"> || </button>
+   <button id="replay"> replay </button>
+   </div>
     <p id="data"></p>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 </body>

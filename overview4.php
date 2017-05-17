@@ -379,9 +379,11 @@
                 <?php foreach ( $res as $key => $video): ?>
                   <div class="video">
                      <div class="imgcontainer">
+                        <a href='pages/videoPlayer.php?id=<?php echo $video["id"];?>'>
                          <video src="<?php echo "uploads/videos/" . $video["data"]?>" alt="video thumbnail" poster="">
                              <source src="uploads/videos/<?php echo $video["data"] ?>" type="video/webm">
                          </video>
+                         </a>
                      </div>
                      <div class="actionbar">
                         <p class="naam"><?php echo $video["uploader"]?></p>
