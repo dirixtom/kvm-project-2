@@ -41,7 +41,7 @@
    <a href="../overview.php"> terug </a>
    <a id="downloadLink" download="mediarecorder.webm" name="mediarecorder.webm" href></a>
     <div id="videoscreen">
-       <video id="video" width="320" height="480" autoplay></video>
+       <video id="video" width="320" height="480" controls></video>
    </div>
    <button id="record"> neem op </button>
     <p id="data"></p>
@@ -52,7 +52,7 @@
                     <input type="text" name="tags" id="tags" placeholder="voeg tags toe">
                     <input type="hidden" name="cancel" id="cancel" value="true">
                     <br>
-                    <button type="submit" id="cancel">video annuleren</button>
+                    <button type="button" id="cancel">video annuleren</button>
                     <br>
                     <button type="submit" id="upload">Ok</button>
                 </form>

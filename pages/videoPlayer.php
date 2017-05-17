@@ -45,15 +45,17 @@
    <a href="../overview.php"> terug </a>
    <a id="downloadLink" download="mediarecorder.webm" name="mediarecorder.webm" href></a>
     <div id="videoscreen">
-       <video id="video" width="320" height="480" autoplay>
+       <video id="video" width="320" height="480" controls>
            <source src="../uploads/videos/<?php echo $res["data"] ?>" type="video/webm">
        </video>
    </div>
    <div id="buttons">
-   <button id="pause"> || </button>
+   <button id="pause"> pauzeer </button>
    <button id="replay"> replay </button>
+   <button id="mute"> mute </button>
    </div>
     <p id="data"></p>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+   <script src="../js/videoPlayer.js"></script>
 </body>
 </html>

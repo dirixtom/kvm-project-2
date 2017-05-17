@@ -355,8 +355,8 @@
    <script>
       $('#videocontainer').dragscrollable({
          dragSelector: '.video',
-         acceptPropagatedEvent: false;
-      });
+         acceptPropagatedEvent: false
+      })
    </script>
 </head>
 </head>
