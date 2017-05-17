@@ -91,14 +91,25 @@
             }
         }
         
-        public function vote($p_iUserid){
+        public function vote($p_iVideoid, $p_iUserid){
+            //check of dit niet een video van deze gebruiker is
             $conn = Db::getInstance();
-            $statement = $conn->prepare("INSERT INTO stemmen (user_id, video_id) VALUES (:user_id, :video_id);");
-            $statement->bindValue(":user_id", $p_iUserid);
-            $statement->bindValue(":video_id", $this->ID);
+            $statement = $conn->prepare("SELECT * FROM videos WHERE id = :video_id ORDER BY id DESC;");
+            $statement->bindValue(":video_id", $p_iVideoid);
             $statement->execute();
+            $res = $statement->fetch(PDO::FETCH_ASSOC);
+            if($res["uploader"] == $_SESSION["user"]){
+                //wordt genegeerd omdat een gebruiker niet op zijn eigen video's mag stemmen
+            } else {
+            //stem
+            $conn = Db::getInstance();
+            $statement2 = $conn->prepare("INSERT INTO stemmen (user_id, video_id) VALUES (:user_id, :video_id);");
+            $statement2->bindValue(":user_id", $p_iUserid);
+            $statement2->bindValue(":video_id", $this->ID);
+            $statement2->execute();
             
             $this->Voted= true;
+            }
         }
         
         public function checkVote($p_iVideoid, $p_iUserid){
@@ -122,6 +133,15 @@
                 $this->Voted = false;
             }
             
+            //Als deze video van de gebruiker is, toon het aantal stemmen
+            $conn = Db::getInstance();
+            $statement = $conn->prepare("SELECT * FROM videos WHERE id = :video_id ORDER BY id DESC;");
+            $statement->bindValue(":video_id", $p_iVideoid);
+            $statement->execute();
+            $res = $statement->fetch(PDO::FETCH_ASSOC);
+            if($res["uploader"] == $_SESSION["user"]){
+                $this->Voted = true;
+            }
             
         }
         

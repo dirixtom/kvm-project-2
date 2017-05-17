@@ -348,15 +348,12 @@
        .video_id{
            display: none;
        }
-       
-       video{
-       }
    </style>
    <script>
       $('#videocontainer').dragscrollable({
          dragSelector: '.video',
          acceptPropagatedEvent: false
-      })
+      });
    </script>
 </head>
 </head>
@@ -383,7 +380,7 @@
                   <div class="video">
                      <div class="imgcontainer">
                         <a href='pages/videoPlayer.php?id=<?php echo $video["id"];?>'>
-                         <video src="<?php echo "uploads/videos/" . $video["data"]?>" alt="video thumbnail" poster="">
+                         <video src="<?php echo "uploads/videos/" . $video["data"]?>" alt="video thumbnail">
                              <source src="uploads/videos/<?php echo $video["data"] ?>" type="video/webm">
                          </video>
                          </a>

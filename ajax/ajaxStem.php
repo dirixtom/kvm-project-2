@@ -13,7 +13,7 @@
             $video->checkVote($_POST["video_id"], $_SESSION["userid"]);
             if($video->Voted == false){
             $video->ID = $_POST["video_id"];
-            $video->vote($_SESSION["userid"]);
+            $video->vote($_POST["video_id"], $_SESSION["userid"]);
             } else {
                 //niets gebeurt hier.
             }
