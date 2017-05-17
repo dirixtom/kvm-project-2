@@ -98,6 +98,10 @@ $(document).ready(function(){
 
         mediaRecorder.onstart = function(){
             console.log('Started & state = ' + mediaRecorder.state);
+            
+            setTimeout(function(){
+                mediaRecorder.stop();
+            }, 8000);
         };
 
         mediaRecorder.onstop = function(){

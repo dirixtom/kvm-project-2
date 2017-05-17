@@ -43,6 +43,7 @@
     <div id="videoscreen">
        <video id="video" width="320" height="480" autoplay></video>
    </div>
+   <input type="file" accept="image/*;capture=camera">
    <button id="record"> neem op </button>
     <p id="data"></p>
    <br>

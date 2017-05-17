@@ -312,7 +312,7 @@
          height: calc(100% - 40px);
          overflow: hidden;
       }
-      .video img {
+      .video video {
          width: 100%;
          border-radius: 4px;
       }
@@ -348,6 +348,9 @@
        .video_id{
            display: none;
        }
+       
+       video{
+       }
    </style>
    <script>
       $('#videocontainer').dragscrollable({
@@ -379,7 +382,9 @@
                 <?php foreach ( $res as $key => $video): ?>
                   <div class="video">
                      <div class="imgcontainer">
-                        <video src="<?php echo "uploads/videos/" . $video["data"]?>" alt="video thumbnail">
+                         <video src="<?php echo "uploads/videos/" . $video["data"]?>" alt="video thumbnail" poster="">
+                             <source src="uploads/videos/<?php echo $video["data"] ?>" type="video/webm">
+                         </video>
                      </div>
                      <div class="actionbar">
                         <p class="naam"><?php echo $video["uploader"]?></p>
