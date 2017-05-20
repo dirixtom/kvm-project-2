@@ -254,6 +254,7 @@
       button#upload img {
         width: 20px;
       }
+      
       nav {
          height: 48px;
          width: 100%;
