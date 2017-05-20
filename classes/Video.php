@@ -151,7 +151,16 @@
             }
 
         }
-
+        
+        public function deleteVideo($p_iVideoid){
+            $res = $this->show($p_iVideoid);
+            unlink("../uploads/videos/" . $res["data"]);
+            $conn = Db::getInstance();
+            $statement = $conn->prepare("DELETE FROM videos WHERE id = :id;");
+            $statement->bindValue(":id", $p_iVideoid);
+            $statement->execute();
+        }
+        
         public function printRecent(){
             $conn = Db::getInstance();
             $statement = $conn->prepare("SELECT * FROM videos ORDER BY id DESC;");
@@ -201,7 +210,7 @@
             if((time() - $previous) > 20*60){ //meer dan 20 minuten geleden
 
             // 2) als het lang genoeg geleden was, haal alle video's op die zijn geupload sinds de laatste timestamp uit de featured tabel. orden op meeste stemmen
-                $statement2 = $conn->prepare("SELECT * FROM videos WHERE timestamp > :timestamp ORDER BY stemmen DESC, timestamp DESC LIMIT 1;");
+                $statement2 = $conn->prepare("SELECT * FROM videos WHERE timestamp > :timestamp AND stemmen > 0 ORDER BY stemmen DESC, timestamp DESC LIMIT 1;");
                 $statement2->bindValue(":timestamp", $previous);
                 $statement2->execute();
                 $res2 = $statement2->fetch(PDO::FETCH_ASSOC);

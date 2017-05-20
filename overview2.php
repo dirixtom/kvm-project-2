@@ -355,6 +355,14 @@
             text-decoration: none;
            text-align: center;
        }
+       .video .actionbar .delete img { /* dit is godenloos gefoefel van de developer om die vuilbak op dezelfde lijn als het uitroepteken te krijgen... */
+         margin-right: -6.5px;
+        height: 20px;		
+         width: 20px;
+      }
+        #verwijder_modal{
+            display: none;
+        }
    </style>
 </head>
    <script>
@@ -384,11 +392,20 @@
                         echo "<p class='emptystate'> Je hebt nog niet gestemd... </p>";
                     }
                 ?>
-                <?php foreach ( $res as $key => $video): ?>
+                
+                   <?php foreach ( $res as $key => $video): ?>
+                 
+                 <div class="modal" id="verwijder_modal">
+                   <h2> Verwijder je video </h2>
+                   <p>Ben je zeker dat je de video wil verwijderen? De video wordt definitief verwijderd en kan niet meer hersteld worden. </p>
+                    <input type="button" class="cancel_verwijder" value="annuleer">
+                    <input type="button" class="delete" value="ok">
+                </div>
+                 
                   <div class="video">
                      <div class="imgcontainer">
                         <a href='pages/videoPlayer.php?id=<?php echo $video["id"];?>'>
-                         <video src="<?php echo "uploads/videos/" . $video["data"]?>" alt="video thumbnail" poster="">
+                         <video src="<?php echo "uploads/videos/" . $video["data"]?>" alt="video thumbnail">
                              <source src="uploads/videos/<?php echo $video["data"] ?>" type="video/webm">
                          </video>
                          </a>
@@ -397,7 +414,13 @@
                         <p class="naam"><?php echo $video["uploader"]?></p>
                         <p class="video_id"><?php echo $video["id"]?></p>
                         <div class="right-actions">
+                          <?php if($video["uploader"] == $_SESSION["user"]) : ?>
+                          <a href="#" class="verwijder">
+                           <img src="images/ic_delete.svg" alt="verwijder je video" />
+                            </a>
+                           <?php else : ?>
                            <p class="report">!</p>
+                           <?php endif ; ?>
                            <a href="#" class="stem">
                                <img src="images/ic_favorite.svg" alt="markeer als favoriet" />
                             </a>
