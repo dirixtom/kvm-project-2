@@ -152,6 +152,10 @@
             
         }
         
+        public function deleteVideo(){
+            
+        }
+        
         public function printRecent(){
             $conn = Db::getInstance();
             $statement = $conn->prepare("SELECT * FROM videos ORDER BY id DESC;");
