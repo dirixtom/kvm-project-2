@@ -121,11 +121,18 @@
             $rows = count($res);
             $this->Votes = $rows;
             
-            $statement2 = $conn->prepare("SELECT * FROM stemmen WHERE video_id = :video_id AND user_id = :user_id;");
-            $statement2->bindValue(":user_id", $p_iUserid);
+            //Sla het aantal stemmen op in de databank (nodig voor featuren)
+            $statement2 = $conn->prepare("UPDATE videos SET stemmen = :votes WHERE id = :video_id ;");
             $statement2->bindValue(":video_id", $p_iVideoid);
+            $statement2->bindValue(":votes", $this->Votes);
             $statement2->execute();
-            $res2 = $statement2->fetchAll(\PDO::FETCH_ASSOC);
+            
+            
+            $statement3 = $conn->prepare("SELECT * FROM stemmen WHERE video_id = :video_id AND user_id = :user_id;");
+            $statement3->bindValue(":user_id", $p_iUserid);
+            $statement3->bindValue(":video_id", $p_iVideoid);
+            $statement3->execute();
+            $res2 = $statement3->fetchAll(\PDO::FETCH_ASSOC);
             $rows2 = count($res2);
             if($rows2 > 0){
                 $this->Voted = true;
