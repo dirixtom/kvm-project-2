@@ -37,7 +37,7 @@ $(document).ready(function(){
         that = $(this);
         
         console.info("the id of this video is "+video_id);
-        alert("de modal gaat open");
+        console.log("de modal gaat open");
         $("#verwijder_modal").css('display', 'inline');
         
         e.preventDefault();
@@ -50,7 +50,7 @@ $(document).ready(function(){
     });
     
     $(".delete").click( function(e){
-        alert("het wordt verwijderd");
+        console.log("het wordt verwijderd");
             
         $.ajax({
             type:"POST",

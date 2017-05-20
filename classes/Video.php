@@ -152,8 +152,13 @@
 
         }
         
-        public function deleteVideo(){
-            
+        public function deleteVideo($p_iVideoid){
+            $res = $this->show($p_iVideoid);
+            unlink("../uploads/videos/" . $res["data"]);
+            $conn = Db::getInstance();
+            $statement = $conn->prepare("DELETE FROM videos WHERE id = :id;");
+            $statement->bindValue(":id", $p_iVideoid);
+            $statement->execute();
         }
         
         public function printRecent(){
