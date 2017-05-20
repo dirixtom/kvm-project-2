@@ -195,12 +195,30 @@
         }
         
         public function deleteProfile(){
+            $conn = Db::getInstance();
+            
+            //unlink alle video bestanden
+            $statement = $conn->prepare("SELECT * FROM videos WHERE uploader = :user;");
+            $statement->bindValue(":user", $_SESSION['user']);
+            $statement->execute();
+            $res = $statement->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($res as $key => $video) {
+                unlink("../uploads/videos/" . $video["data"]);
+            };
+            
+            //alle video's verwijderen uit db
+            $statement2 = $conn->prepare("DELETE FROM videos WHERE uploader = :user;");
+            $statement2->bindValue(":user", $_SESSION['user']);
+            $statement2->execute();
+            
+            //profile image verwijderen
             if ($_SESSION["image"] != "default.png") {
                 unlink("uploads/profileImages/" . $_SESSION["image"]);
             }
-            $conn = Db::getInstance();
-            $statement = $conn->prepare("DELETE FROM users WHERE username = :username;");
-            $statement->bindValue(":username", $_SESSION['user']);
-            $statement->execute();
+            
+            //profile verwijderen uit db
+            $statement3 = $conn->prepare("DELETE FROM users WHERE username = :username;");
+            $statement3->bindValue(":username", $_SESSION['user']);
+            $statement3->execute();
         }
     }
