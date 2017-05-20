@@ -165,6 +165,7 @@
       height: 30px;
       border: none;
       outline: none;
+      cursor: pointer;
    }
    .modal button:first-child {
       color: #E22E2F;
