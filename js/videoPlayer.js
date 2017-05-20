@@ -34,10 +34,16 @@ $(document).ready(function(){
         }
     });
     
+    video.onended = function(e) {
+        console.info("de video is beindigd");
+        $("#pause").css("display", "none");
+    };
+    
     $("#replay").click( function(e){
         console.log("replay");
         video.currentTime = '0';
         video.play();
+        $("#pause").css("display", "inline");
     });
     
     function checkMute(){
