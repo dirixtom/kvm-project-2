@@ -1,14 +1,15 @@
 <?php
     session_start();
-    /*if (isset($_SESSION['user'])) {
+
+    if (isset($_SESSION['user'])) {
     } else {
-        header('Location: login.php');
-    }*/
+        header('Location: pages/login.php');
+    }
 
     define("SCHERM", "Overzicht");
-    
+
     spl_autoload_register(function ($class) {
-        include_once("/classes/" . $class . ".php");
+        include_once("classes/" . $class . ".php");
     });
 
     $videos = new Video;
@@ -385,7 +386,7 @@
                   </div>
                </nav>
                <div id="videocontainer">
-                
+
                 <?php foreach ( $res as $key => $video): ?>
                  
                  <div class="modal" id="verwijder_modal">
@@ -427,7 +428,7 @@
                      </div>
                   </div>
                   <?php endforeach; ?>
-                  
+
                </div>
                <button id="upload"><img src="images/ic_camera.svg" alt="opnemen camera icoon" /></button>
             </main>
