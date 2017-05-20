@@ -175,6 +175,13 @@
             return $statement->fetchAll(PDO::FETCH_ASSOC);
         }
         
+        public function printFeatured(){
+            $conn = Db::getInstance();
+            $statement = $conn->prepare("SELECT * FROM videos v INNER JOIN featured f ON v.id = f.video_id ORDER BY f.feature_id DESC;");
+            $statement->execute();
+            return $statement->fetchAll(PDO::FETCH_ASSOC);
+        }
+        
         public function show($p_iID){
             $conn = Db::getInstance();
             $statement = $conn->prepare("SELECT * FROM videos WHERE id = :id;");
@@ -191,10 +198,10 @@
             $res = $statement->fetch(PDO::FETCH_ASSOC);
             $previous = $res["timestamp"];
             
-            if((time() - $previous) > 30*60){ //meer dan 30 minuten geleden
+            if((time() - $previous) > 20*60){ //meer dan 20 minuten geleden
                 
             // 2) als het lang genoeg geleden was, haal alle video's op die zijn geupload sinds de laatste timestamp uit de featured tabel. orden op meeste stemmen
-                $statement2 = $conn->prepare("SELECT * FROM videos WHERE timestamp > :timestamp ORDER BY stemmen, timestamp DESC LIMIT 1;");
+                $statement2 = $conn->prepare("SELECT * FROM videos WHERE timestamp > :timestamp ORDER BY stemmen DESC, timestamp DESC LIMIT 1;");
                 $statement2->bindValue(":timestamp", $previous);
                 $statement2->execute();
                 $res2 = $statement2->fetch(PDO::FETCH_ASSOC);
