@@ -305,6 +305,7 @@
          margin: 0 auto;
          clear: both;
          margin-bottom: 12px;
+         border-radius: 4px;
          -webkit-box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.20);
          -moz-box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.20);
          box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.20);
@@ -327,6 +328,7 @@
          display: flex;
          align-items: center;
          justify-content: space-between;
+
       }
       .video .actionbar p {
          color: #626A6C;
@@ -341,6 +343,14 @@
       }
       .video .actionbar .right-actions p {
          font-size: 20px;
+      }
+      .video .actionbar .right-actions p.count {
+         font-size: 14px;
+      }
+      .video .actionbar .right-actions .stem {
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
       }
       .video .actionbar .right-actions img {
          margin-left: 32px;
@@ -393,8 +403,8 @@
                         <div class="right-actions">
                            <p class="report">!</p>
                            <a href="#" class="stem">
-                               <img src="images/ic_favorite.svg" alt="markeer als favoriet" />
-                            </a>
+                              <img src="images/ic_favorite.svg" alt="markeer als favoriet" />
+                           </a>
                             <p class="count"><?php $videos->checkVote($video["id"], $_SESSION["userid"]);
         if($videos->Voted == true){
                                 echo $videos->Votes;
