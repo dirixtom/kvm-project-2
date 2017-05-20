@@ -32,12 +32,26 @@ $(document).ready(function(){
         e.preventDefault();
     });
     
-    $(".delete").click( function(e){
-        alert("blubbers");
-        var video_id = $(this).parents(".right-actions").siblings(".video_id").html();
-        console.info("the id of this video is "+video_id);
-        var that = $(this);
+    $(".verwijder").click(function(e){
+        video_id = $(this).parents(".right-actions").siblings(".video_id").html();
+        that = $(this);
         
+        console.info("the id of this video is "+video_id);
+        alert("de modal gaat open");
+        $("#verwijder_modal").css('display', 'inline');
+        
+        e.preventDefault();
+    });
+    
+    $(".cancel_verwijder").click(function(e){
+        $("#verwijder_modal").css('display', 'none');
+        delete video_id;
+        e.preventDefault();
+    });
+    
+    $(".delete").click( function(e){
+        alert("het wordt verwijderd");
+            
         $.ajax({
             type:"POST",
             url:"./ajax/ajaxDelete.php",
@@ -51,9 +65,10 @@ $(document).ready(function(){
             if( feedback.code == 200){
                 console.log("everything is perfect");
                 that.parents(".video").css("display", "none");
+                console.info("video "+video_id+" was removed");
+                $("#verwijder_modal").css('display', 'none');
             }
         });
-        
         e.preventDefault();
     });
     

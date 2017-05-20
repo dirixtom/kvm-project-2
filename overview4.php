@@ -363,6 +363,10 @@
          width: 20px;
       }
        
+        #verwijder_modal{
+            display: none;
+        }
+       
    </style>
 </head>
    <script>
@@ -386,6 +390,7 @@
                   <a href="overview3.php">Featured</a>
                   <a href="overview4.php">Eigen</a>
                </nav>
+               
                <div id="videocontainer">
                 <?php
                     if(count($res) == 0){
@@ -393,6 +398,14 @@
                     }
                 ?>
                 <?php foreach ( $res as $key => $video): ?>
+                 
+                 <div class="modal" id="verwijder_modal">
+                   <h2> Verwijder je video </h2>
+                   <p>Ben je zeker dat je de video wil verwijderen? De video wordt definitief verwijderd en kan niet meer hersteld worden. </p>
+                    <input type="button" class="cancel_verwijder" value="annuleer">
+                    <input type="button" class="delete" value="ok">
+                </div>
+                 
                   <div class="video">
                      <div class="imgcontainer">
                         <a href='pages/videoPlayer.php?id=<?php echo $video["id"];?>'>
@@ -406,7 +419,7 @@
                         <p class="video_id"><?php echo $video["id"]?></p>
                         <div class="right-actions">
                           <?php if($video["uploader"] == $_SESSION["user"]) : ?>
-                          <a href="#" class="delete">
+                          <a href="#" class="verwijder">
                            <img src="images/ic_delete.svg" alt="verwijder je video" />
                             </a>
                            <?php else : ?>
