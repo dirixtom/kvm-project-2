@@ -357,6 +357,11 @@
             text-decoration: none;
            text-align: center;
        }
+       .video .actionbar .delete img { /* dit is godenloos gefoefel van de developer om die vuilbak op dezelfde lijn als het uitroepteken te krijgen... */
+         margin-right: -6.5px;
+        height: 20px;		
+         width: 20px;
+      }
        
    </style>
 </head>
@@ -391,7 +396,7 @@
                   <div class="video">
                      <div class="imgcontainer">
                         <a href='pages/videoPlayer.php?id=<?php echo $video["id"];?>'>
-                         <video src="<?php echo "uploads/videos/" . $video["data"]?>" alt="video thumbnail" poster="">
+                         <video src="<?php echo "uploads/videos/" . $video["data"]?>" alt="video thumbnail">
                              <source src="uploads/videos/<?php echo $video["data"] ?>" type="video/webm">
                          </video>
                          </a>
@@ -400,7 +405,13 @@
                         <p class="naam"><?php echo $video["uploader"]?></p>
                         <p class="video_id"><?php echo $video["id"]?></p>
                         <div class="right-actions">
+                          <?php if($video["uploader"] == $_SESSION["user"]) : ?>
+                          <a href="#" class="delete">
+                           <img src="images/ic_delete.svg" alt="verwijder je video" />
+                            </a>
+                           <?php else : ?>
                            <p class="report">!</p>
+                           <?php endif ; ?>
                            <a href="#" class="stem">
                                <img src="images/ic_favorite.svg" alt="markeer als favoriet" />
                             </a>

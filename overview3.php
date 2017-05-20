@@ -354,6 +354,11 @@
             text-decoration: none;		
            text-align: center;		
        }
+       .video .actionbar .delete img { /* dit is godenloos gefoefel van de developer om die vuilbak op dezelfde lijn als het uitroepteken te krijgen... */
+         margin-right: -6.5px;
+        height: 20px;		
+         width: 20px;
+      }
        
    </style>
 </head>
@@ -383,32 +388,38 @@
                         echo "<p class='emptystate'> Er is deze match nog geen video op het LED-scherm gekomen. </p>";		
                     }		
                 ?>		
-                <?php foreach ( $res as $key => $video): ?>		
-                  <div class="video">		
-                     <div class="imgcontainer">		
-                        <a href='pages/videoPlayer.php?id=<?php echo $video["id"];?>'>		
-                         <video src="<?php echo "uploads/videos/" . $video["data"]?>" alt="video thumbnail" poster="">		
-                             <source src="uploads/videos/<?php echo $video["data"] ?>" type="video/webm">		
-                         </video>		
-                         </a>		
-                     </div>		
-                     <div class="actionbar">		
-                        <p class="naam"><?php echo $video["uploader"]?></p>		
-                        <p class="video_id"><?php echo $video["id"]?></p>		
-                        <div class="right-actions">		
-                           <p class="report">!</p>		
-                           <a href="#" class="stem">		
-                               <img src="images/ic_favorite.svg" alt="markeer als favoriet" />		
-                            </a>		
-                            <p class="count"><?php $videos->checkVote($video["id"], $_SESSION["userid"]);		
-        if($videos->Voted == true){		
-                                echo $videos->Votes;		
-    }		
-                                ?>		
-                            </p>		
-                        </div>		
-                     </div>		
-                  </div>		
+                <?php foreach ( $res as $key => $video): ?>
+                  <div class="video">
+                     <div class="imgcontainer">
+                        <a href='pages/videoPlayer.php?id=<?php echo $video["id"];?>'>
+                         <video src="<?php echo "uploads/videos/" . $video["data"]?>" alt="video thumbnail">
+                             <source src="uploads/videos/<?php echo $video["data"] ?>" type="video/webm">
+                         </video>
+                         </a>
+                     </div>
+                     <div class="actionbar">
+                        <p class="naam"><?php echo $video["uploader"]?></p>
+                        <p class="video_id"><?php echo $video["id"]?></p>
+                        <div class="right-actions">
+                          <?php if($video["uploader"] == $_SESSION["user"]) : ?>
+                          <a href="#" class="delete">
+                           <img src="images/ic_delete.svg" alt="verwijder je video" />
+                            </a>
+                           <?php else : ?>
+                           <p class="report">!</p>
+                           <?php endif ; ?>
+                           <a href="#" class="stem">
+                               <img src="images/ic_favorite.svg" alt="markeer als favoriet" />
+                            </a>
+                            <p class="count"><?php $videos->checkVote($video["id"], $_SESSION["userid"]);
+        if($videos->Voted == true){
+                                echo $videos->Votes;
+    }
+                                ?>
+                            </p>
+                        </div>
+                     </div>
+                  </div>
                   <?php endforeach; ?>		
                   		
                   </div>
