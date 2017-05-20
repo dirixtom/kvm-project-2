@@ -9,7 +9,7 @@
         private $m_bVoted;
         private $m_sStatus;
         private $m_sTagInput;
-        
+
         public function __set($p_sProperty, $p_vValue)
         {
             switch ($p_sProperty) {
@@ -69,7 +69,7 @@
                     break;
             }
         }
-        
+
         public function upload(){
             $conn = Db::getInstance();
             $statement = $conn->prepare("INSERT INTO videos (data, timestamp, uploader, status) VALUES (:data, :timestamp, :uploader, :status);");
@@ -79,7 +79,7 @@
             $statement->bindValue(":status", $this->Status);
             $statement->execute();
         }
-        
+
         public function setTags(){
             $tags = explode("; ", strtolower($this->TagInput));
             foreach($tags as $tag){
@@ -90,7 +90,7 @@
                 $stmnt->execute();
             }
         }
-        
+
         public function vote($p_iVideoid, $p_iUserid){
             //check of dit niet een video van deze gebruiker is
             $conn = Db::getInstance();
@@ -107,11 +107,11 @@
             $statement2->bindValue(":user_id", $p_iUserid);
             $statement2->bindValue(":video_id", $this->ID);
             $statement2->execute();
-            
+
             $this->Voted= true;
             }
         }
-        
+
         public function checkVote($p_iVideoid, $p_iUserid){
             $conn = Db::getInstance();
             $statement1 = $conn->prepare("SELECT * FROM stemmen WHERE video_id = :video_id;");
@@ -120,14 +120,14 @@
             $res = $statement1->fetchAll(\PDO::FETCH_ASSOC);
             $rows = count($res);
             $this->Votes = $rows;
-            
+
             //Sla het aantal stemmen op in de databank (nodig voor featuren)
             $statement2 = $conn->prepare("UPDATE videos SET stemmen = :votes WHERE id = :video_id ;");
             $statement2->bindValue(":video_id", $p_iVideoid);
             $statement2->bindValue(":votes", $this->Votes);
             $statement2->execute();
-            
-            
+
+
             $statement3 = $conn->prepare("SELECT * FROM stemmen WHERE video_id = :video_id AND user_id = :user_id;");
             $statement3->bindValue(":user_id", $p_iUserid);
             $statement3->bindValue(":video_id", $p_iVideoid);
@@ -139,7 +139,7 @@
             } else {
                 $this->Voted = false;
             }
-            
+
             //Als deze video van de gebruiker is, toon het aantal stemmen
             $conn = Db::getInstance();
             $statement = $conn->prepare("SELECT * FROM videos WHERE id = :video_id ORDER BY id DESC;");
@@ -149,16 +149,16 @@
             if($res["uploader"] == $_SESSION["user"]){
                 $this->Voted = true;
             }
-            
+
         }
-        
+
         public function printRecent(){
             $conn = Db::getInstance();
             $statement = $conn->prepare("SELECT * FROM videos ORDER BY id DESC;");
             $statement->execute();
             return $statement->fetchAll(PDO::FETCH_ASSOC);
         }
-        
+
         public function printFavorite(){
             $conn = Db::getInstance();
             $statement = $conn->prepare("SELECT * FROM videos v INNER JOIN stemmen s ON v.id = s.video_id WHERE s.user_id = :user_id ORDER BY s.stem_id DESC;");
@@ -166,7 +166,7 @@
             $statement->execute();
             return $statement->fetchAll(PDO::FETCH_ASSOC);
         }
-        
+
         public function printUploads(){
             $conn = Db::getInstance();
             $statement = $conn->prepare("SELECT * FROM videos WHERE uploader = :user ORDER BY id DESC;");
@@ -174,14 +174,14 @@
             $statement->execute();
             return $statement->fetchAll(PDO::FETCH_ASSOC);
         }
-        
+
         public function printFeatured(){
             $conn = Db::getInstance();
             $statement = $conn->prepare("SELECT * FROM videos v INNER JOIN featured f ON v.id = f.video_id ORDER BY f.feature_id DESC;");
             $statement->execute();
             return $statement->fetchAll(PDO::FETCH_ASSOC);
         }
-        
+
         public function show($p_iID){
             $conn = Db::getInstance();
             $statement = $conn->prepare("SELECT * FROM videos WHERE id = :id;");
@@ -189,7 +189,7 @@
             $statement->execute();
             return $statement->fetch(PDO::FETCH_ASSOC);
         }
-        
+
         public function feature(){ // maak een nieuwe feature aan
             // 1)lees de laatste feature id uit, check timestamp en check hoe lang dit geleden was
             $conn = Db::getInstance();
@@ -197,17 +197,17 @@
             $statement->execute();
             $res = $statement->fetch(PDO::FETCH_ASSOC);
             $previous = $res["timestamp"];
-            
+
             if((time() - $previous) > 20*60){ //meer dan 20 minuten geleden
-                
+
             // 2) als het lang genoeg geleden was, haal alle video's op die zijn geupload sinds de laatste timestamp uit de featured tabel. orden op meeste stemmen
                 $statement2 = $conn->prepare("SELECT * FROM videos WHERE timestamp > :timestamp ORDER BY stemmen DESC, timestamp DESC LIMIT 1;");
                 $statement2->bindValue(":timestamp", $previous);
                 $statement2->execute();
                 $res2 = $statement2->fetch(PDO::FETCH_ASSOC);
-                
+
                 $feature = $res2["id"]; // dit is de video die in featured zal worden opgeslaan.
-                
+
                 // 3) Neem de bovenste video uit de lijst van 2) en maak een record aan in de featured tabel met die video_id, en een nieuwe timestamp
             //INSERT INTO featured (video_id, timestamp) VALUES (0, 0);
                 $statement3 = $conn->prepare("INSERT INTO featured (video_id, timestamp) VALUES (:video_id, :timestamp);");
@@ -216,12 +216,12 @@
                 $statement3->execute();
             }
         }
-        
+
         //een functie genaamd updateNotifications() zal de laatste feature id uit de tabel features opslaan wanneer de gebruiker op overview 3 of in livefeed is
-        
-        public function checkFeature(){// controleer of er een nieuwe feature is
+
+        //public function checkFeature(){// controleer of er een nieuwe feature is
             // 1) check de recentste gefeaturede video in de featured tabel, als deze id niet overeen komt met wat in localStorage staat, wordt er een melding gemaakt
-            
+
             // 2) in de medling wordt gezegd hoeveel nieuwe gefeaturede video's er zijn = laatste id in de tabel - id in localstorage/session
-        }
+        //}
     }
