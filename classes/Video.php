@@ -191,10 +191,10 @@
             $res = $statement->fetch(PDO::FETCH_ASSOC);
             $previous = $res["timestamp"];
             
-            if((time() - $previous) > 10*60){ //meer dan 10 minuten geleden
+            if((time() - $previous) > 30*60){ //meer dan 30 minuten geleden
                 
             // 2) als het lang genoeg geleden was, haal alle video's op die zijn geupload sinds de laatste timestamp uit de featured tabel. orden op meeste stemmen
-                $statement2 = $conn->prepare("SELECT * FROM videos WHERE timestamp > :timestamp ORDER BY timestamp DESC LIMIT 1;");
+                $statement2 = $conn->prepare("SELECT * FROM videos WHERE timestamp > :timestamp ORDER BY stemmen, timestamp DESC LIMIT 1;");
                 $statement2->bindValue(":timestamp", $previous);
                 $statement2->execute();
                 $res2 = $statement2->fetch(PDO::FETCH_ASSOC);
@@ -210,11 +210,11 @@
             }
         }
         
-        //een functie genaamd updateNotifications() zal de laatste feature id uit de tabel features opslaan wanneer de gebruiker op overview 4 of in livefeed is
+        //een functie genaamd updateNotifications() zal de laatste feature id uit de tabel features opslaan wanneer de gebruiker op overview 3 of in livefeed is
         
         public function checkFeature(){// controleer of er een nieuwe feature is
             // 1) check de recentste gefeaturede video in de featured tabel, als deze id niet overeen komt met wat in localStorage staat, wordt er een melding gemaakt
             
-            // 2) in de medling wordt gezegd hoeveel nieuwe gefeaturede video's er zijn = laatste id in de tabel - id in localstorage
+            // 2) in de medling wordt gezegd hoeveel nieuwe gefeaturede video's er zijn = laatste id in de tabel - id in localstorage/session
         }
     }
