@@ -72,4 +72,31 @@ $(document).ready(function(){
         e.preventDefault();
     });
     
+    $(".rapporteer").click(function(e){
+        video_id2 = $(this).parents(".right-actions").siblings(".video_id").html();
+        that = $(this);
+        
+        console.info("the id of this video is "+video_id2);
+        console.log("de modal gaat open");
+        $("#report_modal").css('display', 'inline');
+        
+        e.preventDefault();
+    });
+    
+    $(".cancel_report").click(function(e){
+        $("#report_modal").css('display', 'none');
+        delete video_id2;
+        e.preventDefault();
+    });
+    
+    $(".report").click( function(e){
+        console.log(video_id2+" is gerapporteerd");
+        
+        var category = $(this).siblings(".category").val();
+        var bericht = $(this).siblings(".bericht").val();
+        
+        console.info("category: "+category+" bericht: "+bericht);
+        
+    });
+    
 });
