@@ -28,9 +28,9 @@
             }
         }
         
-        public function checkAll(){
+        public function countAllNew(){
             $conn = Db::getInstance();
-            $statement = $conn->prepare("SELECT * FROM meldingen WHERE ontvanger = :ontvanger ;");
+            $statement = $conn->prepare("SELECT * FROM meldingen WHERE ontvanger = :ontvanger AND gezien = 'false';");
             $statement->bindValue(":ontvanger", $_SESSION["user"]);
             $statement->execute();
             $res = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -49,7 +49,21 @@
             $_SESSION["LastF"] = $this->LastFeatured; //sla op in sessie
         }
         
-        public function notifyWinner($feature, $uploader){
+        public function notifyReported($uploader){
+            $conn = Db::getInstance();
+            
+            $boodschap = "Uw video werd verwijderd omdat hij door enkele personen als ongepast werd gerapporteerd. Klik hier om uw status te bekijken.";
+            
+            $statement = $conn->prepare("INSERT INTO meldingen (boodschap, pad, ontvanger, type, gezien) VALUES (:boodschap, :pad, :ontvanger, :type, :gezien);");
+            $statement->bindValue(":boodschap", $boodschap);
+            $statement->bindValue("pad", "pages/profile.php");
+            $statement->bindValue(":ontvanger", $uploader);
+            $statement->bindValue(":type", 'win');
+            $statement->bindValue(":gezien", "false");
+            $statement->execute();
+        }
+        
+        public function notifyWinner($uploader){
             $conn = Db::getInstance();
             
             $boodschap = "Uw video werd verkozen als featured video. Klik om de featured video lijst te bekijken";
@@ -58,7 +72,7 @@
             $statement->bindValue(":boodschap", $boodschap);
             $statement->bindValue("pad", "overview3.php");
             $statement->bindValue(":ontvanger", $uploader);
-            $statement->bindValue(":type", 'win');
+            $statement->bindValue(":type", 'report');
             $statement->bindValue(":gezien", "false");
             $statement->execute();
         }

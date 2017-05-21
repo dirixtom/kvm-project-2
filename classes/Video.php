@@ -237,6 +237,12 @@
                 $statement3 = $conn->prepare("UPDATE videos SET status = 'removed' WHERE id = :video_id ;");
                 $statement3->bindValue(":video_id", $video_id);
                 $statement3->execute();
+                
+                //melding maken voor uploader van de verwijderde video
+                include_once("Melding.php");
+                $melding = new Melding;
+                $melding->notifyReported($uploader);
+                
             } else {
                 //verander status naar 'reported'
                 $statement3 = $conn->prepare("UPDATE videos SET status = 'reported' WHERE id = :video_id ;");
@@ -261,12 +267,12 @@
                 $statement2->bindValue(":timestamp", $previous);
                 $statement2->execute();
                 $res2 = $statement2->fetch(PDO::FETCH_ASSOC);
-
-                $feature = $res2["id"]; // dit is de video die in featured zal worden opgeslaan.
                 
                 //melding maken voor winnaar
                 $melding = new Melding;
-                $melding->notifyWinner($feature, $res2["uploader"]);
+                $melding->notifyWinner($res2["uploader"]);
+
+                $feature = $res2["id"]; // dit is de video die in featured zal worden opgeslaan.
 
                 // 3) Neem de bovenste video uit de lijst van 2) en maak een record aan in de featured tabel met die video_id, en een nieuwe timestamp
             //INSERT INTO featured (video_id, timestamp) VALUES (0, 0);
