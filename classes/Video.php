@@ -263,6 +263,10 @@
                 $res2 = $statement2->fetch(PDO::FETCH_ASSOC);
 
                 $feature = $res2["id"]; // dit is de video die in featured zal worden opgeslaan.
+                
+                //melding maken voor winnaar
+                $melding = new Melding;
+                $melding->notifyWinner($feature, $res2["uploader"]);
 
                 // 3) Neem de bovenste video uit de lijst van 2) en maak een record aan in de featured tabel met die video_id, en een nieuwe timestamp
             //INSERT INTO featured (video_id, timestamp) VALUES (0, 0);

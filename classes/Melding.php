@@ -48,6 +48,20 @@
             
             $_SESSION["LastF"] = $this->LastFeatured; //sla op in sessie
         }
+        
+        public function notifyWinner($feature, $uploader){
+            $conn = Db::getInstance();
+            
+            $boodschap = "Uw video werd verkozen als featured video. Klik om de featured video lijst te bekijken";
+            
+            $statement = $conn->prepare("INSERT INTO meldingen (boodschap, pad, ontvanger, type, gezien) VALUES (:boodschap, :pad, :ontvanger, :type, :gezien);");
+            $statement->bindValue(":boodschap", $boodschap);
+            $statement->bindValue("pad", "overview3.php");
+            $statement->bindValue(":ontvanger", $uploader);
+            $statement->bindValue(":type", 'win');
+            $statement->bindValue(":gezien", "false");
+            $statement->execute();
+        }
 
         public function notifyFeatured(){// controleer of er een nieuwe feature is en maak melding als dit zo is
             // 1) check de recentst gefeaturede video in de featured tabel, als deze id niet overeen komt met wat in sessie staat, wordt er een melding gemaakt
