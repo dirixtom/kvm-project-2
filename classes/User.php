@@ -197,13 +197,17 @@
         public function deleteProfile(){
             $conn = Db::getInstance();
             
-            //unlink alle video bestanden
+            //unlink alle video bestanden en verwijder tags
             $statement = $conn->prepare("SELECT * FROM videos WHERE uploader = :user;");
             $statement->bindValue(":user", $_SESSION['user']);
             $statement->execute();
             $res = $statement->fetchAll(PDO::FETCH_ASSOC);
             foreach ($res as $key => $video) {
                 unlink("../uploads/videos/" . $video["data"]);
+                
+                $statement4 = $conn->prepare("DELETE FROM tags WHERE video = :video;");
+                $statement4->bindValue(":video", $video["data"]);
+                $statement4->execute();
             };
             
             //alle video's verwijderen uit db
