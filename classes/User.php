@@ -220,9 +220,14 @@
                 unlink("uploads/profileImages/" . $_SESSION["image"]);
             }
             
-            //profile verwijderen uit db
-            $statement3 = $conn->prepare("DELETE FROM users WHERE username = :username;");
-            $statement3->bindValue(":username", $_SESSION['user']);
+            //stemmen verwijderen
+            $statement3 = $conn->prepare("DELETE FROM stemmen WHERE user_id = :user_id;");
+            $statement3->bindValue(":user_id", $_SESSION['userid']);
             $statement3->execute();
+            
+            //profile verwijderen uit db
+            $statement5 = $conn->prepare("DELETE FROM users WHERE username = :username;");
+            $statement5->bindValue(":username", $_SESSION['user']);
+            $statement5->execute();
         }
     }
