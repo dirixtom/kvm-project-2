@@ -342,6 +342,10 @@
       .video .actionbar .right-actions p {
          font-size: 20px;
       }
+       .video .actionbar .right-actions a {
+         font-size: 20px;
+           text-decoration: none;
+      }
       .video .actionbar .right-actions img {
          margin-left: 32px;
          height: 20px;
@@ -357,6 +361,9 @@
       }
        
         #verwijder_modal{
+            display: none;
+        }
+       #report_modal{
             display: none;
         }
    </style>
@@ -388,6 +395,20 @@
                <div id="videocontainer">
 
                 <?php foreach ( $res as $key => $video): ?>
+                
+                <div class="modal" id="report_modal">
+                   <h2> Rapporteer </h2>
+                   <select class="category">
+                       <option value="None"> - - - </option>
+                        <option value="Taalgebruik">Ongepast taalgebruik</option>
+                        <option value="Provocatie">Provocatie</option>
+                        <option value="Racisme">Racisme</option>
+                        <option value="Naaktheid">Naaktheid</option>
+                    </select>
+                   <input type="text" placeholder="Uw bericht" class="bericht">
+                    <input type="button" class="cancel_report" value="annuleer">
+                    <input type="button" class="report" value="ok">
+                </div>
                  
                  <div class="modal" id="verwijder_modal">
                    <h2> Verwijder je video </h2>
@@ -413,7 +434,9 @@
                            <img src="images/ic_delete.svg" alt="verwijder je video" />
                             </a>
                            <?php else : ?>
-                           <p class="report">!</p>
+                           <a href="#" class="rapporteer">
+                               <p>!</p>
+                           </a>
                            <?php endif ; ?>
                            <a href="#" class="stem">
                                <img src="images/ic_favorite.svg" alt="markeer als favoriet" />

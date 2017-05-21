@@ -72,4 +72,48 @@ $(document).ready(function(){
         e.preventDefault();
     });
     
+    $(".rapporteer").click(function(e){
+        video_id2 = $(this).parents(".right-actions").siblings(".video_id").html();
+        that = $(this);
+        
+        console.info("the id of this video is "+video_id2);
+        console.log("de modal gaat open");
+        $("#report_modal").css('display', 'inline');
+        
+        e.preventDefault();
+    });
+    
+    $(".cancel_report").click(function(e){
+        $("#report_modal").css('display', 'none');
+        delete video_id2;
+        e.preventDefault();
+    });
+    
+    $(".report").click( function(e){
+        var category = $(this).siblings(".category").val();
+        var bericht = $(this).siblings(".bericht").val();
+        
+        console.info("category: "+category+" bericht: "+bericht);
+        
+        $.ajax({
+            type:"POST",
+            url:"./ajax/ajaxReport.php",
+            data:{"video_id" : video_id2, "category": category, "bericht": bericht},
+            dataType:"html"
+        }).done(function(response){
+            var feedback = JSON.parse(response); // want om één of andere reden weigert hij het zelf juist te lezen.
+            if( feedback.code == 500){
+                console.log("something went wrong");
+            }
+            if( feedback.code == 200){
+                console.log("everything is perfect");
+                that.parents(".video").css("display", "none");
+                console.log(video_id2+" is gerapporteerd");
+                $("#report_modal").css('display', 'none');
+            }
+        });
+        e.preventDefault();
+        
+    });
+    
 });
