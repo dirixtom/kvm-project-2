@@ -384,6 +384,22 @@
          text-decoration: none;
          text-align: center;
       }
+       .emptystate{
+         color: #626A6C;
+         margin: auto 0;
+         text-decoration: none;
+         text-align: center;
+      }
+       .icoon-nummer{
+           display: inline-block;
+           position: relative;
+           left: 100px;
+       }
+       .nummer{
+           position: absolute;
+           left: 335px;
+           top: 30px;
+       }
    </style>
    <script>
       $('#videocontainer').dragscrollable({

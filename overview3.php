@@ -382,6 +382,11 @@
          text-decoration: none;
          text-align: center;
       }
+       .nummer{
+           position: absolute;
+           left: 335px;
+           top: 30px;
+       }
    </style>
 </head>
 <script>

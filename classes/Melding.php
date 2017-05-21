@@ -28,6 +28,17 @@
             }
         }
         
+        public function checkAll(){
+            $conn = Db::getInstance();
+            $statement = $conn->prepare("SELECT * FROM meldingen WHERE ontvanger = :ontvanger ;");
+            $statement->bindValue(":ontvanger", $_SESSION["user"]);
+            $statement->execute();
+            $res = $statement->fetchAll(PDO::FETCH_ASSOC);
+            $rows = count($res);
+            
+            return $rows;
+        }
+        
         public function checkedFeatured(){// zal de laatste feature id uit de tabel features opslaan wanneer de gebruiker op overview 3 of in livefeed is -> roep deze functie aan in overview3 en livePlayer
             $conn = Db::getInstance();
             $statement = $conn->prepare("SELECT * FROM featured ORDER BY feature_id DESC LIMIT 1;");
