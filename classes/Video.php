@@ -163,15 +163,17 @@
         
         public function printRecent(){
             $conn = Db::getInstance();
-            $statement = $conn->prepare("SELECT * FROM videos ORDER BY id DESC;");
+            $statement = $conn->prepare("SELECT * FROM videos WHERE NOT status = 'removed' AND NOT id =(SELECT video_id FROM reports WHERE reporter = :user) ORDER BY id DESC;");
+            $statement->bindValue(":user", $_SESSION["user"]);
             $statement->execute();
             return $statement->fetchAll(PDO::FETCH_ASSOC);
         }
 
         public function printFavorite(){
             $conn = Db::getInstance();
-            $statement = $conn->prepare("SELECT * FROM videos v INNER JOIN stemmen s ON v.id = s.video_id WHERE s.user_id = :user_id ORDER BY s.stem_id DESC;");
+            $statement = $conn->prepare("SELECT * FROM videos v INNER JOIN stemmen s ON v.id = s.video_id WHERE s.user_id = :user_id AND NOT status = 'removed' AND NOT id =(SELECT video_id FROM reports WHERE reporter = :user) ORDER BY s.stem_id DESC;");
             $statement->bindValue(":user_id", $_SESSION["userid"]);
+            $statement->bindValue(":user", $_SESSION["user"]);
             $statement->execute();
             return $statement->fetchAll(PDO::FETCH_ASSOC);
         }
@@ -186,7 +188,8 @@
 
         public function printFeatured(){
             $conn = Db::getInstance();
-            $statement = $conn->prepare("SELECT * FROM videos v INNER JOIN featured f ON v.id = f.video_id ORDER BY f.feature_id DESC;");
+            $statement = $conn->prepare("SELECT * FROM videos v INNER JOIN featured f ON v.id = f.video_id WHERE NOT status = 'removed' AND NOT id =(SELECT video_id FROM reports WHERE reporter = :user) ORDER BY f.feature_id DESC;");
+            $statement->bindValue(":user", $_SESSION["user"]);
             $statement->execute();
             return $statement->fetchAll(PDO::FETCH_ASSOC);
         }
