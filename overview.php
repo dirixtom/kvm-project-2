@@ -345,6 +345,7 @@
       .video .actionbar .right-actions p {
          font-size: 20px;
       }
+<<<<<<< HEAD
       .video .actionbar .right-actions p.count {
          font-size: 14px;
       }
@@ -353,6 +354,11 @@
          display: flex;
          align-items: center;
          justify-content: space-between;
+=======
+       .video .actionbar .right-actions a {
+         font-size: 20px;
+           text-decoration: none;
+>>>>>>> master
       }
       .video .actionbar .right-actions img {
          height: 20px;
@@ -361,6 +367,18 @@
        .video_id{
            display: none;
        }
+       .video .actionbar .delete img { /* dit is godenloos gefoefel van de developer om die vuilbak op dezelfde lijn als het uitroepteken te krijgen... */
+         margin-right: -6.5px;
+        height: 20px;		
+         width: 20px;
+      }
+       
+        #verwijder_modal{
+            display: none;
+        }
+       #report_modal{
+            display: none;
+        }
    </style>
    <script>
       $('#videocontainer').dragscrollable({
@@ -390,6 +408,28 @@
                <div id="videocontainer">
 
                 <?php foreach ( $res as $key => $video): ?>
+                
+                <div class="modal" id="report_modal">
+                   <h2> Rapporteer </h2>
+                   <select class="category">
+                       <option value="None"> - - - </option>
+                        <option value="Taalgebruik">Ongepast taalgebruik</option>
+                        <option value="Provocatie">Provocatie</option>
+                        <option value="Racisme">Racisme</option>
+                        <option value="Naaktheid">Naaktheid</option>
+                    </select>
+                   <input type="text" placeholder="Uw bericht" class="bericht">
+                    <input type="button" class="cancel_report" value="annuleer">
+                    <input type="button" class="report" value="ok">
+                </div>
+                 
+                 <div class="modal" id="verwijder_modal">
+                   <h2> Verwijder je video </h2>
+                   <p>Ben je zeker dat je de video wil verwijderen? De video wordt definitief verwijderd en kan niet meer hersteld worden. </p>
+                    <input type="button" class="cancel_verwijder" value="annuleer">
+                    <input type="button" class="delete" value="ok">
+                </div>
+                 
                   <div class="video">
                      <div class="imgcontainer">
                         <a href='pages/videoPlayer.php?id=<?php echo $video["id"];?>'>
@@ -402,7 +442,15 @@
                         <p class="naam"><?php echo $video["uploader"]?></p>
                         <p class="video_id"><?php echo $video["id"]?></p>
                         <div class="right-actions">
-                           <p class="report">!</p>
+                          <?php if($video["uploader"] == $_SESSION["user"]) : ?>
+                          <a href="#" class="verwijder">
+                           <img src="images/ic_delete.svg" alt="verwijder je video" />
+                            </a>
+                           <?php else : ?>
+                           <a href="#" class="rapporteer">
+                               <p>!</p>
+                           </a>
+                           <?php endif ; ?>
                            <a href="#" class="stem">
                               <img src="images/ic_favorite.svg" alt="markeer als favoriet" />
                            </a>

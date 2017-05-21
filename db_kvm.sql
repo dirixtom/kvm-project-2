@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 20 mei 2017 om 12:05
+-- Gegenereerd op: 21 mei 2017 om 15:10
 -- Serverversie: 10.1.21-MariaDB
 -- PHP-versie: 5.6.30
 
@@ -39,7 +39,31 @@ CREATE TABLE `featured` (
 INSERT INTO `featured` (`feature_id`, `video_id`, `timestamp`) VALUES
 (3, 41, 1495034357),
 (4, 42, 1495106826),
-(5, 43, 1495190275);
+(5, 43, 1495190275),
+(6, 44, 1495296245),
+(7, 46, 1495354100);
+
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `reports`
+--
+
+CREATE TABLE `reports` (
+  `id` int(11) NOT NULL,
+  `video_id` int(11) NOT NULL,
+  `uploader` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `reporter` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `category` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `bericht` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `reports`
+--
+
+INSERT INTO `reports` (`id`, `video_id`, `uploader`, `reporter`, `category`, `bericht`) VALUES
+(10, 41, 'Langnek', 'roelifant', 'Provocatie', 'Deze man is eng, help!');
 
 -- --------------------------------------------------------
 
@@ -67,8 +91,7 @@ INSERT INTO `stemmen` (`stem_id`, `user_id`, `video_id`) VALUES
 (32, 25, 39),
 (33, 25, 37),
 (34, 25, 32),
-(35, 18, 42),
-(36, 18, 41);
+(35, 18, 42);
 
 -- --------------------------------------------------------
 
@@ -107,7 +130,10 @@ INSERT INTO `tags` (`id`, `tag`, `video`) VALUES
 (26, 'none', '1495033145_Langnek_video.webm'),
 (27, 'none', '1495033245_Langnek_video.webm'),
 (28, 'alex', '1495106812_Langnek_video.webm'),
-(29, 'lisa', '1495190271_Langnek_video.webm');
+(29, 'lisa', '1495190271_Langnek_video.webm'),
+(30, 'none', '1495296241_roelifant_video.webm'),
+(31, 'none', '1495296404_roelifant_video.webm'),
+(32, 'none', '1495297592_roelifant_video.webm');
 
 -- --------------------------------------------------------
 
@@ -164,22 +190,10 @@ CREATE TABLE `videos` (
 --
 
 INSERT INTO `videos` (`id`, `data`, `timestamp`, `uploader`, `stemmen`, `status`) VALUES
-(28, '1494427544_roelifant_video.webm', 0, 'roelifant', 1, 'default'),
-(29, '1494427836_roelifant_video.webm', 0, 'roelifant', 1, 'default'),
-(30, '1494428568_roelifant_video.webm', 0, 'roelifant', 2, 'default'),
-(31, '1495008420_roelifant_video.webm', 0, 'roelifant', 0, 'default'),
-(32, '1495009056_roelifant_video.webm', 0, 'roelifant', 1, 'default'),
-(33, '1495009087_roelifant_video.webm', 0, 'roelifant', 0, 'default'),
-(34, '1495009115_roelifant_video.webm', 0, 'roelifant', 0, 'default'),
-(35, '1495009244_roelifant_video.webm', 0, 'roelifant', 0, 'default'),
-(36, '1495009306_roelifant_video.webm', 0, 'roelifant', 1, 'default'),
-(37, '1495009440_roelifant_video.webm', 0, 'roelifant', 1, 'default'),
-(38, '1495023077_roelifant_video.webm', 0, 'roelifant', 0, 'default'),
-(39, '1495023532_roelifant_video.webm', 0, 'roelifant', 1, 'default'),
-(40, '1495025911_roelifant_video.webm', 0, 'roelifant', 1, 'default'),
-(41, '1495033245_Langnek_video.webm', 1495033261, 'Langnek', 1, 'default'),
+(41, '1495033245_Langnek_video.webm', 1495033261, 'Langnek', 1, 'reported'),
 (42, '1495106812_Langnek_video.webm', 1495106824, 'Langnek', 1, 'default'),
-(43, '1495190271_Langnek_video.webm', 1495190275, 'Langnek', 0, 'default');
+(43, '1495190271_Langnek_video.webm', 1495190275, 'Langnek', 0, 'default'),
+(46, '1495297592_roelifant_video.webm', 1495297604, 'roelifant', 0, 'default');
 
 --
 -- Indexen voor geëxporteerde tabellen
@@ -190,6 +204,12 @@ INSERT INTO `videos` (`id`, `data`, `timestamp`, `uploader`, `stemmen`, `status`
 --
 ALTER TABLE `featured`
   ADD PRIMARY KEY (`feature_id`);
+
+--
+-- Indexen voor tabel `reports`
+--
+ALTER TABLE `reports`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexen voor tabel `stemmen`
@@ -223,17 +243,22 @@ ALTER TABLE `videos`
 -- AUTO_INCREMENT voor een tabel `featured`
 --
 ALTER TABLE `featured`
-  MODIFY `feature_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `feature_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+--
+-- AUTO_INCREMENT voor een tabel `reports`
+--
+ALTER TABLE `reports`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT voor een tabel `stemmen`
 --
 ALTER TABLE `stemmen`
-  MODIFY `stem_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `stem_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 --
 -- AUTO_INCREMENT voor een tabel `tags`
 --
 ALTER TABLE `tags`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 --
 -- AUTO_INCREMENT voor een tabel `users`
 --
@@ -243,7 +268,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT voor een tabel `videos`
 --
 ALTER TABLE `videos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

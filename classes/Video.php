@@ -117,7 +117,7 @@
             $statement1 = $conn->prepare("SELECT * FROM stemmen WHERE video_id = :video_id;");
             $statement1->bindValue(":video_id", $p_iVideoid);
             $statement1->execute();
-            $res = $statement1->fetchAll(\PDO::FETCH_ASSOC);
+            $res = $statement1->fetchAll(PDO::FETCH_ASSOC);
             $rows = count($res);
             $this->Votes = $rows;
 
@@ -132,7 +132,7 @@
             $statement3->bindValue(":user_id", $p_iUserid);
             $statement3->bindValue(":video_id", $p_iVideoid);
             $statement3->execute();
-            $res2 = $statement3->fetchAll(\PDO::FETCH_ASSOC);
+            $res2 = $statement3->fetchAll(PDO::FETCH_ASSOC);
             $rows2 = count($res2);
             if($rows2 > 0){
                 $this->Voted = true;
@@ -151,18 +151,29 @@
             }
 
         }
-
+        
+        public function deleteVideo($p_iVideoid){
+            $res = $this->show($p_iVideoid);
+            unlink("../uploads/videos/" . $res["data"]);
+            $conn = Db::getInstance();
+            $statement = $conn->prepare("DELETE FROM videos WHERE id = :id;");
+            $statement->bindValue(":id", $p_iVideoid);
+            $statement->execute();
+        }
+        
         public function printRecent(){
             $conn = Db::getInstance();
-            $statement = $conn->prepare("SELECT * FROM videos ORDER BY id DESC;");
+            $statement = $conn->prepare("SELECT * FROM videos WHERE NOT status = 'removed' AND id not in (SELECT video_id FROM reports WHERE reporter = :user) ORDER BY id DESC;");
+            $statement->bindValue(":user", $_SESSION["user"]);
             $statement->execute();
             return $statement->fetchAll(PDO::FETCH_ASSOC);
         }
 
         public function printFavorite(){
             $conn = Db::getInstance();
-            $statement = $conn->prepare("SELECT * FROM videos v INNER JOIN stemmen s ON v.id = s.video_id WHERE s.user_id = :user_id ORDER BY s.stem_id DESC;");
+            $statement = $conn->prepare("SELECT * FROM videos v INNER JOIN stemmen s ON v.id = s.video_id WHERE s.user_id = :user_id AND NOT status = 'removed' AND id not in (SELECT video_id FROM reports WHERE reporter = :user) ORDER BY s.stem_id DESC;");
             $statement->bindValue(":user_id", $_SESSION["userid"]);
+            $statement->bindValue(":user", $_SESSION["user"]);
             $statement->execute();
             return $statement->fetchAll(PDO::FETCH_ASSOC);
         }
@@ -177,7 +188,8 @@
 
         public function printFeatured(){
             $conn = Db::getInstance();
-            $statement = $conn->prepare("SELECT * FROM videos v INNER JOIN featured f ON v.id = f.video_id ORDER BY f.feature_id DESC;");
+            $statement = $conn->prepare("SELECT * FROM videos v INNER JOIN featured f ON v.id = f.video_id WHERE NOT status = 'removed' AND id not in (SELECT video_id FROM reports WHERE reporter = :user) ORDER BY f.feature_id DESC;");
+            $statement->bindValue(":user", $_SESSION["user"]);
             $statement->execute();
             return $statement->fetchAll(PDO::FETCH_ASSOC);
         }
@@ -188,6 +200,41 @@
             $statement->bindValue(":id", $p_iID);
             $statement->execute();
             return $statement->fetch(PDO::FETCH_ASSOC);
+        }
+        
+        public function report($video_id, $user, $category, $bericht){
+            $conn = Db::getInstance();
+            //uploader opzoeken, en status lezen
+            $res = $this->show($video_id);
+            $uploader = $res["uploader"];
+            
+            //record aan report tabel toevoegen
+            $statement = $conn->prepare("INSERT INTO reports (video_id, uploader, reporter, category, bericht) VALUES (:video_id, :uploader, :reporter, :category, :bericht);");
+            $statement->bindValue(":video_id", $video_id);
+            $statement->bindValue(":uploader", $uploader);
+            $statement->bindValue(":reporter", $user);
+            $statement->bindValue(":category", $category);
+            $statement->bindValue(":bericht", $bericht);
+            $statement->execute();
+            
+            //video status updaten: tel hoe veel keer de video gerapporteerd is geweest en pas status aan.
+            $statement2 = $conn->prepare("SELECT * FROM reports WHERE video_id = :video_id;");
+            $statement2->bindValue(":video_id", $video_id);
+            $statement2->execute();
+            $res = $statement2->fetchAll(PDO::FETCH_ASSOC);
+            $rows = count($res);
+            if($rows > 2){
+                // verander status naar 'removed'
+                $statement3 = $conn->prepare("UPDATE videos SET status = 'removed' WHERE id = :video_id ;");
+                $statement3->bindValue(":video_id", $video_id);
+                $statement3->execute();
+            } else {
+                //verander status naar 'reported'
+                $statement3 = $conn->prepare("UPDATE videos SET status = 'reported' WHERE id = :video_id ;");
+                $statement3->bindValue(":video_id", $video_id);
+                $statement3->execute();
+            }
+                
         }
 
         public function feature(){ // maak een nieuwe feature aan
@@ -201,7 +248,7 @@
             if((time() - $previous) > 20*60){ //meer dan 20 minuten geleden
 
             // 2) als het lang genoeg geleden was, haal alle video's op die zijn geupload sinds de laatste timestamp uit de featured tabel. orden op meeste stemmen
-                $statement2 = $conn->prepare("SELECT * FROM videos WHERE timestamp > :timestamp ORDER BY stemmen DESC, timestamp DESC LIMIT 1;");
+                $statement2 = $conn->prepare("SELECT * FROM videos WHERE timestamp > :timestamp AND stemmen > 0 ORDER BY stemmen DESC, timestamp DESC LIMIT 1;");
                 $statement2->bindValue(":timestamp", $previous);
                 $statement2->execute();
                 $res2 = $statement2->fetch(PDO::FETCH_ASSOC);

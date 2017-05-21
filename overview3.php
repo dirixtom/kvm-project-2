@@ -277,6 +277,7 @@
          border: none;
          width: 25%;
       }
+<<<<<<< HEAD
       nav div {
          position: relative;
          width: 100%;
@@ -364,6 +365,101 @@
            text-align: center;
        }
 
+=======
+       
+       nav div {		       		
+         position: relative;		
+         width: 100%;				
+         height: 48px;				
+         background-color: #FFF;				
+         margin-top: 48px;				
+         display: flex;				
+         align-items: center;				
+         justify-content: flex-end;				
+      }				
+      #filter {				
+         width: 20px;				
+         margin-right: 24px;				
+      }				
+      #videocontainer {				
+         position: relative;				
+         margin-top: 96px;				
+      }				
+      .video {				
+         position: relative;				
+         width: 94%;				
+         height: 200px;				
+         margin: 0 auto;				
+         clear: both;				
+         margin-bottom: 12px;				
+         -webkit-box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.20);				
+         -moz-box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.20);				
+         box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.20);				
+      }				
+      .video .imgcontainer {				
+         width: 100%;				
+         height: calc(100% - 40px);				
+         overflow: hidden;				
+      }				
+      .video video {				
+         width: 100%;				
+         border-radius: 4px;				
+      }				
+      .video .actionbar {				
+         height: 40px;				
+         width: 100%;				
+         position: absolute;				
+         bottom: 0;				
+         left: 0;				
+         display: flex;				
+         align-items: center;				
+         justify-content: space-between;				
+      }				
+      .video .actionbar p {				
+         color: #626A6C;				
+         font-size: 14px;				
+         margin-left: 8px;				
+      }				
+      .video .actionbar .right-actions {				
+         margin-right: 8px;				
+         display: flex;				
+         align-items: center;				
+         justify-content: space-between;				
+      }				
+      .video .actionbar .right-actions p {				
+         font-size: 20px;				
+      }
+       .video .actionbar .right-actions a {
+         font-size: 20px;
+           text-decoration: none;
+      }
+      .video .actionbar .right-actions img {				
+         margin-left: 32px;				
+         height: 20px;				
+         width: 20px;				
+      }				
+       		
+    .video_id{		
+           display: none;		
+       }		
+       .emptystate{		
+           color: #626A6C;		
+           margin: auto 0;		
+            text-decoration: none;		
+           text-align: center;		
+       }
+       .video .actionbar .delete img { /* dit is godenloos gefoefel van de developer om die vuilbak op dezelfde lijn als het uitroepteken te krijgen... */
+         margin-right: -6.5px;
+        height: 20px;		
+         width: 20px;
+      }
+        #verwijder_modal{
+            display: none;
+        }
+       #report_modal{
+            display: none;
+        }
+>>>>>>> master
    </style>
 </head>
 <script>
@@ -386,6 +482,7 @@
           			<a href="overview3.php">Featured</a>
           			<a href="overview4.php">Eigen</a>
                </nav>
+<<<<<<< HEAD
                <div id="videocontainer">
                 <?php
                     if(count($res) == 0){
@@ -397,6 +494,42 @@
                      <div class="imgcontainer">
                         <a href='pages/videoPlayer.php?id=<?php echo $video["id"];?>'>
                          <video src="<?php echo "uploads/videos/" . $video["data"]?>" alt="video thumbnail" poster="">
+=======
+               <div id="videocontainer">		
+                <?php		
+                    if(count($res) == 0){		
+                        echo "<p class='emptystate'> Er is deze match nog geen video op het LED-scherm gekomen. </p>";		
+                    }		
+                ?>
+                		
+                <?php foreach ( $res as $key => $video): ?>
+                
+                <div class="modal" id="report_modal">
+                   <h2> Rapporteer </h2>
+                   <select class="category">
+                       <option value="None"> - - - </option>
+                        <option value="Taalgebruik">Ongepast taalgebruik</option>
+                        <option value="Provocatie">Provocatie</option>
+                        <option value="Racisme">Racisme</option>
+                        <option value="Naaktheid">Naaktheid</option>
+                    </select>
+                   <input type="text" placeholder="Uw bericht" class="bericht">
+                    <input type="button" class="cancel_report" value="annuleer">
+                    <input type="button" class="report" value="ok">
+                </div>
+                 
+                 <div class="modal" id="verwijder_modal">
+                   <h2> Verwijder je video </h2>
+                   <p>Ben je zeker dat je de video wil verwijderen? De video wordt definitief verwijderd en kan niet meer hersteld worden. </p>
+                    <input type="button" class="cancel_verwijder" value="annuleer">
+                    <input type="button" class="delete" value="ok">
+                </div>
+                 
+                  <div class="video">
+                     <div class="imgcontainer">
+                        <a href='pages/videoPlayer.php?id=<?php echo $video["id"];?>'>
+                         <video src="<?php echo "uploads/videos/" . $video["data"]?>" alt="video thumbnail">
+>>>>>>> master
                              <source src="uploads/videos/<?php echo $video["data"] ?>" type="video/webm">
                          </video>
                          </a>
@@ -405,7 +538,19 @@
                         <p class="naam"><?php echo $video["uploader"]?></p>
                         <p class="video_id"><?php echo $video["id"]?></p>
                         <div class="right-actions">
+<<<<<<< HEAD
                            <p class="report">!</p>
+=======
+                          <?php if($video["uploader"] == $_SESSION["user"]) : ?>
+                          <a href="#" class="verwijder">
+                           <img src="images/ic_delete.svg" alt="verwijder je video" />
+                            </a>
+                           <?php else : ?>
+                           <a href="#" class="rapporteer">
+                               <p>!</p>
+                           </a>
+                           <?php endif ; ?>
+>>>>>>> master
                            <a href="#" class="stem">
                                <img src="images/ic_favorite.svg" alt="markeer als favoriet" />
                             </a>
@@ -419,7 +564,11 @@
                      </div>
                   </div>
                   <?php endforeach; ?>
+<<<<<<< HEAD
 
+=======
+                  		
+>>>>>>> master
                   </div>
                <button id="upload"><img src="images/ic_camera.svg" alt="opnemen camera icoon" /></button>
             </main>

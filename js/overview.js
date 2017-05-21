@@ -8,7 +8,7 @@ $(document).ready(function(){
     
     $(".stem").click( function(e){
         var video_id = $(this).parents(".right-actions").siblings(".video_id").html();
-        console.info("the id of this video is "+video_id);
+        //console.info("the id of this video is "+video_id);
         var that = $(this);
         
         $.ajax({
@@ -19,10 +19,10 @@ $(document).ready(function(){
         }).done(function(response){
             var feedback = JSON.parse(response); // want om één of andere reden weigert hij het zelf juist te lezen.
             if( feedback.code == 500){
-                console.log("something went wrong");
+                //console.log("something went wrong");
             }
             if( feedback.code == 200){
-                console.log("everything is perfect");
+                //console.log("everything is perfect");
                 if(feedback.boolean = true){
                     that.siblings(".count").text(feedback.count);
                 }
@@ -30,6 +30,90 @@ $(document).ready(function(){
         });
         
         e.preventDefault();
+    });
+    
+    $(".verwijder").click(function(e){
+        video_id = $(this).parents(".right-actions").siblings(".video_id").html();
+        that = $(this);
+        
+        console.info("the id of this video is "+video_id);
+        console.log("de modal gaat open");
+        $("#verwijder_modal").css('display', 'inline');
+        
+        e.preventDefault();
+    });
+    
+    $(".cancel_verwijder").click(function(e){
+        $("#verwijder_modal").css('display', 'none');
+        delete video_id;
+        e.preventDefault();
+    });
+    
+    $(".delete").click( function(e){
+        console.log("het wordt verwijderd");
+            
+        $.ajax({
+            type:"POST",
+            url:"./ajax/ajaxDelete.php",
+            data:{"video_id" : video_id},
+            dataType:"html"
+        }).done(function(response){
+            var feedback = JSON.parse(response); // want om één of andere reden weigert hij het zelf juist te lezen.
+            if( feedback.code == 500){
+                console.log("something went wrong");
+            }
+            if( feedback.code == 200){
+                console.log("everything is perfect");
+                that.parents(".video").css("display", "none");
+                console.info("video "+video_id+" was removed");
+                $("#verwijder_modal").css('display', 'none');
+            }
+        });
+        e.preventDefault();
+    });
+    
+    $(".rapporteer").click(function(e){
+        video_id2 = $(this).parents(".right-actions").siblings(".video_id").html();
+        that = $(this);
+        
+        console.info("the id of this video is "+video_id2);
+        console.log("de modal gaat open");
+        $("#report_modal").css('display', 'inline');
+        
+        e.preventDefault();
+    });
+    
+    $(".cancel_report").click(function(e){
+        $("#report_modal").css('display', 'none');
+        delete video_id2;
+        e.preventDefault();
+    });
+    
+    $(".report").click( function(e){
+        var category = $(this).siblings(".category").val();
+        var bericht = $(this).siblings(".bericht").val();
+        
+        console.info("category: "+category+" bericht: "+bericht);
+        
+        $.ajax({
+            type:"POST",
+            url:"./ajax/ajaxReport.php",
+            data:{"video_id" : video_id2, "category": category, "bericht": bericht},
+            dataType:"html"
+        }).done(function(response){
+            var feedback = JSON.parse(response); // want om één of andere reden weigert hij het zelf juist te lezen.
+            if( feedback.code == 500){
+                console.log("something went wrong");
+            }
+            if( feedback.code == 200){
+                console.log("everything is perfect");
+                that.parents(".video").css("display", "none");
+                console.log(video_id2+" is gerapporteerd");
+                $("#report_modal").css('display', 'none');
+            }
+        });
+        e.preventDefault();
+        
     });
     
 });
