@@ -116,4 +116,52 @@ $(document).ready(function(){
         
     });
     
+    var click_meldingen = 0;
+    $("#drie").click(function(e){
+        click_meldingen++;
+        if(click_meldingen % 2 == 0){
+            $("#meldingen").css('display', 'none');
+        } else {
+            $("#meldingen").css('display', 'inline');
+        
+            $.ajax({
+                type:"POST",
+                url:"./ajax/ajaxCheckNotifications.php",
+                data:{"gezien" : true},
+                dataType:"html"
+            }).done(function(response){
+                var feedback = JSON.parse(response); // want om één of andere reden weigert hij het zelf juist te lezen.
+                if( feedback.code == 500){
+                    console.log("something went wrong");
+                }
+                if( feedback.code == 200){
+                    console.log("success");
+                }
+            });
+        }
+        
+        e.preventDefault();
+    });
+    
+    $(".melding_close").click(function(e){
+        $(this).parents(".melding").css('display', 'none');
+        var melding_id = $(this).siblings(".pad").children(".melding_id").html();
+        
+        $.ajax({
+            type:"POST",
+            url:"./ajax/ajaxDeleteNotifications.php",
+            data:{"melding_id" : melding_id},
+            dataType:"html"
+        }).done(function(response){
+            var feedback = JSON.parse(response); // want om één of andere reden weigert hij het zelf juist te lezen.
+            if( feedback.code == 500){
+                console.log("something went wrong");
+            }
+            if( feedback.code == 200){
+                console.log("melding "+melding_id+" verwijderd");
+            }
+        });
+        
+        e.preventDefault();
+    });
 });

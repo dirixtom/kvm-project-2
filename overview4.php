@@ -13,6 +13,11 @@
 
     $videos = new Video;
     $res = $videos->printUploads();
+    $videos->feature();
+
+    $melding = new Melding;
+    $melding->notifyFeatured();
+
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -378,6 +383,28 @@
          text-decoration: none;
          text-align: center;
       }
+       .nummer{
+           position: absolute;
+           left: 335px;
+           top: 30px;
+       }
+       #meldingen{
+           position: absolute;
+           background-color: white;
+           width: 260px;
+           left: 50px;
+           top: 20px;
+           display: none;
+       }
+       #meldingen ul{
+           list-style-type: none;
+       }
+       #meldingen a{
+           text-decoration: none;
+       }
+       #meldingen .melding_id{
+           display: none;
+       }
    </style>
 </head>
    <script>
