@@ -90,12 +90,29 @@ $(document).ready(function(){
     });
     
     $(".report").click( function(e){
-        console.log(video_id2+" is gerapporteerd");
-        
         var category = $(this).siblings(".category").val();
         var bericht = $(this).siblings(".bericht").val();
         
         console.info("category: "+category+" bericht: "+bericht);
+        
+        $.ajax({
+            type:"POST",
+            url:"./ajax/ajaxReport.php",
+            data:{"video_id" : video_id2, "category": category, "bericht": bericht},
+            dataType:"html"
+        }).done(function(response){
+            var feedback = JSON.parse(response); // want om één of andere reden weigert hij het zelf juist te lezen.
+            if( feedback.code == 500){
+                console.log("something went wrong");
+            }
+            if( feedback.code == 200){
+                console.log("everything is perfect");
+                that.parents(".video").css("display", "none");
+                console.log(video_id2+" is gerapporteerd");
+                $("#report_modal").css('display', 'none');
+            }
+        });
+        e.preventDefault();
         
     });
     

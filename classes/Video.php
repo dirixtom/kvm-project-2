@@ -198,6 +198,24 @@
             $statement->execute();
             return $statement->fetch(PDO::FETCH_ASSOC);
         }
+        
+        public function report($video_id, $user, $category, $bericht){
+            $conn = Db::getInstance();
+            //uploader opzoeken, en status lezen
+            $res = $this->show($video_id);
+            $uploader = $res["uploader"];
+            
+            //record aan report tabel toevoegen
+            $statement = $conn->prepare("INSERT INTO reports (video_id, uploader, reporter, category, bericht) VALUES (:video_id, :uploader, :reporter, :category, :bericht);");
+            $statement->bindValue(":video_id", $video_id);
+            $statement->bindValue(":uploader", $uploader);
+            $statement->bindValue(":reporter", $user);
+            $statement->bindValue(":category", $category);
+            $statement->bindValue(":bericht", $bericht);
+            $statement->execute();
+            
+            //video status updaten
+        }
 
         public function feature(){ // maak een nieuwe feature aan
             // 1)lees de laatste feature id uit, check timestamp en check hoe lang dit geleden was

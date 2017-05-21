@@ -399,11 +399,11 @@
                 <div class="modal" id="report_modal">
                    <h2> Rapporteer </h2>
                    <select class="category">
-                       <option value="None"> - - </option>
-                        <option value="Arial">Arial</option>
-                        <option value="Calibri">Calibri</option>
-                        <option value="Courier">Courier</option>
-                        <option value="Verdana">Verdana</option>
+                       <option value="None"> - - - </option>
+                        <option value="Taalgebruik">Ongepast taalgebruik</option>
+                        <option value="Provocatie">Provocatie</option>
+                        <option value="Racisme">Racisme</option>
+                        <option value="Naaktheid">Naaktheid</option>
                     </select>
                    <input type="text" placeholder="Uw bericht" class="bericht">
                     <input type="button" class="cancel_report" value="annuleer">
