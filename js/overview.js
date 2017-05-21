@@ -119,19 +119,31 @@ $(document).ready(function(){
     $("#drie").click(function(e){
         $("#meldingen").css('display', 'inline');
         
+        $.ajax({
+            type:"POST",
+            url:"./ajax/ajaxCheckNotifications.php",
+            data:{"gezien" : true},
+            dataType:"html"
+        }).done(function(response){
+            var feedback = JSON.parse(response); // want om één of andere reden weigert hij het zelf juist te lezen.
+            if( feedback.code == 500){
+                console.log("something went wrong");
+            }
+            if( feedback.code == 200){
+                console.log("success");
+            }
+        });
+        
         e.preventDefault();
     });
     
     $(".melding_close").click(function(e){
         $(this).parents(".melding").css('display', 'none');
         var melding_id = $(this).siblings(".pad").children(".melding_id").html();
-        var nummer = $(".nummer").html();
-        nummer = nummer -1;
-        $(".nummer").html(nummer);
         
         $.ajax({
             type:"POST",
-            url:"./ajax/ajaxCheckNotifications.php",
+            url:"./ajax/ajaxDeleteNotifications.php",
             data:{"melding_id" : melding_id},
             dataType:"html"
         }).done(function(response){

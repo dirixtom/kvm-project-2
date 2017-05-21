@@ -10,11 +10,11 @@
         if(!empty($_POST) ){
             
             $melding = new Melding;
-            $melding->view();
+            $melding->deleteMelding($_POST["melding_id"]);
             
             $feedback = [
                 "code" => 200,
-                "message" => "de notificaties zijn bekeken."
+                "message" => "de notificatie is verwijderd."
             ];
                 
         }

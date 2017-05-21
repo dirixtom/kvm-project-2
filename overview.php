@@ -390,11 +390,6 @@
          text-decoration: none;
          text-align: center;
       }
-       .icoon-nummer{
-           display: inline-block;
-           position: relative;
-           left: 100px;
-       }
        .nummer{
            position: absolute;
            left: 335px;

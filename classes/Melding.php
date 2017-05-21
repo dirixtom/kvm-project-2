@@ -148,5 +148,12 @@
             $statement->bindValue(":ontvanger", $_SESSION["user"]);
             $statement->execute();
         }
+        
+        public function view(){
+            $conn = Db::getInstance();
+            $statement2 = $conn->prepare("UPDATE meldingen SET gezien = 'true' WHERE ontvanger = :ontvanger;");
+            $statement2->bindValue(":ontvanger", $_SESSION["user"]);
+            $statement2->execute();
+        }
 
 }
