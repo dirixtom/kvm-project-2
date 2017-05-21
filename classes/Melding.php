@@ -39,6 +39,14 @@
             return $rows;
         }
         
+        public function printAll($user){
+            $conn = Db::getInstance();
+            $statement = $conn->prepare("SELECT * FROM meldingen WHERE ontvanger = :ontvanger;");
+            $statement->bindValue(":ontvanger", $user);
+            $statement->execute();
+            return $statement->fetchAll(PDO::FETCH_ASSOC);
+        }
+        
         public function checkedFeatured(){// zal de laatste feature id uit de tabel features opslaan wanneer de gebruiker op overview 3 of in livefeed is -> roep deze functie aan in overview3 en livePlayer
             $conn = Db::getInstance();
             $statement = $conn->prepare("SELECT * FROM featured ORDER BY feature_id DESC LIMIT 1;");
@@ -132,5 +140,13 @@
                         //er moet geen melding gemaakt worden
                     }
                 }
+        
+        public function deleteMelding($melding_id){
+            $conn = Db::getInstance();
+            $statement = $conn->prepare("DELETE FROM meldingen WHERE id = :id AND ontvanger = :ontvanger;");
+            $statement->bindValue(":id", $melding_id);
+            $statement->bindValue(":ontvanger", $_SESSION["user"]);
+            $statement->execute();
+        }
 
 }

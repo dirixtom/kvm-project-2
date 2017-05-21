@@ -7,4 +7,20 @@
 	<div class="menuicon"><span></span></div>
 	<div class="menu"></div>
 	<div class="shade"></div>
+	<?php
+        $res2 = $melding->printAll($_SESSION["user"]);
+    ?>
+    <div id="meldingen">
+        <ul>
+            <?php foreach ( $res2 as $key => $boodschap): ?>
+                <li class="melding">
+                   <a class="pad" href="<?php echo $boodschap["pad"]; ?>">
+                        <p class="boodschap"><?php echo $boodschap["boodschap"]; ?></p>
+                        <p class="melding_id"><?php echo $boodschap["id"]; ?></p>
+                    </a>
+                    <a href="#" class="melding_close">x</a>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+	</div>
 </header>
