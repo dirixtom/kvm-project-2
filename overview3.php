@@ -1,17 +1,18 @@
 <?php
     session_start();
-    /*if (isset($_SESSION['user'])) {
+    if (isset($_SESSION['user'])) {
     } else {
         header('Location: login.php');
-    }*/
+    }
 
     define("SCHERM", "Overzicht");
 
-    spl_autoload_register(function ($class) {		
-        include_once("/classes/" . $class . ".php");		
-    });		
-    $videos = new Video;		
+    spl_autoload_register(function ($class) {
+        include_once("classes/" . $class . ".php");
+    });
+    $videos = new Video;
     $res = $videos->printFeatured();
+
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,7 +51,7 @@
          width: 360px;
          height: 496px;
          background: #FFF;
-          overflow-y: auto;
+         overflow-y: auto;
       }
       .scherm {
          position: relative;
@@ -250,11 +251,12 @@
       button#upload img {
         width: 20px;
       }
+
       nav {
          height: 48px;
          width: 100%;
-          position: absolute;		
-          z-index: 1;
+         position: absolute;
+         z-index: 1;
       }
       nav a {
          width: calc(25% - 2px);
@@ -272,110 +274,117 @@
          background-color: #FFF;
          color: #626A6C;
       }
-      nav a:last-child {
+      #last-child {
          border: none;
          width: 25%;
       }
-       
-       nav div {		       		
-         position: relative;		
-         width: 100%;				
-         height: 48px;				
-         background-color: #FFF;				
-         margin-top: 48px;				
-         display: flex;				
-         align-items: center;				
-         justify-content: flex-end;				
-      }				
-      #filter {				
-         width: 20px;				
-         margin-right: 24px;				
-      }				
-      #videocontainer {				
-         position: relative;				
-         margin-top: 96px;				
-      }				
-      .video {				
-         position: relative;				
-         width: 94%;				
-         height: 200px;				
-         margin: 0 auto;				
-         clear: both;				
-         margin-bottom: 12px;				
-         -webkit-box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.20);				
-         -moz-box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.20);				
-         box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.20);				
-      }				
-      .video .imgcontainer {				
-         width: 100%;				
-         height: calc(100% - 40px);				
-         overflow: hidden;				
-      }				
-      .video video {				
-         width: 100%;				
-         border-radius: 4px;				
-      }				
-      .video .actionbar {				
-         height: 40px;				
-         width: 100%;				
-         position: absolute;				
-         bottom: 0;				
-         left: 0;				
-         display: flex;				
-         align-items: center;				
-         justify-content: space-between;				
-      }				
-      .video .actionbar p {				
-         color: #626A6C;				
-         font-size: 14px;				
-         margin-left: 8px;				
-      }				
-      .video .actionbar .right-actions {				
-         margin-right: 8px;				
-         display: flex;				
-         align-items: center;				
-         justify-content: space-between;				
-      }				
-      .video .actionbar .right-actions p {				
-         font-size: 20px;				
+      nav div {
+         position: relative;
+         width: 100%;
+         height: 48px;
+         background-color: #FFF;
+         margin-top: 48px;
+         display: flex;
+         align-items: center;
+         justify-content: flex-end;
       }
-       .video .actionbar .right-actions a {
+      #filter {
+         width: 20px;
+         margin-right: 24px;
+      }
+      #videocontainer {
+         position: relative;
+         margin-top: 96px;
+      }
+      .video {
+         position: relative;
+         width: 94%;
+         height: 200px;
+         margin: 0 auto;
+         clear: both;
+         margin-bottom: 12px;
+         border-radius: 4px;
+         -webkit-box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.20);
+         -moz-box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.20);
+         box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.20);
+      }
+      .video .imgcontainer {
+         width: 100%;
+         height: calc(100% - 40px);
+         overflow: hidden;
+      }
+      .video video {
+         width: 100%;
+         border-radius: 4px;
+      }
+      .video .actionbar {
+         height: 40px;
+         width: 100%;
+         position: absolute;
+         bottom: 0;
+         left: 0;
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+      }
+      .video .actionbar p {
+         color: #626A6C;
+         font-size: 14px;
+         margin-left: 8px;
+      }
+      .video .actionbar .right-actions {
+         margin-right: 8px;
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+      }
+      .video .actionbar .right-actions p {
+         line-height: 20px;
          font-size: 20px;
-           text-decoration: none;
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
       }
-      .video .actionbar .right-actions img {				
-         margin-left: 32px;				
-         height: 20px;				
-         width: 20px;				
-      }				
-       		
-    .video_id{		
-           display: none;		
-       }		
-       .emptystate{		
-           color: #626A6C;		
-           margin: auto 0;		
-            text-decoration: none;		
-           text-align: center;		
-       }
-       .video .actionbar .delete img { /* dit is godenloos gefoefel van de developer om die vuilbak op dezelfde lijn als het uitroepteken te krijgen... */
-         margin-right: -6.5px;
-        height: 20px;		
+      .video .actionbar .right-actions p.count {
+         font-size: 14px;
+         line-height: 20px;
+      }
+      .video .actionbar .right-actions .stem, .video .actionbar .right-actions .verwijder {
+         margin-left: 16px;
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+	  }
+      .video .actionbar .right-actions a {
+         font-size: 20px;
+         text-decoration: none;
+      }
+      .video .actionbar .right-actions img {
+         height: 20px;
          width: 20px;
       }
-        #verwijder_modal{
-            display: none;
-        }
-       #report_modal{
-            display: none;
-        }
+      .video_id{
+         display: none;
+      }
+      #verwijder_modal{
+         display: none;
+      }
+      #report_modal{
+         display: none;
+      }
+      .emptystate{
+         color: #626A6C;
+         margin: auto 0;
+         text-decoration: none;
+         text-align: center;
+      }
    </style>
 </head>
-<script>		
-   $('#videocontainer').dragscrollable({		
-      dragSelector: '.video',		
-      acceptPropagatedEvent: false		
-   });		
+<script>
+   $('#videocontainer').dragscrollable({
+      dragSelector: '.video',
+      acceptPropagatedEvent: false
+   });
    </script>
 <body>
     <div class="container">
@@ -391,15 +400,16 @@
           			<a href="overview3.php">Featured</a>
           			<a href="overview4.php">Eigen</a>
                </nav>
-               <div id="videocontainer">		
-                <?php		
-                    if(count($res) == 0){		
-                        echo "<p class='emptystate'> Er is deze match nog geen video op het LED-scherm gekomen. </p>";		
-                    }		
+
+               <div id="videocontainer">
+                <?php
+                    if(count($res) == 0){
+                        echo "<p class='emptystate'> Er is deze match nog geen video op het LED-scherm gekomen. </p>";
+                    }
                 ?>
-                		
+
                 <?php foreach ( $res as $key => $video): ?>
-                
+
                 <div class="modal" id="report_modal">
                    <h2> Rapporteer </h2>
                    <select class="category">
@@ -413,14 +423,14 @@
                     <input type="button" class="cancel_report" value="annuleer">
                     <input type="button" class="report" value="ok">
                 </div>
-                 
+
                  <div class="modal" id="verwijder_modal">
                    <h2> Verwijder je video </h2>
                    <p>Ben je zeker dat je de video wil verwijderen? De video wordt definitief verwijderd en kan niet meer hersteld worden. </p>
                     <input type="button" class="cancel_verwijder" value="annuleer">
                     <input type="button" class="delete" value="ok">
                 </div>
-                 
+
                   <div class="video">
                      <div class="imgcontainer">
                         <a href='pages/videoPlayer.php?id=<?php echo $video["id"];?>'>
@@ -455,7 +465,6 @@
                      </div>
                   </div>
                   <?php endforeach; ?>
-                  		
                   </div>
                <button id="upload"><img src="images/ic_camera.svg" alt="opnemen camera icoon" /></button>
             </main>

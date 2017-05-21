@@ -254,6 +254,7 @@
       button#upload img {
         width: 20px;
       }
+
       nav {
          height: 48px;
          width: 100%;
@@ -305,6 +306,7 @@
          margin: 0 auto;
          clear: both;
          margin-bottom: 12px;
+         border-radius: 4px;
          -webkit-box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.20);
          -moz-box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.20);
          box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.20);
@@ -340,32 +342,45 @@
          justify-content: space-between;
       }
       .video .actionbar .right-actions p {
+         line-height: 20px;
          font-size: 20px;
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
       }
-       .video .actionbar .right-actions a {
+      .video .actionbar .right-actions p.count {
+         font-size: 14px;
+         line-height: 20px;
+      }
+      .video .actionbar .right-actions .stem, .video .actionbar .right-actions .verwijder {
+         margin-left: 16px;
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+	  }
+      .video .actionbar .right-actions a {
          font-size: 20px;
-           text-decoration: none;
+         text-decoration: none;
       }
       .video .actionbar .right-actions img {
-         margin-left: 32px;
          height: 20px;
          width: 20px;
       }
-       .video_id{
-           display: none;
-       }
-       .video .actionbar .delete img { /* dit is godenloos gefoefel van de developer om die vuilbak op dezelfde lijn als het uitroepteken te krijgen... */
-         margin-right: -6.5px;
-        height: 20px;		
-         width: 20px;
+      .video_id{
+         display: none;
       }
-       
-        #verwijder_modal{
-            display: none;
-        }
-       #report_modal{
-            display: none;
-        }
+      #verwijder_modal{
+         display: none;
+      }
+      #report_modal{
+         display: none;
+      }
+      .emptystate{
+         color: #626A6C;
+         margin: auto 0;
+         text-decoration: none;
+         text-align: center;
+      }
    </style>
    <script>
       $('#videocontainer').dragscrollable({
@@ -395,7 +410,7 @@
                <div id="videocontainer">
 
                 <?php foreach ( $res as $key => $video): ?>
-                
+
                 <div class="modal" id="report_modal">
                    <h2> Rapporteer </h2>
                    <select class="category">
@@ -409,14 +424,14 @@
                     <input type="button" class="cancel_report" value="annuleer">
                     <input type="button" class="report" value="ok">
                 </div>
-                 
+
                  <div class="modal" id="verwijder_modal">
                    <h2> Verwijder je video </h2>
                    <p>Ben je zeker dat je de video wil verwijderen? De video wordt definitief verwijderd en kan niet meer hersteld worden. </p>
                     <input type="button" class="cancel_verwijder" value="annuleer">
                     <input type="button" class="delete" value="ok">
                 </div>
-                 
+
                   <div class="video">
                      <div class="imgcontainer">
                         <a href='pages/videoPlayer.php?id=<?php echo $video["id"];?>'>
@@ -439,8 +454,8 @@
                            </a>
                            <?php endif ; ?>
                            <a href="#" class="stem">
-                               <img src="images/ic_favorite.svg" alt="markeer als favoriet" />
-                            </a>
+                              <img src="images/ic_favorite.svg" alt="markeer als favoriet" />
+                           </a>
                             <p class="count"><?php $videos->checkVote($video["id"], $_SESSION["userid"]);
         if($videos->Voted == true){
                                 echo $videos->Votes;

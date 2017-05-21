@@ -1,14 +1,14 @@
 $(document).ready(function(){
-    
+
     var video = document.getElementById('video');
-    
+
     if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
         video.src = window.URL.createObjectURL(stream);
         video.play();
     });
     }
-    
+
     //browser chrome of firefox?
     function getBrowser(){
         var nAgt = navigator.userAgent;
@@ -16,17 +16,17 @@ $(document).ready(function(){
         var fullVersion  = ''+parseFloat(navigator.appVersion);
         var majorVersion = parseInt(navigator.appVersion,10);
         var verOffset,ix;
-        
+
         if ((verOffset=nAgt.indexOf("Chrome"))!=-1) {
          browserName = "Chrome";
          fullVersion = nAgt.substring(verOffset+7);
         }
-        
+
         else if ((verOffset=nAgt.indexOf("Firefox"))!=-1) {
          browserName = "Firefox";
          fullVersion = nAgt.substring(verOffset+8);
         }
-        
+
         if ((ix=fullVersion.indexOf(";"))!=-1)
            fullVersion=fullVersion.substring(0,ix);
         if ((ix=fullVersion.indexOf(" "))!=-1)
@@ -39,29 +39,29 @@ $(document).ready(function(){
         }
         return browserName;
     }
-    
+
     console.info("deze browser is "+getBrowser());
-    
+
     var recording = false;
-            
+
     if(getBrowser() == "Chrome"){
         var constraints = {"audio": true, "video": {  "mandatory": {  "minWidth": 640,  "maxWidth": 640, "minHeight": 480,"maxHeight": 480 }, "optional": [] } };//Chrome
     }else if(getBrowser() == "Firefox"){
         var constraints = {audio: true,video: {  width: { min: 640, ideal: 640, max: 640 },  height: { min: 480, ideal: 480, max: 480 }}}; //Firefox
     }
-            
+
     var data = document.querySelector('#data');
-    
+
     video.controls = false;
-    
+
     function errorCallback(error){
-        console.log('navigator.getUserMedia error: ', error);	
+        console.log('navigator.getUserMedia error: ', error);
     }
-            
+
     var mediaRecorder;
     var chunks = [];
     var count = 0;
-    
+
     //magische voodoo magie die ik zelf maar half begrijp:
     function startRecording(stream) {
         console.log('Start record functie');
@@ -97,7 +97,7 @@ $(document).ready(function(){
 
         mediaRecorder.onstart = function(){
             console.log('Started & state = ' + mediaRecorder.state);
-            
+
             setTimeout(function(){
                 mediaRecorder.stop();
             }, 8000);
@@ -108,11 +108,11 @@ $(document).ready(function(){
 
             var blob = new Blob(chunks, {type: "video/webm"});
             chunks = [];
-    
+
             var videoURL = window.URL.createObjectURL(blob);
             video.src = videoURL;
             video.play();
-            
+
             var name  = "_video.webm" ;
 
 
@@ -137,7 +137,7 @@ $(document).ready(function(){
             };
             reader.readAsDataURL(blob);
             // EIND AJAX
-            
+
             function setValue(){
                 document.fileform.upload.value = 100;
                 document.forms["fileform"].submit();
@@ -149,15 +149,16 @@ $(document).ready(function(){
                     console.log('Warning: ' + e);
         };
         }
-            
+
     $("#record").click( function(){
-        
+
         if(recording == false ){
             console.log("recording now");
-        
-            $("#record").text("stop");
+
+            $("#record p").text("");
+			$("#record #inner").css("display", "none");
             recording = true;
-            
+
             if (typeof MediaRecorder === 'undefined' || !navigator.getUserMedia) {alert('MediaRecorder not supported on your browser, use Firefox 30 or Chrome 49 instead.');
             } else {
                 navigator.getUserMedia(constraints, startRecording, errorCallback);
@@ -165,11 +166,11 @@ $(document).ready(function(){
         } else {
             mediaRecorder.stop();
             video.controls = true;
-            
+
             $("#record").css('display', 'none');
-            
+
             console.log("recording stopped");
         }
-        
+
     });
 });
