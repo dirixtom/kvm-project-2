@@ -153,12 +153,21 @@
         }
         
         public function deleteVideo($p_iVideoid){
+            $conn = Db::getInstance();
+            
+            //data uit upload map verwijderen
             $res = $this->show($p_iVideoid);
             unlink("../uploads/videos/" . $res["data"]);
-            $conn = Db::getInstance();
-            $statement = $conn->prepare("DELETE FROM videos WHERE id = :id;");
-            $statement->bindValue(":id", $p_iVideoid);
+            
+            //tags van de video verwijderen
+            $statement = $conn->prepare("DELETE FROM tags WHERE video = :video;");
+            $statement->bindValue(":video", $res["data"]);
             $statement->execute();
+            
+            //records uit db verwijderen
+            $statement2 = $conn->prepare("DELETE FROM videos WHERE id = :id;");
+            $statement2->bindValue(":id", $p_iVideoid);
+            $statement2->execute();
         }
         
         public function printRecent(){
