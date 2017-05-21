@@ -105,7 +105,7 @@
          -ms-transition-delay: .2s;
          -o-transition-delay: .2s;
          transition-delay: .2s;
-         z-index: 2;
+         z-index: 3;
       }
       .shade {
          position: absolute;
@@ -125,7 +125,7 @@
          -ms-transition-delay: .2s;
          -o-transition-delay: .2s;
          transition-delay: .2s;
-         z-index: 1;
+         z-index: 2;
       }
       .menuicon {
          position: absolute;
@@ -270,7 +270,7 @@
          text-decoration: none;
          color: #FFF;
       }
-      nav a:last-child {
+      nav a:nth-child(4) {
          background-color: #FFF;
          color: #626A6C;
       }
@@ -359,9 +359,17 @@
          font-size: 20px;
          text-decoration: none;
       }
+      .video .actionbar .right-actions .verwijder img{
+         height: 16px;
+         width: 16px;
+         margin-right: 16px;
+      }
       .video .actionbar .right-actions img {
          height: 20px;
          width: 20px;
+      }
+      .rapporteer {
+         margin-right: 16px;
       }
       .video_id{
          display: none;
@@ -372,11 +380,86 @@
       #report_modal{
          display: none;
       }
+      #report_modal select {
+         margin-left: 24px;
+         margin-top: 16px;
+      }
       .emptystate{
          color: #626A6C;
          margin: auto 0;
          text-decoration: none;
          text-align: center;
+      }
+      .modal {
+         position: absolute;
+         width: 300px;
+         height: 234px;
+         top: 50%;
+         left: 50%;
+         transform: translateY(-50%) translateX(-50%);
+         background-color: #FFF;
+         border-radius: 4px;
+         -webkit-box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.20);
+         -moz-box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.20);
+         box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.20);
+         z-index: 10000;
+      }
+      .modal h2 {
+         font-family: 'Roboto', sans-serif;
+         font-weight: 200;
+         font-size: 20px;
+         color: #E22E2F;
+         margin-top: 24px;
+         margin-left: 24px;
+      }
+      .modal p {
+         font-family: 'Roboto', sans-serif;
+         font-weight: 200;
+         font-size: 14px;
+         margin-top: 16px;
+         margin-left: 24px;
+         margin-right: 24px;
+         color: #95989A;
+      }
+      .modal input{
+         border-top: 0px;
+         border-left: 0px;
+         border-right: 0px;
+         outline: none;
+         margin-top: 20px;
+         margin-left: 24px;
+         font-weight: 200;
+         font-size: 14px;
+         color: #95989A;
+         height: 60px;
+         line-height: 30px;
+         width: 232px;
+      }
+      .modal input::placeholder{
+         font-weight: 200;
+         font-size: 14px;
+         color: #95989A;
+      }
+      .modal .buttons {
+         position: absolute;
+         bottom: -48px;
+         right: -24px;
+      }
+      .modal button {
+         position: relative;
+         font-weight: 200;
+         font-size: 14px;
+         color: #OOO;
+         background-color: #FFF;
+         width: 80px;
+         height: 30px;
+         border: none;
+         outline: none;
+         cursor: pointer;
+      }
+      .modal button:first-child {
+         color: #E22E2F;
+
       }
    </style>
 </head>
@@ -394,12 +477,40 @@
         <div class="scherm">
             <img class="sysbar" src="images/sysbar-top.png" alt="android systeem balk" />
             <?php include_once("includes/mainHeader.php") ?>
+            <div class="modal" id="report_modal">
+               <h2> Rapporteer </h2>
+               <select class="category">
+                   <option value="None"> - - - </option>
+                    <option value="Taalgebruik">Ongepast taalgebruik</option>
+                    <option value="Provocatie">Provocatie</option>
+                    <option value="Racisme">Racisme</option>
+                    <option value="Naaktheid">Naaktheid</option>
+                </select>
+               <input type="textarea" placeholder="Uw bericht" class="bericht">
+               <div class="buttons">
+                  <button class="cancel_report">ANNULEER</button>
+                  <button class="report">OK</button>
+               </div>
+            </div>
+
+            <div class="modal" id="verwijder_modal">
+               <h2>Verwijder je video</h2>
+               <p>Ben je zeker dat je de video wil verwij-<br />deren? De video wordt definitief verwij-<br />derd en kan niet meer hersteld worden. </p>
+               <div class="buttons">
+                  <button class="cancel_verwijder">ANNULEER</button>
+                  <button class="delete">OK</button>
+              </div>
+            </div>
+
             <main>
                <nav>
                   <a href="overview.php">Recent</a>
                   <a href="overview2.php">Favorieten</a>
                   <a href="overview3.php">Featured</a>
-                  <a href="overview4.php">Eigen</a>
+                  <a id="last-child" href="overview4.php">Eigen</a>
+                  <div>
+                     <img id="filter" src="images/ic_filter.svg" alt="filter icoon" />
+                  </div>
                </nav>
 
                <div id="videocontainer">
@@ -410,27 +521,6 @@
                 ?>
 
                 <?php foreach ( $res as $key => $video): ?>
-
-                <div class="modal" id="report_modal">
-                   <h2> Rapporteer </h2>
-                   <select class="category">
-                       <option value="None"> - - - </option>
-                        <option value="Taalgebruik">Ongepast taalgebruik</option>
-                        <option value="Provocatie">Provocatie</option>
-                        <option value="Racisme">Racisme</option>
-                        <option value="Naaktheid">Naaktheid</option>
-                    </select>
-                   <input type="text" placeholder="Uw bericht" class="bericht">
-                    <input type="button" class="cancel_report" value="annuleer">
-                    <input type="button" class="report" value="ok">
-                </div>
-
-                 <div class="modal" id="verwijder_modal">
-                   <h2> Verwijder je video </h2>
-                   <p>Ben je zeker dat je de video wil verwijderen? De video wordt definitief verwijderd en kan niet meer hersteld worden. </p>
-                    <input type="button" class="cancel_verwijder" value="annuleer">
-                    <input type="button" class="delete" value="ok">
-                </div>
 
                   <div class="video">
                      <div class="imgcontainer">
