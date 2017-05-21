@@ -5,6 +5,11 @@
         header('Location: login.php');
     }
 
+    if (isset($_SESSION['recorded'])) { //video verwijderen na annuleren
+        unlink("../uploads/videos/" . $_SESSION["recorded"]);
+        unset($_SESSION["recorded"]);
+    }
+
     spl_autoload_register(function ($class) {
         include_once("../classes/" . $class . ".php");
     });
@@ -190,8 +195,8 @@
          <input type="text" name="tags" id="tags" placeholder="Voeg tags toe">
          <input type="hidden" name="cancel" id="cancel" value="true">
          <div class="buttons">
-            <button type="button" id="cancel">ANNULEER</button>
-            <button type="submit" id="upload">OK</button>
+            <button type="submit" id="cancel">ANNULEER</button>
+            <button type="button" id="upload">OK</button>
          </div>
       </form>
    </div>

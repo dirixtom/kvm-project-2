@@ -1,13 +1,6 @@
 $(document).ready(function(){
     
-    $("#cancel").click( function(e){
-        console.log("Waarom werkt dit niet???");
-        
-        e.preventDefault();
-    });
-    
     $("#upload").click( function(e){
-        
         var tags = $("#tags").val();
         
         if(tags == ""){
