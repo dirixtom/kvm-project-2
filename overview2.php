@@ -1,18 +1,19 @@
 <?php
     session_start();
-    /*if (isset($_SESSION['user'])) {
+    if (isset($_SESSION['user'])) {
     } else {
         header('Location: login.php');
-    }*/
+    }
 
     define("SCHERM", "Overzicht");
-    
+
     spl_autoload_register(function ($class) {
-        include_once("/classes/" . $class . ".php");
+        include_once("classes/" . $class . ".php");
     });
 
     $videos = new Video;
     $res = $videos->printFavorite();
+
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -51,7 +52,7 @@
          width: 360px;
          height: 496px;
          background: #FFF;
-        overflow-y: auto;
+         overflow-y: auto;
       }
       .scherm {
          position: relative;
@@ -251,11 +252,12 @@
       button#upload img {
         width: 20px;
       }
+
       nav {
          height: 48px;
          width: 100%;
-          position: absolute;
-          z-index: 1;
+         position: absolute;
+         z-index: 1;
       }
       nav a {
          width: calc(25% - 2px);
@@ -273,80 +275,88 @@
          background-color: #FFF;
          color: #626A6C;
       }
-      nav a:last-child {
+      #last-child {
          border: none;
          width: 25%;
       }
-       
-       nav div {		       
+      nav div {
          position: relative;
-         width: 100%;		
-         height: 48px;		
-         background-color: #FFF;		
-         margin-top: 48px;		
-         display: flex;		
-         align-items: center;		
-         justify-content: flex-end;		
-      }		
-      #filter {		
-         width: 20px;		
-         margin-right: 24px;		
-      }		
-      #videocontainer {		
-         position: relative;		
-         margin-top: 96px;		
-      }		
-      .video {		
-         position: relative;		
-         width: 94%;		
-         height: 200px;		
-         margin: 0 auto;		
-         clear: both;		
-         margin-bottom: 12px;		
-         -webkit-box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.20);		
-         -moz-box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.20);		
-         box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.20);		
-      }		
-      .video .imgcontainer {		
-         width: 100%;		
-         height: calc(100% - 40px);		
-         overflow: hidden;		
-      }		
-      .video video {		
-         width: 100%;		
-         border-radius: 4px;		
-      }		
-      .video .actionbar {		
-         height: 40px;		
-         width: 100%;		
-         position: absolute;		
-         bottom: 0;		
-         left: 0;		
-         display: flex;		
-         align-items: center;		
-         justify-content: space-between;		
-      }		
-      .video .actionbar p {		
-         color: #626A6C;		
-         font-size: 14px;		
-         margin-left: 8px;		
-      }		
-      .video .actionbar .right-actions {		
-         margin-right: 8px;		
-         display: flex;		
-         align-items: center;		
-         justify-content: space-between;		
-      }		
-      .video .actionbar .right-actions p {		
-         font-size: 20px;		
-      }		
-      .video .actionbar .right-actions img {		
-         margin-left: 32px;		
-         height: 20px;		
-         width: 20px;		
-      }		
-       
-    .video_id{
+         width: 100%;
+         height: 48px;
+         background-color: #FFF;
+         margin-top: 48px;
+         display: flex;
+         align-items: center;
+         justify-content: flex-end;
+      }
+      #filter {
+         width: 20px;
+         margin-right: 24px;
+      }
+      #videocontainer {
+         position: relative;
+         margin-top: 96px;
+      }
+      .video {
+         position: relative;
+         width: 94%;
+         height: 200px;
+         margin: 0 auto;
+         clear: both;
+         margin-bottom: 12px;
+         border-radius: 4px;
+         -webkit-box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.20);
+         -moz-box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.20);
+         box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.20);
+      }
+      .video .imgcontainer {
+         width: 100%;
+         height: calc(100% - 40px);
+         overflow: hidden;
+      }
+      .video video {
+         width: 100%;
+         border-radius: 4px;
+      }
+      .video .actionbar {
+         height: 40px;
+         width: 100%;
+         position: absolute;
+         bottom: 0;
+         left: 0;
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+
+      }
+      .video .actionbar p {
+         color: #626A6C;
+         font-size: 14px;
+         margin-left: 8px;
+      }
+      .video .actionbar .right-actions {
+         margin-right: 8px;
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+      }
+      .video .actionbar .right-actions p {
+         font-size: 20px;
+      }
+      .video .actionbar .right-actions p.count {
+         font-size: 14px;
+      }
+      .video .actionbar .right-actions .stem {
+         margin-left: 16px;
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+      }
+      .video .actionbar .right-actions img {
+         height: 20px;
+         width: 20px;
+      }
+       .video_id{
            display: none;
        }
        .emptystate{
@@ -411,7 +421,7 @@
                      </div>
                   </div>
                   <?php endforeach; ?>
-                  
+
                   </div>
                <button id="upload"><img src="images/ic_camera.svg" alt="opnemen camera icoon" /></button>
             </main>
