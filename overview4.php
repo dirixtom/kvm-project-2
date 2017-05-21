@@ -273,6 +273,8 @@
       nav a:last-child {
          background-color: #FFF;
          color: #626A6C;
+      }
+      #last-child {
          border: none;
          width: 25%;
       }
@@ -292,7 +294,6 @@
       }
       #videocontainer {
          position: relative;
-<<<<<<< HEAD
          margin-top: 96px;
       }
       .video {
@@ -325,7 +326,6 @@
          display: flex;
          align-items: center;
          justify-content: space-between;
-
       }
       .video .actionbar p {
          color: #626A6C;
@@ -339,120 +339,45 @@
          justify-content: space-between;
       }
       .video .actionbar .right-actions p {
+         line-height: 20px;
          font-size: 20px;
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
       }
       .video .actionbar .right-actions p.count {
          font-size: 14px;
+         line-height: 20px;
       }
-      .video .actionbar .right-actions .stem {
+      .video .actionbar .right-actions .stem, .video .actionbar .right-actions .verwijder {
          margin-left: 16px;
          display: flex;
          align-items: center;
          justify-content: space-between;
+	  }
+      .video .actionbar .right-actions a {
+         font-size: 20px;
+         text-decoration: none;
       }
       .video .actionbar .right-actions img {
          height: 20px;
          width: 20px;
       }
-       .video_id{
-=======
-         width: 100%;		
-         height: 48px;		
-         background-color: #FFF;		
-         margin-top: 48px;		
-         display: flex;		
-         align-items: center;		
-         justify-content: flex-end;		
-      }		
-      #filter {		
-         width: 20px;		
-         margin-right: 24px;		
-      }		
-      #videocontainer {		
-         position: relative;		
-         margin-top: 96px;		
-      }		
-      .video {		
-         position: relative;		
-         width: 94%;		
-         height: 200px;		
-         margin: 0 auto;		
-         clear: both;		
-         margin-bottom: 12px;		
-         -webkit-box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.20);		
-         -moz-box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.20);		
-         box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.20);		
-      }		
-      .video .imgcontainer {		
-         width: 100%;		
-         height: calc(100% - 40px);		
-         overflow: hidden;		
-      }		
-      .video video {		
-         width: 100%;		
-         border-radius: 4px;		
-      }		
-      .video .actionbar {		
-         height: 40px;		
-         width: 100%;		
-         position: absolute;		
-         bottom: 0;		
-         left: 0;		
-         display: flex;		
-         align-items: center;		
-         justify-content: space-between;		
-      }		
-      .video .actionbar p {		
-         color: #626A6C;		
-         font-size: 14px;		
-         margin-left: 8px;		
-      }		
-      .video .actionbar .right-actions {		
-         margin-right: 8px;		
-         display: flex;		
-         align-items: center;		
-         justify-content: space-between;		
-      }		
-      .video .actionbar .right-actions p {		
-         font-size: 20px;		
+      .video_id{
+         display: none;
       }
-       .video .actionbar .right-actions a {
-         font-size: 20px;
-           text-decoration: none;
+      #verwijder_modal{
+         display: none;
       }
-      .video .actionbar .right-actions img {		
-         margin-left: 32px;		
-         height: 20px;		
-         width: 20px;		
-      }		
-       
-    .video_id{
->>>>>>> master
-           display: none;
-       }
-
-       .emptystate{
-           color: #626A6C;
-           margin: auto 0;
-            text-decoration: none;
-           text-align: center;
-       }
-<<<<<<< HEAD
-
-=======
-       .video .actionbar .delete img { /* dit is godenloos gefoefel van de developer om die vuilbak op dezelfde lijn als het uitroepteken te krijgen... */
-         margin-right: -6.5px;
-        height: 20px;		
-         width: 20px;
+      #report_modal{
+         display: none;
       }
-       
-        #verwijder_modal{
-            display: none;
-        }
-       #report_modal{
-            display: none;
-        }
->>>>>>> master
+      .emptystate{
+         color: #626A6C;
+         margin: auto 0;
+         text-decoration: none;
+         text-align: center;
+      }
    </style>
 </head>
    <script>
@@ -476,16 +401,16 @@
                   <a href="overview3.php">Featured</a>
                   <a href="overview4.php">Eigen</a>
                </nav>
-               
+
                <div id="videocontainer">
                 <?php
                     if(count($res) == 0){
                         echo "<p class='emptystate'> Je hebt nog niets gefilmd... </p>";
                     }
                 ?>
-                
+
                 <?php foreach ( $res as $key => $video): ?>
-                
+
                 <div class="modal" id="report_modal">
                    <h2> Rapporteer </h2>
                    <select class="category">
@@ -499,14 +424,14 @@
                     <input type="button" class="cancel_report" value="annuleer">
                     <input type="button" class="report" value="ok">
                 </div>
-                 
+
                  <div class="modal" id="verwijder_modal">
                    <h2> Verwijder je video </h2>
                    <p>Ben je zeker dat je de video wil verwijderen? De video wordt definitief verwijderd en kan niet meer hersteld worden. </p>
                     <input type="button" class="cancel_verwijder" value="annuleer">
                     <input type="button" class="delete" value="ok">
                 </div>
-                 
+
                   <div class="video">
                      <div class="imgcontainer">
                         <a href='pages/videoPlayer.php?id=<?php echo $video["id"];?>'>
