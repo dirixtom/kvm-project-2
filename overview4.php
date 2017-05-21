@@ -13,6 +13,11 @@
 
     $videos = new Video;
     $res = $videos->printUploads();
+    $videos->feature();
+
+    $melding = new Melding;
+    $melding->notifyFeatured();
+
 ?><!DOCTYPE html>
 <html lang="en">
 <head>

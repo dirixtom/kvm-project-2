@@ -16,6 +16,9 @@
     $res = $videos->printRecent();
     $videos->feature();
 
+    $melding = new Melding;
+    $melding->notifyFeatured();
+
 ?><!DOCTYPE html>
 <html lang="en">
 <head>

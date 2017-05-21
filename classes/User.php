@@ -152,6 +152,9 @@
                 $_SESSION['email'] = $email;
                 $_SESSION['image'] = $image;
                 $_SESSION['userid'] = $userid;
+                
+                $melding = new Melding;
+                $melding->checkedFeatured();
 
                 header('Location: ../overview.php');
             } catch (Exception $e) {

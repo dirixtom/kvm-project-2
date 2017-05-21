@@ -12,6 +12,10 @@
     });
     $videos = new Video;
     $res = $videos->printFeatured();
+    $videos->feature();
+
+    $melding = new Melding;
+    $melding->checkedFeatured();
 
 ?><!DOCTYPE html>
 <html lang="en">

@@ -13,6 +13,10 @@
 
     $videos = new Video;
     $res = $videos->printFavorite();
+    $videos->feature();
+
+    $melding = new Melding;
+    $melding->notifyFeatured();
 
 ?><!DOCTYPE html>
 <html lang="en">
