@@ -254,7 +254,7 @@
       button#upload img {
         width: 20px;
       }
-      
+
       nav {
          height: 48px;
          width: 100%;
@@ -349,12 +349,12 @@
          font-size: 14px;
       }
       .video .actionbar .right-actions .stem {
+         margin-left: 16px;
          display: flex;
          align-items: center;
          justify-content: space-between;
       }
       .video .actionbar .right-actions img {
-         margin-left: 32px;
          height: 20px;
          width: 20px;
       }
