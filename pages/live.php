@@ -151,14 +151,16 @@
    <a id="downloadLink" download="mediarecorder.webm" name="mediarecorder.webm" href></a>
     <div id="videoscreen">
       <img id="left" src="../images/sysbar-left.png" />
-       <iframe
+      <div id="twitch">
+       <!--<iframe
     src="http://player.twitch.tv/?channel=bigbangs06&muted=true"
     height="360"
     width="570"
     frameborder="0"
     scrolling="no"
     allowfullscreen="false">
-</iframe>
+</iframe>-->
+        </div>
        <div id="controlbar"></div>
        <a href="../overview.php"><img id="terug" src="../images/ic_terugpijl.svg" /></a>
        <img id="right" src="../images/navbar-right.png" />
@@ -166,6 +168,7 @@
    
     <p id="data"></p>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-   <script src="../js/videoPlayer.js"></script>
+   <script src= "http://player.twitch.tv/js/embed/v1.js"></script>
+   <script src="../js/live.js"></script>
 </body>
 </html>
