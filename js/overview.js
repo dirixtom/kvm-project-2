@@ -168,4 +168,75 @@ $(document).ready(function(){
     $("#twee").click(function(e){
         window.location = "pages/live.php"
     });
+    
+    $("#filter").click(function(e){
+        $("#filter").css('display', 'none');
+        $("#filter_dropdown").css('display', 'inline');
+    });
+    
+    $("#filter1").click(function(e){
+        console.log("filter 1");
+        
+        $.ajax({
+            type:"POST",
+            url:"./ajax/ajaxFilter.php",
+            data:{"filter" : 1},
+            dataType:"html"
+        }).done(function(response){
+            var feedback = JSON.parse(response); // want om één of andere reden weigert hij het zelf juist te lezen.
+            if( feedback.code == 500){
+                console.log("something went wrong");
+            }
+            if( feedback.code == 200){
+                console.log("success");
+                window.location.reload();
+            }
+        });
+        
+        e.preventDefault();
+    });
+    
+    $("#filter2").click(function(e){
+        console.log("filter 2");
+        
+        $.ajax({
+            type:"POST",
+            url:"./ajax/ajaxFilter.php",
+            data:{"filter" : 2},
+            dataType:"html"
+        }).done(function(response){
+            var feedback = JSON.parse(response); // want om één of andere reden weigert hij het zelf juist te lezen.
+            if( feedback.code == 500){
+                console.log("something went wrong");
+            }
+            if( feedback.code == 200){
+                console.log("success");
+                window.location.reload();
+            }
+        });
+        
+        e.preventDefault();
+    });
+    
+    $("#filter3").click(function(e){
+        console.log("filter 3");
+        
+        $.ajax({
+            type:"POST",
+            url:"./ajax/ajaxFilter.php",
+            data:{"filter" : 3},
+            dataType:"html"
+        }).done(function(response){
+            var feedback = JSON.parse(response); // want om één of andere reden weigert hij het zelf juist te lezen.
+            if( feedback.code == 500){
+                console.log("something went wrong");
+            }
+            if( feedback.code == 200){
+                console.log("success");
+                window.location.reload();
+            }
+        });
+        
+        e.preventDefault();
+    });
 });
