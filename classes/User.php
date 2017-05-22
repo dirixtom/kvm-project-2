@@ -197,6 +197,35 @@
             $_SESSION['image']=$this->Image;
         }
         
+        public function resetPassword(){
+            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $charactersLength = strlen($characters);
+            $randomString = '';
+            for ($i = 0; $i < 10; $i++) {
+                $randomString .= $characters[rand(0, $charactersLength - 1)];
+            }
+            
+            $conn = Db::getInstance();
+            
+            //check of deze email wel bestaat
+            $checkemail = $conn->prepare("SELECT * FROM `users` WHERE (email =:email);");
+            $checkemail->bindValue(":email", $this->m_sEmail);
+            $checkemail->execute();
+            $found_email = $checkemail->fetch(PDO::FETCH_ASSOC);
+            if (empty($found_email)) {
+                throw new Exception("Deze email staat niet geregistreerd");
+            }
+            
+            // zet reset key in databank
+            $statement = $conn->prepare("INSERT INTO reset (email, reset_key) VALUES (:email, :reset_key);");
+            $statement->bindValue(":email", $this->Email);
+            $statement->bindValue(":reset_key", $randomString);
+            $statement->execute();
+            
+            // mail sturen
+            //mail($this->Email,"kvm Fancorder", $randomString, "From: test"); //mail() kan niet werken in localhost.
+        }
+        
         public function deleteProfile(){
             $conn = Db::getInstance();
             
