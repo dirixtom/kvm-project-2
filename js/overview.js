@@ -164,4 +164,8 @@ $(document).ready(function(){
         
         e.preventDefault();
     });
+    
+    $("#twee").click(function(e){
+        window.location = "pages/live.php"
+    });
 });
