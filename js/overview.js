@@ -136,6 +136,7 @@ $(document).ready(function(){
                 }
                 if( feedback.code == 200){
                     console.log("success");
+                    $(".nummer").text("");
                 }
             });
         }
