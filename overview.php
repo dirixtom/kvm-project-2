@@ -378,12 +378,6 @@
       #report_modal{
          display: none;
       }
-      .emptystate{
-         color: #626A6C;
-         margin: auto 0;
-         text-decoration: none;
-         text-align: center;
-      }
        .emptystate{
          color: #626A6C;
          margin: auto 0;
@@ -412,6 +406,25 @@
        #meldingen .melding_id{
            display: none;
        }
+       #filter_dropdown{
+           position: relative;
+           background-color: white;
+           width: 100px;
+           height: 100px;
+           left: -20px;
+           top: 10px;
+           display: none;
+       }
+       #filter_dropdown li{
+           padding: 15px;
+           list-style-type: none;
+           position: relative;
+           left: 25px;
+           top: -5px;
+       }
+       #filter_dropdown a{
+           text-decoration: none;
+       }
    </style>
    <script>
       $('#videocontainer').dragscrollable({
@@ -436,6 +449,13 @@
                   <a id="last-child" href="overview4.php">Eigen</a>
                   <div>
                      <img id="filter" src="images/ic_filter.svg" alt="filter icoon" />
+                     <div id="filter_dropdown">
+                     <ul>
+                         <li><a href="#" id="filter1">Nieuwste</a></li>
+                         <li><a href="#" id="filter2">Oudste</a></li>
+                         <li><a href="#" id="filter3">Stemmen</a></li>
+                     </ul>
+                     </div>
                   </div>
                </nav>
                <div id="videocontainer">

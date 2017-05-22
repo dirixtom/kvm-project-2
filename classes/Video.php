@@ -9,6 +9,7 @@
         private $m_bVoted;
         private $m_sStatus;
         private $m_sTagInput;
+        private $m_sFilter;
 
         public function __set($p_sProperty, $p_vValue)
         {
@@ -36,6 +37,9 @@
                     break;
                 case "TagInput":
                     $this->m_sTagInput = $p_vValue;
+                    break;
+                case "Filter":
+                    $this->m_sFilter = $p_vValue;
                     break;
             }
         }
@@ -66,6 +70,9 @@
                     break;
                 case "TagInput":
                     return $this->m_sTagInput;
+                    break;
+                case "Filter":
+                    return $this->m_sFilter;
                     break;
             }
         }
@@ -172,7 +179,17 @@
         
         public function printRecent(){
             $conn = Db::getInstance();
-            $statement = $conn->prepare("SELECT * FROM videos WHERE NOT status = 'removed' AND id not in (SELECT video_id FROM reports WHERE reporter = :user) ORDER BY id DESC;");
+            if(isset($_SESSION["filter"])){
+            if($_SESSION["filter"] == "Nieuwste"){
+                $statement = $conn->prepare("SELECT * FROM videos WHERE NOT status = 'removed' AND id not in (SELECT video_id FROM reports WHERE reporter = :user) ORDER BY id DESC;");
+            } else if($_SESSION["filter"] == "Oudste"){
+                $statement = $conn->prepare("SELECT * FROM videos WHERE NOT status = 'removed' AND id not in (SELECT video_id FROM reports WHERE reporter = :user) ORDER BY id ASC;");
+            } else if($_SESSION["filter"] == "Stemmen"){
+                $statement = $conn->prepare("SELECT * FROM videos WHERE NOT status = 'removed' AND id not in (SELECT video_id FROM reports WHERE reporter = :user) ORDER BY stemmen DESC, id DESC;");
+            }
+            } else {
+                $statement = $conn->prepare("SELECT * FROM videos WHERE NOT status = 'removed' AND id not in (SELECT video_id FROM reports WHERE reporter = :user) ORDER BY id DESC;");
+            }
             $statement->bindValue(":user", $_SESSION["user"]);
             $statement->execute();
             return $statement->fetchAll(PDO::FETCH_ASSOC);
