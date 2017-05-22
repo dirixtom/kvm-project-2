@@ -5,7 +5,15 @@
     include_once("../classes/" . $class . ".php");
     });
     
+
     try{
+        if(!empty($_POST["email"])){
+
+            $user = new User();
+            $user->Email = $_POST["email"];
+            $user->resetPassword();
+        }
+        
         if(!empty($_POST["username"]) && !empty($_POST["password"])){
             $user = new User();
             $user->Username = $_POST["username"];
@@ -13,9 +21,10 @@
             if ($user->canLogin()) {
                 $user->handleLogin();
             }
-        } else {
+        } else if(empty($_POST["username"]) && empty($_POST["password"]) && empty($_POST["email"])){
             throw new Exception('Niet alle velden zijn ingevuld.');
         }
+        
     } catch (Exception $e){
         
     }
