@@ -29,12 +29,12 @@
     <title><?php echo SCHERM; ?></title>
 
 	<script src="js/jquery.min.js"></script>
-   <script src="js/overview.js"></script>
-   <script src="js/desktopNotifications.js"></script>
-   
-   <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
+	<script src="js/overview.js"></script>
+	<script src="js/desktopNotifications.js"></script>
 
-   <style type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:200,400,500" rel="stylesheet">
+
+	<style type="text/css">
       * {
          margin: 0;
          padding: 0;
