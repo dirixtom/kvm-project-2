@@ -7,6 +7,7 @@
 
 
     try{
+        if($_POST){
         if(!empty($_POST["email"])){
 
             $user = new User();
@@ -23,6 +24,7 @@
             }
         } else if(empty($_POST["username"]) && empty($_POST["password"]) && empty($_POST["email"])){
             throw new Exception('Niet alle velden zijn ingevuld.');
+        }
         }
 
     } catch (Exception $e){
