@@ -422,7 +422,7 @@
             <?php include_once("includes/mainHeader.php") ?>
             <main>
                <nav>
-   				   <a href="overview.php">Recent</a>
+   				   <a href="index.php">Recent</a>
           			<a href="overview2.php">Favorieten</a>
           			<a href="overview3.php">Featured</a>
           			<a href="overview4.php">Eigen</a>

@@ -156,7 +156,7 @@
                 $melding = new Melding;
                 $melding->checkedFeatured();
 
-                header('Location: ../overview.php');
+                header('Location: ../index.php');
             } catch (Exception $e) {
                 echo $e->getMessage();
             }
@@ -223,7 +223,7 @@
             $statement->execute();
             
             // mail sturen
-            //mail($this->Email,"kvm Fancorder", $randomString, "From: test"); //mail() kan niet werken in localhost.
+            mail($this->Email,"kvm Fancorder", $randomString, "From: test"); //mail() kan niet werken in localhost.
         }
         
         public function deleteProfile(){

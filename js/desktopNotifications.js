@@ -44,7 +44,7 @@ $(document).ready(function(){
     } else if(nummer == 1){
         melding(boodschap, pad);
     } else if(nummer > 1){
-        melding("er zijn "+nummer+" nieuwe meldingen", "overview.php");
+        melding("er zijn "+nummer+" nieuwe meldingen", "index.php");
     }
         
     }
