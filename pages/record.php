@@ -181,7 +181,7 @@
    <div id="videoscreen">
       <img id="left" src="../images/sysbar-left.png" />
       <video id="video"></video>
-      <a href="../overview.php"><img id="terug" src="../images/ic_terugpijl.svg" /></a>
+      <a href="../index.php"><img id="terug" src="../images/ic_terugpijl.svg" /></a>
       <button id="record"><p></p><div id="inner"></div></button>
       <img id="right" src="../images/navbar-right.png" />
    </div>

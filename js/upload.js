@@ -14,7 +14,7 @@ $(document).ready(function(){
         }).done(function(response){
             if( response.code == 200){
                 console.log("De video is geupload naar de databank!");
-                window.location = "../overview.php";
+                window.location = "../index.php";
             }
             if( response.code == 500){
                 console.log("er is iets misgelopen.");

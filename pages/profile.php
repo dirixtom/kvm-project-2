@@ -32,16 +32,13 @@
                 $bestandsnaam = strtolower($_FILES['image']['name']);
 
                 if (strpos($bestandsnaam, ".png")) {
-                    move_uploaded_file($_FILES["image"]["tmp_name"],
-                    "uploads/profileImages/" . $_SESSION['userid'] . ".png");
+                    move_uploaded_file($_FILES["image"]["tmp_name"], "../uploads/profileImages/" . $_SESSION['userid'] . ".png");
                     $user->Image = $_SESSION['userid'] . ".png";
                 } elseif (strpos($bestandsnaam, ".jpg")) {
-                    move_uploaded_file($_FILES["image"]["tmp_name"],
-                    "uploads/profileImages/" . $_SESSION['userid'] . ".jpg");
+                    move_uploaded_file($_FILES["image"]["tmp_name"], "../uploads/profileImages/" . $_SESSION['userid'] . ".jpg");
                     $user->Image = $_SESSION['userid'] . ".jpg";
                 } elseif (strpos($bestandsnaam, ".gif")) {
-                    move_uploaded_file($_FILES["image"]["tmp_name"],
-                    "uploads/profileImages/" . $_SESSION['userid'] . ".gif");
+                    move_uploaded_file($_FILES["image"]["tmp_name"], "../uploads/profileImages/" . $_SESSION['userid'] . ".gif");
                     $user->Image = $_SESSION['userid'] . ".gif";
                 } else {
                     throw new exception("De foto moet een jpg, png of gif zijn!");
@@ -69,7 +66,7 @@
     }
 </style>
 <body>
-   <a href="../overview.php"> terug </a>
+   <a href="../index.php"> terug </a>
     <h1> <?php echo $_SESSION['user']; ?></h1>
     <img src="../uploads/profileImages/<?php echo $_SESSION['image']; ?>" alt="profielfoto" id="img" style="max-width: 150px;"> <!-- profiel foto -->
     <img src="../uploads/profileImages/<?php echo $_SESSION['image']; ?>" alt="profielfoto" id="background" style="max-width: 150px;"> <!-- achtergrond foto -->
