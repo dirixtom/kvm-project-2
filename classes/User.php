@@ -9,7 +9,7 @@
         private $m_sPasswordCheck;
         private $m_sPasswordNew;
         private $m_sImage;
-        
+
         public function __set($p_sProperty, $p_vValue)
         {
             switch ($p_sProperty) {
@@ -68,7 +68,7 @@
                     break;
             }
         }
-        
+
         public function register(){
             if($this->Password == $this->PasswordCheck){
             $options = [
@@ -81,7 +81,7 @@
 
                 $conn = Db::getInstance();
                 $statement = $conn->prepare("INSERT INTO users (username, `email`, `firstname`, `lastname`, `password`, `image`) VALUES (:username, :email, :firstname, :lastname, :password, :image);");
-                
+
                 //username
                 $checkusername = $conn->prepare("SELECT * FROM `users` WHERE (username =:username)");
                 $checkusername->bindValue(":username", $this->m_susername);
@@ -91,10 +91,10 @@
                     throw new Exception("Deze username is al bezet.");
                 }
                 $statement->bindValue(":username", $this->Username);
-            
+
                 $statement->bindValue(":firstname", $this->Firstname);
                 $statement->bindValue(":lastname", $this->Lastname);
-                
+
                 //email
                 $checkemail = $conn->prepare("SELECT * FROM `users` WHERE (email =:email)");
                 $checkemail->bindValue(":email", $this->m_sEmail);
@@ -108,7 +108,7 @@
                 } else {
                     throw new Exception("Dit is geen geldig email adres");
                 }
-            
+
                 $statement->bindValue(":password", $this->Password);
                 $statement->bindValue(":image", $this->Image);
                 $result = $statement->execute();
@@ -117,7 +117,7 @@
                 throw new Exception("De ingegeven wachtwoorden komen niet overeen");
             }
         }
-        
+
         public function canLogin(){ //checken of we mogen inloggen
 
             $conn = Db::getInstance();
@@ -129,10 +129,10 @@
             if(password_verify($this->m_sPassword, $password)){
                 return true;
             } else {
-                throw new exception("Username of wachtwoord is verkeerd.");
+                throw new exception("Gebruikersnaam of wachtwoord is verkeerd.");
             }
         }
-        
+
         public function handleLogin() {
             try {
                 $conn = Db::getInstance();
@@ -152,7 +152,7 @@
                 $_SESSION['email'] = $email;
                 $_SESSION['image'] = $image;
                 $_SESSION['userid'] = $userid;
-                
+
                 $melding = new Melding;
                 $melding->checkedFeatured();
 
@@ -161,15 +161,15 @@
                 echo $e->getMessage();
             }
         }
-        
+
         public function updateProfile(){
-            
+
             $conn = Db::getInstance();
             $statement = $conn->prepare("UPDATE users SET firstname = :firstname, lastname = :lastname, email = :email, image = :image where username = :username");
             $statement->bindValue(":username", $_SESSION['user']);
             $statement->bindValue(":firstname", $this->Firstname);
             $statement->bindValue(":lastname", $this->Lastname);
-            
+
             //email:
             $checkemail = $conn->prepare("SELECT * FROM `users` WHERE (email =:email) and (username != :username);");
             $checkemail->bindValue(":email", $this->m_sEmail);
@@ -184,7 +184,7 @@
             } else {
                 throw new Exception("Dit is geen geldig email adres.");
             }
-            
+
             //image:
             if (($_SESSION["image"] != "default.png") && ($_SESSION["image"] != $this->Image)) {
                 unlink("uploads/profileImages/" . $_SESSION["image"]);
@@ -196,7 +196,7 @@
             $_SESSION['email']=$this->Email;
             $_SESSION['image']=$this->Image;
         }
-        
+
         public function resetPassword(){
             $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
             $charactersLength = strlen($characters);
@@ -204,9 +204,9 @@
             for ($i = 0; $i < 10; $i++) {
                 $randomString .= $characters[rand(0, $charactersLength - 1)];
             }
-            
+
             $conn = Db::getInstance();
-            
+
             //check of deze email wel bestaat
             $checkemail = $conn->prepare("SELECT * FROM `users` WHERE (email =:email);");
             $checkemail->bindValue(":email", $this->m_sEmail);
@@ -215,20 +215,20 @@
             if (empty($found_email)) {
                 throw new Exception("Deze email staat niet geregistreerd");
             }
-            
+
             // zet reset key in databank
             $statement = $conn->prepare("INSERT INTO reset (email, reset_key) VALUES (:email, :reset_key);");
             $statement->bindValue(":email", $this->Email);
             $statement->bindValue(":reset_key", $randomString);
             $statement->execute();
-            
+
             // mail sturen
             mail($this->Email,"kvm Fancorder", $randomString, "From: test"); //mail() kan niet werken in localhost.
         }
-        
+
         public function deleteProfile(){
             $conn = Db::getInstance();
-            
+
             //unlink alle video bestanden en verwijder tags
             $statement = $conn->prepare("SELECT * FROM videos WHERE uploader = :user;");
             $statement->bindValue(":user", $_SESSION['user']);
@@ -236,27 +236,27 @@
             $res = $statement->fetchAll(PDO::FETCH_ASSOC);
             foreach ($res as $key => $video) {
                 unlink("../uploads/videos/" . $video["data"]);
-                
+
                 $statement4 = $conn->prepare("DELETE FROM tags WHERE video = :video;");
                 $statement4->bindValue(":video", $video["data"]);
                 $statement4->execute();
             };
-            
+
             //alle video's verwijderen uit db
             $statement2 = $conn->prepare("DELETE FROM videos WHERE uploader = :user;");
             $statement2->bindValue(":user", $_SESSION['user']);
             $statement2->execute();
-            
+
             //profile image verwijderen
             if ($_SESSION["image"] != "default.png") {
                 unlink("uploads/profileImages/" . $_SESSION["image"]);
             }
-            
+
             //stemmen verwijderen
             $statement3 = $conn->prepare("DELETE FROM stemmen WHERE user_id = :user_id;");
             $statement3->bindValue(":user_id", $_SESSION['userid']);
             $statement3->execute();
-            
+
             //profile verwijderen uit db
             $statement5 = $conn->prepare("DELETE FROM users WHERE username = :username;");
             $statement5->bindValue(":username", $_SESSION['user']);

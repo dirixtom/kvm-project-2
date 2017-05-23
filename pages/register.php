@@ -6,6 +6,7 @@
     });
     
     try{
+        if(!empty($_POST)){
         if(!empty($_POST["username"]) && !empty($_POST["firstname"]) && !empty($_POST["lastname"]) && !empty($_POST["email"]) && !empty($_POST["password"]) && !empty($_POST["passwordCheck"])){
             $user = new User();
             $user->Username = $_POST["username"];
@@ -22,8 +23,9 @@
         } else {
             throw new Exception('Niet alle velden zijn ingevuld.');
         }
+        }
     } catch (Exception $e){
-        
+        $error= $e->getMessage();
     }
     
 ?><!DOCTYPE html>
@@ -33,6 +35,7 @@
     <title><?php echo SCHERM; ?></title>
 </head>
 <body>
+  <?php if(isset($error)){echo $error;}; ?>
    <a href="login.php"> terug </a>
     <form action="" method="post">
         <input type="text" placeholder="Gebruikersnaam" name="username" id="username">
