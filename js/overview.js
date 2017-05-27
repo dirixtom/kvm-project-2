@@ -90,8 +90,8 @@ $(document).ready(function(){
     });
     
     $(".report").click( function(e){
-        var category = $(this).siblings(".category").val();
-        var bericht = $(this).siblings(".bericht").val();
+        var category = $(this).parents(".buttons").siblings(".category").val();
+        var bericht = $(this).parents(".buttons").siblings(".bericht").val();
         
         console.info("category: "+category+" bericht: "+bericht);
         
