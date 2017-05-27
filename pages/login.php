@@ -58,6 +58,7 @@
 		  width: 80%;
 		  height: 100%;
 		  display: flex;
+           justify-content: center !important;
 		  overflow-y: visible;
 		  margin: auto;
 	   }
