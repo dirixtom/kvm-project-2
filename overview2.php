@@ -1,8 +1,9 @@
 <?php
     session_start();
+
     if (isset($_SESSION['user'])) {
     } else {
-        header('Location: login.php');
+        header('Location: pages/login.php');
     }
 
     define("SCHERM", "Overzicht");
@@ -28,9 +29,8 @@
     <title><?php echo SCHERM; ?></title>
 
 	<script src="js/jquery.min.js"></script>
-   <script src="js/overview.js"></script>
-   <script src="js/desktopNotifications.js"></script>
-   
+  <script src="js/overview.js"></script>
+  <script src="js/desktopNotifications.js"></script>
    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
 
    <style type="text/css">
@@ -420,6 +420,27 @@
        #meldingen .melding_id{
            display: none;
        }
+       #filter_dropdown{
+           position: relative;
+           background-color: white;
+           width: 100px;
+           height: 100px;
+           left: -20px;
+           top: 10px;
+           display: none;
+       }
+       #filter_dropdown li{
+           padding: 15px;
+           list-style-type: none;
+           position: relative;
+           left: 25px;
+           top: -5px;
+       }
+       #filter_dropdown a{
+           text-decoration: none;
+           background-color: #FFF;
+           color: #626A6C;
+       }
       .modal {
          position: absolute;
          width: 300px;
@@ -492,12 +513,11 @@
 
       }
    </style>
-</head>
    <script>
-   $('#videocontainer').dragscrollable({
-      dragSelector: '.video',
-      acceptPropagatedEvent: false
-   });
+       $('#videocontainer').dragscrollable({
+          dragSelector: '.video',
+          acceptPropagatedEvent: false
+       });
    </script>
 </head>
 <body>
@@ -506,7 +526,7 @@
         </div>
         <div class="scherm">
             <img class="sysbar" src="images/sysbar-top.png" alt="android systeem balk" />
-            <?php include_once("includes/mainHeader.php") ?>
+            <?php include_once("includes/mainHeader.php"); ?>
             <div class="modal" id="report_modal">
                <h2> Rapporteer </h2>
                <select class="category">
@@ -540,6 +560,13 @@
                   <a id="last-child" href="overview4.php">Eigen</a>
                   <div>
                      <img id="filter" src="images/ic_filter.svg" alt="filter icoon" />
+                     <div id="filter_dropdown">
+                     <ul>
+                         <li><a href="#" id="filter1">Nieuwste</a></li>
+                         <li><a href="#" id="filter2">Oudste</a></li>
+                         <li><a href="#" id="filter3">Stemmen</a></li>
+                     </ul>
+                     </div>
                   </div>
                </nav>
                <div id="videocontainer">

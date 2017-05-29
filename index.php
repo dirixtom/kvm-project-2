@@ -439,6 +439,8 @@
        }
        #filter_dropdown a{
            text-decoration: none;
+           background-color: #FFF;
+           color: #626A6C;
        }
       .modal {
          position: absolute;
