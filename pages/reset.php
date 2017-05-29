@@ -16,8 +16,8 @@
         if(!empty($_POST)){
             if(!empty($_POST["password"]) && !empty($_POST["passwordCheck"])){
                 $user = new User();
-                $user->Password = $_POST["password"];
-                $user->PasswordCheck = $_POST["passwordCheck"];
+                $user->Password = htmlspecialchars($_POST["password"]);
+                $user->PasswordCheck = htmlspecialchars($_POST["passwordCheck"]);
                 if ($user->resetPassword()) {
                     $user->handleLogin();
                 }

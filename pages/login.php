@@ -10,8 +10,8 @@
         if($_POST){
             if(!empty($_POST["username"]) && !empty($_POST["password"])){
                 $user = new User();
-                $user->Username = $_POST["username"];
-                $user->Password = $_POST["password"];
+                $user->Username = htmlspecialchars($_POST["username"]);
+                $user->Password = htmlspecialchars($_POST["password"]);
                 if ($user->canLogin()) {
                     $user->handleLogin();
                 }

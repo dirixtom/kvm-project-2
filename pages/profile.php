@@ -21,9 +21,9 @@
             }
 
             if(!empty($_POST["firstname"]) && !empty($_POST["lastname"]) && !empty($_POST["email"])){
-                $user->Firstname = $_POST["firstname"];
-                $user->Lastname = $_POST["lastname"];
-                $user->Email = $_POST["email"];
+                $user->Firstname = htmlspecialchars($_POST["firstname"]);
+                $user->Lastname = htmlspecialchars($_POST["lastname"]);
+                $user->Email = htmlspecialchars($_POST["email"]);
             } else {
                 throw new Exception('Een veld mag niet leeg zijn!');
             }

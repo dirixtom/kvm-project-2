@@ -9,12 +9,12 @@
         if(!empty($_POST)){
         if(!empty($_POST["username"]) && !empty($_POST["firstname"]) && !empty($_POST["lastname"]) && !empty($_POST["email"]) && !empty($_POST["password"]) && !empty($_POST["passwordCheck"])){
             $user = new User();
-            $user->Username = $_POST["username"];
-            $user->Firstname = $_POST["firstname"];
-            $user->Lastname = $_POST["lastname"];
-            $user->Email = $_POST["email"];
-            $user->Password = $_POST["password"];
-            $user->PasswordCheck = $_POST["passwordCheck"];
+            $user->Username = htmlspecialchars($_POST["username"]);
+            $user->Firstname = htmlspecialchars($_POST["firstname"]);
+            $user->Lastname = htmlspecialchars($_POST["lastname"]);
+            $user->Email = htmlspecialchars($_POST["email"]);
+            $user->Password = htmlspecialchars($_POST["password"]);
+            $user->PasswordCheck = htmlspecialchars($_POST["passwordCheck"]);
             $user->Image = "default.png";
             
             if ($user->register()) {
