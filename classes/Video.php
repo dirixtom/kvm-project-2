@@ -197,7 +197,17 @@
 
         public function printFavorite(){
             $conn = Db::getInstance();
-            $statement = $conn->prepare("SELECT * FROM videos v INNER JOIN stemmen s ON v.id = s.video_id WHERE s.user_id = :user_id AND NOT status = 'removed' AND id not in (SELECT video_id FROM reports WHERE reporter = :user) ORDER BY s.stem_id DESC;");
+            if(isset($_SESSION["filter"])){
+            if($_SESSION["filter"] == "Nieuwste"){
+                $statement = $conn->prepare("SELECT * FROM videos v INNER JOIN stemmen s ON v.id = s.video_id WHERE s.user_id = :user_id AND NOT status = 'removed' AND id not in (SELECT video_id FROM reports WHERE reporter = :user) ORDER BY v.id DESC;");
+            } else if($_SESSION["filter"] == "Oudste"){
+                $statement = $conn->prepare("SELECT * FROM videos v INNER JOIN stemmen s ON v.id = s.video_id WHERE s.user_id = :user_id AND NOT status = 'removed' AND id not in (SELECT video_id FROM reports WHERE reporter = :user) ORDER BY v.id ASC;");
+            } else if($_SESSION["filter"] == "Stemmen"){
+                $statement = $conn->prepare("SELECT * FROM videos v INNER JOIN stemmen s ON v.id = s.video_id WHERE s.user_id = :user_id AND NOT status = 'removed' AND id not in (SELECT video_id FROM reports WHERE reporter = :user) ORDER BY v.stemmen DESC;");
+            }
+            } else {
+                $statement = $conn->prepare("SELECT * FROM videos v INNER JOIN stemmen s ON v.id = s.video_id WHERE s.user_id = :user_id AND NOT status = 'removed' AND id not in (SELECT video_id FROM reports WHERE reporter = :user) ORDER BY s.stem_id DESC;");
+            }
             $statement->bindValue(":user_id", $_SESSION["userid"]);
             $statement->bindValue(":user", $_SESSION["user"]);
             $statement->execute();
@@ -206,7 +216,17 @@
 
         public function printUploads(){
             $conn = Db::getInstance();
-            $statement = $conn->prepare("SELECT * FROM videos WHERE uploader = :user ORDER BY id DESC;");
+            if(isset($_SESSION["filter"])){
+            if($_SESSION["filter"] == "Nieuwste"){
+                $statement = $conn->prepare("SELECT * FROM videos WHERE uploader = :user ORDER BY id DESC;");
+            } else if($_SESSION["filter"] == "Oudste"){
+                $statement = $conn->prepare("SELECT * FROM videos WHERE uploader = :user ORDER BY id ASC;");
+            } else if($_SESSION["filter"] == "Stemmen"){
+                $statement = $conn->prepare("SELECT * FROM videos WHERE uploader = :user ORDER BY stemmen DESC;");
+            }
+            } else {
+                $statement = $conn->prepare("SELECT * FROM videos WHERE uploader = :user ORDER BY id DESC;");
+            }
             $statement->bindValue(":user", $_SESSION["user"]);
             $statement->execute();
             return $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -214,7 +234,17 @@
 
         public function printFeatured(){
             $conn = Db::getInstance();
-            $statement = $conn->prepare("SELECT * FROM videos v INNER JOIN featured f ON v.id = f.video_id WHERE NOT status = 'removed' AND id not in (SELECT video_id FROM reports WHERE reporter = :user) ORDER BY f.feature_id DESC;");
+            if(isset($_SESSION["filter"])){
+            if($_SESSION["filter"] == "Nieuwste"){
+                $statement = $conn->prepare("SELECT * FROM videos v INNER JOIN featured f ON v.id = f.video_id WHERE NOT status = 'removed' AND id not in (SELECT video_id FROM reports WHERE reporter = :user) ORDER BY v.id DESC;");
+            } else if($_SESSION["filter"] == "Oudste"){
+                $statement = $conn->prepare("SELECT * FROM videos v INNER JOIN featured f ON v.id = f.video_id WHERE NOT status = 'removed' AND id not in (SELECT video_id FROM reports WHERE reporter = :user) ORDER BY v.id ASC;");
+            } else if($_SESSION["filter"] == "Stemmen"){
+                $statement = $conn->prepare("SELECT * FROM videos v INNER JOIN featured f ON v.id = f.video_id WHERE NOT status = 'removed' AND id not in (SELECT video_id FROM reports WHERE reporter = :user) ORDER BY v.stemmen DESC;");
+            }
+            } else {
+                $statement = $conn->prepare("SELECT * FROM videos v INNER JOIN featured f ON v.id = f.video_id WHERE NOT status = 'removed' AND id not in (SELECT video_id FROM reports WHERE reporter = :user) ORDER BY f.feature_id DESC;");
+            }
             $statement->bindValue(":user", $_SESSION["user"]);
             $statement->execute();
             return $statement->fetchAll(PDO::FETCH_ASSOC);
