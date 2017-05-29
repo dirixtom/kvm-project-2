@@ -10,7 +10,7 @@
         if(!empty($_POST) ){
             
             $video = new Video;
-            $video->report($_POST["video_id"], $_SESSION["user"], $_POST["category"], $_POST["bericht"]);
+            $video->report(htmlspecialchars($_POST["video_id"]), $_SESSION["user"], htmlspecialchars($_POST["category"]), htmlspecialchars($_POST["bericht"]));
             
             
             $feedback = [

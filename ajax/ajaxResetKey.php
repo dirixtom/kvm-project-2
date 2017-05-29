@@ -10,7 +10,7 @@
         if(!empty($_POST) ){
             
             $user = new User;
-            $user->checkResetKey($_POST["code"], $_POST["email"]);
+            $user->checkResetKey(htmlspecialchars($_POST["code"]), htmlspecialchars($_POST["email"]));
             
             $feedback = [
                 "code" => 200

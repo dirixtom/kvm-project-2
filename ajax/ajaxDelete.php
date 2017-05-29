@@ -10,7 +10,7 @@
         if(!empty($_POST) ){
             
             $video = new Video;
-            $video->deleteVideo($_POST["video_id"]);
+            $video->deleteVideo(htmlspecialchars($_POST["video_id"]));
             
             $feedback = [
                 "code" => 200,

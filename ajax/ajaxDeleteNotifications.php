@@ -10,7 +10,7 @@
         if(!empty($_POST) ){
             
             $melding = new Melding;
-            $melding->deleteMelding($_POST["melding_id"]);
+            $melding->deleteMelding(htmlspecialchars($_POST["melding_id"]));
             
             $feedback = [
                 "code" => 200,

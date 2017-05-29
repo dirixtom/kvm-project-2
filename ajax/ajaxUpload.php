@@ -19,7 +19,7 @@
             $video->Status = "default";
 
             $video->upload();
-            $video->TagInput = $_POST["tags"];
+            $video->TagInput = htmlspecialchars($_POST["tags"]);
             $video->setTags();
             
             unset($_SESSION['recorded']);

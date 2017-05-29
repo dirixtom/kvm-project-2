@@ -10,9 +10,8 @@
         if(!empty($_POST) ){
             
             $user = new User;
-            $user->Email= $_POST["email"];
+            $user->Email= htmlspecialchars($_POST["email"]);
             $user->makeResetKey();
-            
             
             $feedback = [
                 "code" => 200
