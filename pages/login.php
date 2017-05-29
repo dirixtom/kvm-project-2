@@ -8,23 +8,16 @@
 
     try{
         if($_POST){
-        if(!empty($_POST["email"])){
-
-            $user = new User();
-            $user->Email = $_POST["email"];
-            $user->resetPassword();
-        }
-
-        if(!empty($_POST["username"]) && !empty($_POST["password"])){
-            $user = new User();
-            $user->Username = $_POST["username"];
-            $user->Password = $_POST["password"];
-            if ($user->canLogin()) {
-                $user->handleLogin();
+            if(!empty($_POST["username"]) && !empty($_POST["password"])){
+                $user = new User();
+                $user->Username = $_POST["username"];
+                $user->Password = $_POST["password"];
+                if ($user->canLogin()) {
+                    $user->handleLogin();
+                }
+            } else if(empty($_POST["username"]) && empty($_POST["password"]) && empty($_POST["email"])){
+                throw new Exception('Niet alle velden zijn ingevuld.');
             }
-        } else if(empty($_POST["username"]) && empty($_POST["password"]) && empty($_POST["email"])){
-            throw new Exception('Niet alle velden zijn ingevuld.');
-        }
         }
 
     } catch (Exception $e){
@@ -240,6 +233,9 @@
         #wachtwoord_modal {
             display: none;
         }
+        #key_modal {
+            display: none;
+        }
 		main form {
 			position: relative;
 			margin-top: 68px;
@@ -333,7 +329,17 @@
 		        <form action="" method="post">
 		            <input type="text" name="email" id="email" placeholder="E-mail">
 		            <button id="cancel_wachtwoord"> annuleer </button>
-		            <button type="submit"> ok </button>
+		            <button id="key" type="submit"> ok </button>
+		        </form>
+		    </div>
+            
+            <div class="modal" id="key_modal">
+		       <h2> Email verstuurd </h2>
+		       <p>Een email met een geheime code is naar je adres gestuurd. Vul de code hier in.</p>
+		        <form action="" method="post">
+		            <input type="text" name="code" id="code" placeholder="typ de code hier.">
+		            <button id="cancel_wachtwoord"> annuleer </button>
+		            <button id="reset" type="submit"> ok </button>
 		        </form>
 		    </div>
 

@@ -197,7 +197,7 @@
             $_SESSION['image']=$this->Image;
         }
 
-        public function resetPassword(){
+        public function makeResetKey(){
             $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
             $charactersLength = strlen($characters);
             $randomString = '';
@@ -221,9 +221,58 @@
             $statement->bindValue(":email", $this->Email);
             $statement->bindValue(":reset_key", $randomString);
             $statement->execute();
+            
+            $boodschap = "U hebt aangegeven dat u uw wachtwoord bent vergeten. \r\nGebruik de volgende sleutel om een nieuw wachtwoord aan te maken: " . $randomString . "\r\nAls u niet een nieuw wachtwoord heeft aangevraagd, negeer deze email dan.";
 
             // mail sturen
-            mail($this->Email,"kvm Fancorder", $randomString, "From: test"); //mail() kan niet werken in localhost.
+            mail($this->Email,"kvm Fancorder", $boodschap, "From: roelifant@gmail.com"); //mail() kan niet werken in localhost.
+        }
+        
+        public function checkResetKey($p_sCode, $p_sEmail){
+            $conn = Db::getInstance();
+            $statement = $conn->prepare("SELECT * FROM reset WHERE (email =:email) order by id DESC LIMIT 1;");
+            $statement->bindValue(":email", $p_sEmail);
+            $statement->execute();
+            $res = $statement->fetch(PDO::FETCH_ASSOC);
+            if (count($res)<1) {
+                throw new Exception("Er is iets misgelopen.");
+            } else {
+                if($p_sCode == $res["reset_key"]){
+                    //succes!
+                    $_SESSION["reset"]= true;
+                    $_SESSION["email"]= $p_sEmail;
+                } else {
+                    throw new Exception("De ingegeven code is verkeerd. Probeer opnieuw.");
+                }
+            }
+        }
+        
+        public function resetPassword(){
+            //username halen want nodig om in te loggen na herinstellen van wachtwoord
+            $conn = Db::getInstance();
+            $statement = $conn->prepare("SELECT * FROM users WHERE email = :email;");
+            $statement->bindValue(":email", $_SESSION["email"]);
+            $statement->execute();
+            $res = $statement->fetch(PDO::FETCH_ASSOC);
+            $this->Username = $res["username"];
+            
+            if($this->Password == $this->PasswordCheck){
+            $options = [
+                'cost' => 13,
+                ];
+                if (strlen($this->Password)<6) {
+                    throw new Exception('Het wachtwoord moet minstens 6 tekens lang zijn');
+                }
+                $this->Password = password_hash($this->Password, PASSWORD_DEFAULT, $options);
+                
+                $statement2 = $conn->prepare("UPDATE users SET password = :password WHERE username = :username;");
+                $statement2->bindValue(":password", $this->Password);
+                $statement2->bindValue(":username", $this->Username);
+                $result = $statement2->execute();
+                return $result;
+            } else {
+                throw new Exception("De ingegeven wachtwoorden komen niet overeen");
+            }
         }
 
         public function deleteProfile(){
