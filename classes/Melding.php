@@ -155,5 +155,48 @@
             $statement2->bindValue(":ontvanger", $_SESSION["user"]);
             $statement2->execute();
         }
-
+        
+        public function notificationSettings(){
+            $conn = Db::getInstance();
+            //check of er al een instelling bestaat voor deze user
+            $statement = $conn->prepare("SELECT * FROM settings WHERE user = :user ;");
+            $statement->bindValue(":user", $_SESSION["user"]);
+            $statement->execute();
+            $res = $statement->fetchAll(PDO::FETCH_ASSOC);
+            $rows = count($res);
+            if($rows == 0){
+                
+                // maak nieuwe instelling voor deze users volgens wat er via post is binnengekomen
+                $statement2 = $conn->prepare("INSERT INTO settings (user, push_video, push_upload, push_status, mail_video, mail_upload, mail_status) VALUES (:user, :push_video, :push_upload, :push_status, :mail_video, :mail_upload, :mail_status);");
+                $statement2->bindValue(":user", $_SESSION["user"]);
+                $statement2->bindValue(":push_video", $_POST["pushVerkozen"]);
+                $statement2->bindValue(":push_upload", $_POST["pushVriendUpload"]);
+                $statement2->bindValue(":push_status", $_POST["pushProfielStatus"]);
+                $statement2->bindValue(":mail_video", $_POST["emailVerkozen"]);
+                $statement2->bindValue(":mail_upload", $_POST["emailVriendUpload"]);
+                $statement2->bindValue(":mail_status", $_POST["emailProfielStatus"]);
+                $res2 = $statement2->execute();
+                
+            } else {
+                
+                // update oude instellingen volgens wat er via post is binnengekomen
+                $statement2 = $conn->prepare("UPDATE settings SET push_video = :push_video, push_upload = :push_upload, push_status = :push_status, mail_video = :mail_video, mail_upload = :mail_upload, mail_status = :mail_status WHERE user = :user;");
+                $statement2->bindValue(":user", $_SESSION["user"]);
+                $statement2->bindValue(":push_video", $_POST["pushVerkozen"]);
+                $statement2->bindValue(":push_upload", $_POST["pushVriendUpload"]);
+                $statement2->bindValue(":push_status", $_POST["pushProfielStatus"]);
+                $statement2->bindValue(":mail_video", $_POST["emailVerkozen"]);
+                $statement2->bindValue(":mail_upload", $_POST["emailVriendUpload"]);
+                $statement2->bindValue(":mail_status", $_POST["emailProfielStatus"]);
+                $res2 = $statement2->execute();
+            }
+        }
+        
+        public function readSettings(){
+            $conn = Db::getInstance();
+            $statement = $conn->prepare("SELECT * FROM settings WHERE user = :user ;");
+            $statement->bindValue(":user", $_SESSION["user"]);
+            $statement->execute();
+            return $statement->fetch(PDO::FETCH_ASSOC);
+        }
 }

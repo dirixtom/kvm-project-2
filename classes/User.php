@@ -225,7 +225,7 @@
             $boodschap = "U hebt aangegeven dat u uw wachtwoord bent vergeten. \r\nGebruik de volgende sleutel om een nieuw wachtwoord aan te maken: " . $randomString . "\r\nAls u niet een nieuw wachtwoord heeft aangevraagd, negeer deze email dan.";
 
             // mail sturen
-            mail($this->Email,"kvm Fancorder", $boodschap, "From: roelifant@gmail.com"); //mail() kan niet werken in localhost.
+            mail($this->Email,"kvm Fancorder", $boodschap, "From: roelifant.com"); //mail() kan niet werken in localhost.
         }
         
         public function checkResetKey($p_sCode, $p_sEmail){

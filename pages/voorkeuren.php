@@ -6,6 +6,14 @@
     }*/
 
     define("SCHERM", "Notificatie voorkeuren");
+
+    spl_autoload_register(function ($class) {
+        include_once("../classes/" . $class . ".php");
+    });
+
+    $melding = new Melding;
+    $res = $melding->readSettings();
+
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,6 +24,7 @@
     <title><?php echo SCHERM; ?></title>
 
 	<script src="../js/jquery.min.js"></script>
+	<script src="../js/voorkeuren.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
 
     <style type="text/css">
@@ -192,21 +201,21 @@
                     <div class="selections">
                         <p>Verkozen video</p>
                         <label class="switch">
-                            <input id="pushVerkozen" type="checkbox">
+                            <input id="pushVerkozen" type="checkbox" <?php if($res["push_video"] == "true"){echo "checked='checked'";} ?> >
                             <div class="slider round"></div>
                         </label>
                     </div>
                     <div class="selections">
                         <p>Upload door vrienden</p>
                         <label class="switch">
-                            <input id="pushVriendUpload" type="checkbox">
+                            <input id="pushVriendUpload" type="checkbox" <?php if($res["push_upload"] == "true"){echo "checked='checked'";} ?> >
                             <div class="slider round"></div>
                         </label>
                     </div>
                     <div class="selections">
                         <p>Profiel status updates</p>
                         <label class="switch">
-                            <input id="pushProfielStatus" type="checkbox">
+                            <input id="pushProfielStatus" type="checkbox" <?php if($res["push_status"] == "true"){echo "checked='checked'";} ?> >
                             <div class="slider round"></div>
                         </label>
                     </div>
@@ -216,21 +225,21 @@
                     <div class="selections">
                         <p>Verkozen video</p>
                         <label class="switch">
-                            <input id="emailVerkozen" type="checkbox">
+                            <input id="emailVerkozen" type="checkbox" <?php if($res["mail_video"] == "true"){echo "checked='checked'";} ?> >
                             <div class="slider round"></div>
                         </label>
                     </div>
                     <div class="selections">
                         <p>Upload door vrienden</p>
                         <label class="switch">
-                            <input id="emailVriendUpload" type="checkbox">
+                            <input id="emailVriendUpload" type="checkbox" <?php if($res["mail_upload"] == "true"){echo "checked='checked'";} ?> >
                             <div class="slider round"></div>
                         </label>
                     </div>
                     <div class="selections">
                         <p>Profiel status updates</p>
                         <label class="switch">
-                            <input id="emailProfielStatus" type="checkbox">
+                            <input id="emailProfielStatus" type="checkbox" <?php if($res["mail_status"] == "true"){echo "checked='checked'";} ?> >
                             <div class="slider round"></div>
                         </label>
                     </div>
