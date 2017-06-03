@@ -84,7 +84,7 @@
 
                 //username
                 $checkusername = $conn->prepare("SELECT * FROM `users` WHERE (username =:username)");
-                $checkusername->bindValue(":username", $this->m_susername);
+                $checkusername->bindValue(":username", $this->Username);
                 $checkusername->execute();
                 $found_username = $checkusername->fetch(PDO::FETCH_ASSOC);
                 if (!empty($found_username)) {
@@ -108,10 +108,24 @@
                 } else {
                     throw new Exception("Dit is geen geldig email adres");
                 }
+                
+                
 
                 $statement->bindValue(":password", $this->Password);
                 $statement->bindValue(":image", $this->Image);
                 $result = $statement->execute();
+                
+                //settings aanmaken in db
+                $statement2 = $conn->prepare("INSERT INTO settings (user, push_video, push_upload, push_status, mail_video, mail_upload, mail_status) VALUES (:user, :push_video, :push_upload, :push_status, :mail_video, :mail_upload, :mail_status);");
+                $statement2->bindValue(":user", $this->Username);
+                $statement2->bindValue(":push_video", "true");
+                $statement2->bindValue(":push_upload", "true");
+                $statement2->bindValue(":push_status", "true");
+                $statement2->bindValue(":mail_video", "true");
+                $statement2->bindValue(":mail_upload", "true");
+                $statement2->bindValue(":mail_status", "true");
+                $res2 = $statement2->execute();
+                
                 return $result;
             } else {
                 throw new Exception("De ingegeven wachtwoorden komen niet overeen");
