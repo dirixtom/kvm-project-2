@@ -1,9 +1,16 @@
 <?php
+
+    if(!session_id()){
+        session_start();
+    };
+
+    require_once('../tools/vendor/autoload.php');
+    
     define("SCHERM", "Login");
 
-    spl_autoload_register(function ($class) {
-    include_once("../classes/" . $class . ".php");
-    });
+    include_once("../classes/Db.php");
+    include_once("../classes/Melding.php");
+    include_once("../classes/User.php");
 
 
     try{
@@ -23,6 +30,18 @@
     } catch (Exception $e){
 		$error= $e->getMessage();
     }
+
+    $fb = new \Facebook\Facebook([
+      'app_id' => '733296620185263',
+      'app_secret' => 'f83117d28e549655075c13906449915a',
+      'default_graph_version' => 'v2.9',
+      //'default_access_token' => '{access-token}', // optional
+    ]);
+
+    $helper = $fb->getRedirectLoginHelper();
+
+    $permissions = ['email', 'public_profile']; // Optional permissions
+    $loginUrl = $helper->getLoginUrl('http://localhost/project/kvm-project-2/facebook_login/fb_callback.php', $permissions);
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -361,8 +380,10 @@
 			   <div id="divider">
 				   <hr><h3>of</h3><hr>
 			   </div>
-
-		       <button>Log in met Facebook </button>
+                
+                <form action="<?php echo $loginUrl; ?>" method="post">
+		       <button type="submit">Log in met Facebook </button>
+		       </form>
 		       <a href="#" id="wachtwoord"> Wachtwoord vergeten?</a>
             </main>
             <img class="sysbar" src="../images/navbar-bot.png" alt="android navigatie balk" />
