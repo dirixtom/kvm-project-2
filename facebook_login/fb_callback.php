@@ -4,8 +4,14 @@ if(!session_id()){
         session_start();
 };
 
+$_SESSION["fb_logged_in"] = true;
+
 require_once('../tools/vendor/autoload.php');
 include_once('../config.php');
+
+include_once('../classes/Db.php');
+include_once('../classes/User.php');
+include_once('../classes/Melding.php');
 
  $fb = new Facebook\Facebook([
   'app_id' => $fb_config['app_id'],
@@ -78,16 +84,37 @@ $_SESSION['fb_access_token'] = (string) $accessToken;
 
 // User is logged in with a long-lived access token.
 // You can redirect them to a members-only page.
-//header('Location: https://example.com/members.php');
+
+
+try {
+  // Returns a `Facebook\FacebookResponse` object
+  $response = $fb->get('/me?fields=id,first_name,last_name,email', $_SESSION['fb_access_token']);
+} catch(Facebook\Exceptions\FacebookResponseException $e) {
+  echo 'Graph returned an error: ' . $e->getMessage();
+  exit;
+} catch(Facebook\Exceptions\FacebookSDKException $e) {
+  echo 'Facebook SDK returned an error: ' . $e->getMessage();
+  exit;
+}
+
+$user = $response->getGraphUser();
+/*
+echo 'Id: ' . $user->getId();
+echo 'Last: ' . $user->getLastName();
+echo 'First: ' . $user->getFirstName();
+echo 'Email: ' . $user->getEmail();
+*/
+
+//vind username
+$username = new User;
+$conn = Db::getInstance();
+$statement = $conn->prepare("SELECT * FROM `users` WHERE (facebook_id = :facebook_id)");
+$statement->bindValue(":facebook_id", $user->getId());
+$statement->execute();
+$res = $statement->fetch(PDO::FETCH_ASSOC);
+$username->Username = $res["username"];
+//login met deze username
+$username->handleLogin();
+
+//header('Location: ../index.php');
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>blubber</title>
-</head>
-<body>
-   <h1>blablabla</h1>
-    
-</body>
-</html>
