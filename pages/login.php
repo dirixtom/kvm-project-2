@@ -8,7 +8,7 @@
         header('Location: ../index.php');
     }
 
-    require_once('../tools/vendor/autoload.php');
+    require_once('../facebook_sdk/autoload.php');
     
     define("SCHERM", "Login");
 

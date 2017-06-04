@@ -6,7 +6,7 @@ if(!session_id()){
 
 $_SESSION["fb_logged_in"] = true;
 
-require_once('../tools/vendor/autoload.php');
+require_once('../facebook_sdk/autoload.php');
 include_once('../config.php');
 
 include_once('../classes/Db.php');
