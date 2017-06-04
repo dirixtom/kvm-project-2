@@ -86,7 +86,7 @@ $_SESSION['fb_access_token'] = (string) $accessToken;
 
 try {
   // Returns a `Facebook\FacebookResponse` object
-  $response = $fb->get('/me?fields=id,first_name,last_name,email', $_SESSION['fb_access_token']);
+  $response = $fb->get('/me?fields=id,first_name,last_name,email,picture', $_SESSION['fb_access_token']);
 } catch(Facebook\Exceptions\FacebookResponseException $e) {
   echo 'Graph returned an error: ' . $e->getMessage();
   exit;
@@ -96,23 +96,19 @@ try {
 }
 
 $user = $response->getGraphUser();
-/*
-echo 'Id: ' . $user->getId();
-echo 'Last: ' . $user->getLastName();
-echo 'First: ' . $user->getFirstName();
-echo 'Email: ' . $user->getEmail();
-*/
 
-//vind username
-$username = new User;
+//geef user in sessie een facebook_id in de db
 $conn = Db::getInstance();
-$statement = $conn->prepare("SELECT * FROM `users` WHERE (facebook_id = :facebook_id)");
+$profile = new User;
+$statement = $conn->prepare("UPDATE users SET facebook_id = :facebook_id, firstname = :firstname, lastname = :lastname WHERE username = :username;");
+$statement->bindValue(":username", $_SESSION["user"]);
 $statement->bindValue(":facebook_id", $user->getId());
+$statement->bindValue(":firstname", $user->getFirstName());
+$statement->bindValue(":lastname", $user->getLastName());
 $statement->execute();
-$res = $statement->fetch(PDO::FETCH_ASSOC);
-$username->Username = $res["username"];
-//login met deze username
-$username->handleLogin();
+//sessies aanpassen
+$_SESSION['firstname'] = $user->getFirstName();
+$_SESSION['lastname'] = $user->getLastName();
 
-//header('Location: ../index.php');
+header('Location: ../pages/profile.php');
 ?>
