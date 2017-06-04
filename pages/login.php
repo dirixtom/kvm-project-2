@@ -1,9 +1,20 @@
 <?php
+
+    if(!session_id()){
+        session_start();
+    };
+
+    if (isset($_SESSION['user'])) {
+        header('Location: ../index.php');
+    }
+
+    require_once('../facebook_sdk/autoload.php');
+    
     define("SCHERM", "Login");
 
-    spl_autoload_register(function ($class) {
-    include_once("../classes/" . $class . ".php");
-    });
+    include_once("../classes/Db.php");
+    include_once("../classes/Melding.php");
+    include_once("../classes/User.php");
 
 
     try{
@@ -16,14 +27,42 @@
                     $user->handleLogin();
                 }
             } else if(empty($_POST["username"]) && empty($_POST["password"]) && empty($_POST["email"])){
-                throw new Exception('Niet alle velden zijn ingevuld.');
+                
+                if(isset($_POST["facebook_login"])){
+                    facebookLogin();
+                } else {
+                    throw new Exception('Niet alle velden zijn ingevuld.');
+                }
             }
+            
         }
 
     } catch (Exception $e){
 		$error= $e->getMessage();
     }
 
+    function facebookLogin(){
+        $facebook = new \Facebook\Facebook([
+          'app_id' => '733296620185263',
+          'app_secret' => 'f83117d28e549655075c13906449915a',
+          'default_graph_version' => 'v2.9',
+          //'default_access_token' => '{access-token}', // optional
+        ]);
+        
+        //$user = $facebook->facebook->getUser();
+        
+        if(!isset($_SESSION['fb_access_token'])){
+                //$user = null;
+                //User is not logged in
+                
+                $helper = $facebook->getRedirectLoginHelper();
+
+                $permissions = ['email', 'public_profile']; // Optional permissions
+                $loginUrl = $helper->getLoginUrl('http://localhost/project/kvm-project-2/facebook_login/fb_callback.php', $permissions);
+                
+                header("Location: ".$loginUrl);
+        }
+    }
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -236,12 +275,12 @@
         #key_modal {
             display: none;
         }
-		main form {
+		main .form {
 			position: relative;
 			margin-top: 68px;
 			width: 360px;
 		}
-		main form input {
+		main .form input {
 			position: relative;
 			display: block;
 			margin-left: auto;
@@ -259,7 +298,7 @@
 			line-height: 40px;
 			margin-bottom: 24px;
  	   }
-	   main form input::-webkit-input-placeholder {
+	   main .form input::-webkit-input-placeholder {
 			color: #BEC1C2;
 	   }
 	   button {
@@ -302,7 +341,7 @@
 		text-decoration: none;
 		font-size: 12px;
 	  }
-	  form h4 {
+	  .form h4 {
 	  	position: relative;
 	  	display: block;
 	  	width: 100%;
@@ -326,7 +365,7 @@
 			<div class="modal" id="wachtwoord_modal">
 		       <h2> Wachtwoord vergeten </h2>
 		       <p>Vul het e-mail adres in waarmee je je geregistreerd hebt.</p>
-		        <form action="" method="post">
+		        <form action="" method="post" class="form">
 		            <input type="text" name="email" id="email" placeholder="E-mail">
 		            <button id="cancel_wachtwoord"> annuleer </button>
 		            <button id="key" type="submit"> ok </button>
@@ -336,7 +375,7 @@
             <div class="modal" id="key_modal">
 		       <h2> Email verstuurd </h2>
 		       <p>Een email met een geheime code is naar je adres gestuurd. Vul de code hier in.</p>
-		        <form action="" method="post">
+		        <form action="" method="post" class="form">
 		            <input type="text" name="code" id="code" placeholder="typ de code hier.">
 		            <button id="cancel_wachtwoord"> annuleer </button>
 		            <button id="reset" type="submit"> ok </button>
@@ -348,7 +387,7 @@
 				   <a href="#"> Login </a>
 				   <a href="register.php"> Registreer </a>
                </nav>
-			   <form action="" method="post">
+			   <form action="" method="post" class="form">
 		           <input type="text" placeholder="Gebruikersnaam" name="username" id="username">
 		           <input type="password" placeholder="Wachtwoord" name="password" id="password">
 				   <?php if(!empty($error)) : ?>
@@ -361,8 +400,11 @@
 			   <div id="divider">
 				   <hr><h3>of</h3><hr>
 			   </div>
-
-		       <button>Log in met Facebook </button>
+                
+                <form action="" method="post">
+                <input type="hidden" name="facebook_login">
+		       <button type="submit">Log in met Facebook </button>
+		       </form>
 		       <a href="#" id="wachtwoord"> Wachtwoord vergeten?</a>
             </main>
             <img class="sysbar" src="../images/navbar-bot.png" alt="android navigatie balk" />

@@ -151,7 +151,7 @@
             try {
                 $conn = Db::getInstance();
                 $statement = $conn->prepare("SELECT * FROM `users` WHERE (username = :username)");
-                $statement->bindValue(":username", $this->m_sUsername);
+                $statement->bindValue(":username", $this->Username);
                 $statement->execute();
                 $res = $statement->fetch(PDO::FETCH_ASSOC);
                 $firstname = $res["firstname"];
@@ -159,7 +159,6 @@
                 $email = $res["email"];
                 $image = $res["image"];
                 $userid = $res["id"];
-                session_start();
                 $_SESSION['user'] = $this->Username;
                 $_SESSION['firstname'] = $firstname;
                 $_SESSION['lastname'] = $lastname;
