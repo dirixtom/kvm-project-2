@@ -77,7 +77,7 @@ function facebookLink(){
                 $helper = $facebook->getRedirectLoginHelper();
 
                 $permissions = ['email', 'public_profile']; // Optional permissions
-                $linkUrl = $helper->getLoginUrl('http://localhost/project/kvm-project-2/facebook_login/fb_link_callback.php', $permissions);
+                $linkUrl = $helper->getLoginUrl('https://roelifant.com/fancorder/facebook_login/fb_link_callback.php', $permissions);
                 
                 header("Location: ".$linkUrl);
         } else {

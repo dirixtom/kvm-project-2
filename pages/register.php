@@ -1,4 +1,6 @@
 <?php
+    session_start();
+
     define("SCHERM", "Registreer");
     
     spl_autoload_register(function ($class) {
