@@ -106,13 +106,16 @@ echo 'Email: ' . $user->getEmail();
 //vind username
 $username = new User;
 $conn = Db::getInstance();
-$statement = $conn->prepare("SELECT * FROM `users` WHERE (facebook_id = :facebook_id)");
+$statement = $conn->prepare("SELECT * FROM `users` WHERE (facebook_id = :facebook_id);");
 $statement->bindValue(":facebook_id", $user->getId());
 $statement->execute();
 $res = $statement->fetch(PDO::FETCH_ASSOC);
-$username->Username = $res["username"];
-//login met deze username
-$username->handleLogin();
+if(!empty($res)){
+    $username->Username = $res["username"];
+    //login met deze username
+    $username->handleLogin();
+} else {
+    header('Location: ../pages/login.php?fb_login=fail');
+};
 
-//header('Location: ../index.php');
 ?>

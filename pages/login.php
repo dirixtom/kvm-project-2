@@ -36,6 +36,10 @@
             }
             
         }
+        
+        if(isset($_GET["fb_login"])){
+            throw new Exception('Dit facebook account is nog niet gelinkt met de Fancorder app. Log in met je Fancorder account, en verbind met facebook bij je profiel instellingen.');
+        }
 
     } catch (Exception $e){
 		$error= $e->getMessage();
