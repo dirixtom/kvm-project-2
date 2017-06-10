@@ -162,8 +162,6 @@
        <img id="right" src="../images/navbar-right.png" />
        <div id="buttons">
           <div>
-             <button id="pause"><img src="../images/ic_pause.svg" alt="pauzeer" /></button>
-             <button id="replay"><img src="../images/ic_replay.svg" alt="replay" /></button>
           </div>
           <button id="mute"><img src="../images/ic_mute.svg" alt="mute" /></button>
        </div>
