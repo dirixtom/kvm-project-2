@@ -139,10 +139,14 @@ function facebookLink(){
   .scherm:first-child, .scherm:last-child {
      z-index: 50000000;
   }
+.scherm #bkgd {
+  width: 100%;
+  height: calc(230px - 64px);
+}
    .scherm #bkgd #background {
      width: 100%;
-     height: 100%;
-     filter:blur(12px);
+     height: 230px;
+     filter: blur(12px);
      margin-top: -72px;
      z-index: -100;
    }
@@ -164,7 +168,7 @@ function facebookLink(){
   .scherm .sysbar:first-child {
      width: 100%;
      margin-bottom: -4px;
-     z-index: 1000;
+     z-index: 100000;
   }
   .scherm .sysbar:not(:first-child) {
      position: absolute;
@@ -176,9 +180,9 @@ function facebookLink(){
      visibility: hidden;
   }
   #verwijder {
-    position: absolute;
-    bottom: 56px;
-    left: 20px;
+    position: relative;
+    margin-top: 32px;
+    margin-left: 20px;
     text-decoration: none;
     color: #95989A;
     font-size: 12px;
@@ -211,6 +215,7 @@ function facebookLink(){
      padding-left: 16px;
      padding-right: 16px;
      margin-left: 20px;
+     margin-bottom: 32px;
      width: 60%;
      height: 45px;
      border: none;
@@ -404,6 +409,10 @@ function facebookLink(){
     border: none;
     margin-left: 16px;
     text-transform: capitalize;
+    max-width: 60%;
+   }
+   form input:first-child {
+     max-width: 50%;
    }
    #email {
      text-transform: lowercase;
