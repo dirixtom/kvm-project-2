@@ -409,6 +409,7 @@
            left: 50px;
            top: 20px;
            display: none;
+           z-index: 10;
        }
        #meldingen ul{
            list-style-type: none;
