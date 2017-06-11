@@ -4,22 +4,22 @@ $(document).ready(function(){
         Notification.requestPermission();
         
         var notification = new Notification('kvm Fancorder', {
-          icon: 'http://www.roelifant.com/fancorder/images/Fancorder.png',
+          icon: 'https://www.roelifant.com/fancorder/images/Fancorder.png',
           body: boodschap,
         });
 
         notification.onclick = function () {
-          window.open("http://localhost/project/kvm-project-2/"+pad);      
+          window.open("https://www.roelifant.com/fancorder/"+pad);      
         };
         
       } else {
         var notification = new Notification('kvm Fancorder', {
-          icon: 'http://www.roelifant.com/fancorder/images/Fancorder.png',
+          icon: 'https://www.roelifant.com/fancorder/images/Fancorder.png',
           body: boodschap,
         });
 
         notification.onclick = function () {
-          window.open("http://localhost/project/kvm-project-2/"+pad);      
+          window.open("https://www.roelifant.com/fancorder/"+pad);      
         };
 
       }
