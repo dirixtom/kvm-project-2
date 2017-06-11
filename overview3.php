@@ -29,6 +29,7 @@
 	<script src="js/jquery.min.js"></script>
    <script src="js/overview.js"></script>
    <script src="js/desktopNotifications.js"></script>
+   <script src="js/hotkeys.js"></script>
    
    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
 
