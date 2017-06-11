@@ -4,7 +4,7 @@ $(document).ready(function(){
         Notification.requestPermission();
         
         var notification = new Notification('kvm Fancorder', {
-          icon: 'https://www.roelifant.com/fancorder/images/Fancorder.png',
+          icon: 'http://www.roelifant.com/fancorder/images/Fancorder.png',
           body: boodschap,
         });
 
@@ -14,7 +14,7 @@ $(document).ready(function(){
         
       } else {
         var notification = new Notification('kvm Fancorder', {
-          icon: 'https://www.roelifant.com/fancorder/images/Fancorder.png',
+          icon: 'http://www.roelifant.com/fancorder/images/Fancorder.png',
           body: boodschap,
         });
 
