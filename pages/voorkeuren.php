@@ -1,9 +1,9 @@
 <?php
     session_start();
-    /*if (isset($_SESSION['user'])) {
+    if (isset($_SESSION['user'])) {
     } else {
         header('Location: login.php');
-    }*/
+    }
 
     define("SCHERM", "Notificatie voorkeuren");
 
