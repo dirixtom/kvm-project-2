@@ -411,7 +411,7 @@ function facebookLink(){
 </style>
 <style>
     #image_modal{
-        display: block;
+        display: none;
     }
     #verwijder_modal{
         display: none;
