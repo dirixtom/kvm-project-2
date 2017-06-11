@@ -513,12 +513,6 @@
 
       }
    </style>
-   <script>
-      $('#videocontainer').dragscrollable({
-         dragSelector: '.video',
-         acceptPropagatedEvent: false
-      });
-   </script>
 </head>
 </head>
 <body>
