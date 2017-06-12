@@ -15,6 +15,7 @@
     include_once("../classes/Db.php");
     include_once("../classes/Melding.php");
     include_once("../classes/User.php");
+    include_once("../config.php");
 
 
     try{
@@ -46,11 +47,10 @@
     }
 
     function facebookLogin(){
-        $facebook = new \Facebook\Facebook([
-          'app_id' => '733296620185263',
-          'app_secret' => 'f83117d28e549655075c13906449915a',
-          'default_graph_version' => 'v2.9',
-          //'default_access_token' => '{access-token}', // optional
+        $facebook = new Facebook\Facebook([
+          'app_id' => $fb_config['app_id'],
+          'app_secret' => $fb_config['app_secret'],
+          'default_graph_version' => $fb_config['default_graph_version'],
         ]);
         
         //$user = $facebook->facebook->getUser();
